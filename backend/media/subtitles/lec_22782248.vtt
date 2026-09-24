@@ -1,0 +1,62 @@
+WEBVTT
+
+NOTE Chapter: 1. The Core Intuition: Why Exception handling in python Matters
+
+00:00:00.100 --> 00:00:01.640
+Welcome!
+
+00:00:01.590 --> 00:00:10.490
+To truly understand Exception handling in python, we must start not with definitions or formulas, but with the fundamental problem it solves.
+
+00:00:10.490 --> 00:00:12.240
+Why do we need it?
+
+00:00:12.240 --> 00:00:14.620
+What breaks in its absence?
+
+00:00:14.620 --> 00:00:21.430
+By picturing this through an intuitive mental model, everything that follows will feel natural rather than memorized.
+
+NOTE Chapter: 2. The Underlying Mechanism: Core Architecture
+
+00:00:21.530 --> 00:00:27.150
+Now let us examine the fundamental mechanics that make Exception handling in python work.
+
+00:00:27.100 --> 00:00:31.670
+At its base, it operates through a clear set of invariant rules.
+
+00:00:31.670 --> 00:00:39.650
+Signals, data, or concepts flow predictably from one stage to the next, maintaining consistency and purpose.
+
+NOTE Chapter: 3. Step-by-Step Walkthrough in Action
+
+00:00:39.750 --> 00:00:42.940
+Let us observe a concrete demonstration.
+
+00:00:42.890 --> 00:00:46.570
+Watch how state transitions occur step-by-step.
+
+00:00:46.570 --> 00:00:53.640
+Each action directly addresses the objective, eliminating uncertainty and producing verifiable outcomes.
+
+NOTE Chapter: 4. Edge Cases, Nuances & Common Traps
+
+00:00:53.740 --> 00:00:59.150
+Experienced practitioners know that mastery lies in understanding the edge cases.
+
+00:00:59.100 --> 00:01:02.930
+Where does Exception handling in python encounter limits?
+
+00:01:02.930 --> 00:01:08.210
+What trade-offs between speed, complexity, and memory must we navigate?
+
+00:01:08.210 --> 00:01:12.220
+Being aware of these pitfalls prevents critical failures.
+
+NOTE Chapter: 5. Real-World Applications & Key Takeaways
+
+00:01:12.320 --> 00:01:20.180
+To wrap up our lesson: Exception handling in python is a powerful concept that transforms how we solve complex challenges.
+
+00:01:20.130 --> 00:01:29.670
+By keeping the core intuition, the underlying mechanism, and the key trade-offs in mind, you are fully equipped to apply this in your studies and practical work.

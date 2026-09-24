@@ -1,0 +1,104 @@
+WEBVTT
+
+NOTE Chapter: 1. The Dictionary Dilemma: Revised Edition
+
+00:00:00.100 --> 00:00:05.190
+Imagine searching for a word in an encyclopedia with ten thousand pages.
+
+00:00:05.140 --> 00:00:09.960
+Binary search divides and conquers the problem with logarithmic speed.
+
+NOTE Chapter: 2. The Invariant: Sorted Arrays & Three Pointers
+
+00:00:10.060 --> 00:00:15.480
+Binary search has one non-negotiable prerequisite: the array must be sorted.
+
+00:00:15.430 --> 00:00:18.730
+Without order, division is impossible.
+
+00:00:18.740 --> 00:00:26.280
+We maintain three key pointers: Low at the start of our search window, High at the end, and Mid right in the center.
+
+00:00:26.280 --> 00:00:33.810
+The formula is simple: Mid equals Low plus High minus Low divided by two, avoiding integer overflow.
+
+00:00:33.810 --> 00:00:37.700
+In each step, we inspect only the element at Mid.
+
+NOTE Chapter: 3. The Elimination Engine: Step-by-Step Execution
+
+00:00:37.800 --> 00:00:40.800
+Let us watch the algorithm in motion.
+
+00:00:40.750 --> 00:00:43.320
+We are searching for 23.
+
+00:00:43.320 --> 00:00:47.600
+Mid points to index 4, which holds the value 16.
+
+00:00:47.600 --> 00:00:55.340
+Since 16 is strictly less than 23, our target cannot possibly exist anywhere from index 0 to 4.
+
+00:00:55.340 --> 00:00:58.310
+We eliminate the entire left half!
+
+00:00:58.310 --> 00:01:02.470
+We shift Low to Mid plus one, which is index 5.
+
+00:01:02.470 --> 00:01:06.210
+Now our new window is from index 5 to 9.
+
+00:01:06.210 --> 00:01:10.840
+We recalculate Mid to index 7, which holds 56.
+
+00:01:10.840 --> 00:01:15.680
+56 is greater than 23, so we eliminate the right half!
+
+00:01:15.680 --> 00:01:21.310
+Finally, Low and High converge on index 5, value 23.
+
+00:01:21.310 --> 00:01:24.570
+Target found in just three comparisons!
+
+NOTE Chapter: 4. Clean Code Implementation & Variable Watch
+
+00:01:24.670 --> 00:01:27.970
+Here is the canonical Python implementation.
+
+00:01:27.920 --> 00:01:33.000
+Notice the while loop condition: while low is less than or equal to high.
+
+00:01:33.000 --> 00:01:38.870
+That 'less than or equal' is crucial for arrays with an odd length or single elements.
+
+00:01:38.870 --> 00:01:43.910
+Inside the loop, if array at mid matches target, we return mid.
+
+00:01:43.910 --> 00:01:47.860
+If the target is greater, we search the right sub-array.
+
+00:01:47.860 --> 00:01:50.660
+Otherwise, we search the left.
+
+00:01:50.660 --> 00:01:55.240
+If low crosses high without a match, we return minus one.
+
+NOTE Chapter: 5. Time Complexity: Why O(log N) Changes Everything
+
+00:01:55.340 --> 00:01:59.390
+The logarithmic efficiency of binary search is staggering.
+
+00:01:59.340 --> 00:02:05.600
+For an array of 1 million items, linear search would take on average 500,000 checks.
+
+00:02:05.600 --> 00:02:08.880
+Binary search takes at most 20 checks.
+
+00:02:08.880 --> 00:02:17.010
+For 4 billion items, the entire internet population, binary search finds any user in just 32 operations.
+
+00:02:17.010 --> 00:02:21.240
+It turns an impossible problem into an instantaneous lookup.
+
+00:02:21.240 --> 00:02:26.730
+Remember: sorted input, three pointers, eliminate half each step.

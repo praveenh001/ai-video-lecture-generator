@@ -1,0 +1,2444 @@
+{
+  "fde74a27": {
+    "id": "fde74a27",
+    "topic": "Binary Search",
+    "title": "Mastering Binary Search: Intuition, Algorithm & Complexity",
+    "domain": "computer_science",
+    "subdomain": "Algorithms & Data Structures",
+    "knowledge_level": "intermediate",
+    "teaching_style": "anim_sim",
+    "duration_target": "standard",
+    "voice_name": "en-US-ChristopherNeural",
+    "created_at": "2026-09-24 22:01",
+    "total_duration": 146.73,
+    "scenes": [
+      {
+        "scene_id": "lec_fde74a27_s0",
+        "index": 0,
+        "chapter_title": "1. The Dictionary Dilemma: Revised Edition",
+        "pedagogical_phase": "hook",
+        "narration_text": "Imagine searching for a word in an encyclopedia with ten thousand pages. Binary search divides and conquers the problem with logarithmic speed.",
+        "estimated_duration": 22.0,
+        "visual_spec": {
+          "visual_type": "concept_metaphor",
+          "title": "Search Strategy Comparison",
+          "subtitle": "Linear Page-by-Page vs. Binary Division",
+          "parameters": {
+            "metaphor": "dictionary_search",
+            "left_label": "Linear Search: O(N)",
+            "left_items": [
+              "Page 1: A",
+              "Page 2: B",
+              "Page 3: C",
+              "...",
+              "Page 500: Target Found (500 steps)"
+            ],
+            "right_label": "Binary Search: O(log N)",
+            "right_items": [
+              "Open middle (Page 500)",
+              "Target 'Q' > 'M' -> Discard 1-500",
+              "Open middle of remainder",
+              "Found in ~10 steps!"
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "description": "1,000 pages search space established",
+              "highlight": "entire_space"
+            },
+            {
+              "step": 2,
+              "description": "Dividing search space in half",
+              "highlight": "middle_split"
+            },
+            {
+              "step": 3,
+              "description": "Discarding 500 pages instantly",
+              "highlight": "eliminated_half"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_fde74a27_s0.mp3",
+        "actual_duration": 9.96,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 5.19,
+            "text": "Imagine searching for a word in an encyclopedia with ten thousand pages."
+          },
+          {
+            "start": 5.14,
+            "end": 9.96,
+            "text": "Binary search divides and conquers the problem with logarithmic speed."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_fde74a27_s1",
+        "index": 1,
+        "chapter_title": "2. The Invariant: Sorted Arrays & Three Pointers",
+        "pedagogical_phase": "foundation",
+        "narration_text": "Binary search has one non-negotiable prerequisite: the array must be sorted. Without order, division is impossible. We maintain three key pointers: Low at the start of our search window, High at the end, and Mid right in the center. The formula is simple: Mid equals Low plus High minus Low divided by two, avoiding integer overflow. In each step, we inspect only the element at Mid.",
+        "estimated_duration": 24.0,
+        "visual_spec": {
+          "visual_type": "algorithm_animator",
+          "title": "Three-Pointer Architecture",
+          "subtitle": "Tracking Low, Mid, and High on a Sorted Array",
+          "parameters": {
+            "algorithm_type": "array_search",
+            "array": [
+              2,
+              5,
+              8,
+              12,
+              16,
+              23,
+              38,
+              56,
+              72,
+              91
+            ],
+            "target": 23,
+            "low": 0,
+            "high": 9,
+            "mid": 4,
+            "state_label": "Initial State: Target = 23"
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "low": 0,
+              "high": 9,
+              "mid": 4,
+              "action": "Calculate mid = 0 + (9-0)//2 = 4",
+              "val": 16,
+              "status": "active"
+            },
+            {
+              "step": 2,
+              "low": 0,
+              "high": 9,
+              "mid": 4,
+              "action": "Compare array[mid] (16) vs Target (23)",
+              "val": 16,
+              "status": "comparing"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_fde74a27_s1.mp3",
+        "actual_duration": 27.74,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 5.52,
+            "text": "Binary search has one non-negotiable prerequisite: the array must be sorted."
+          },
+          {
+            "start": 5.47,
+            "end": 8.77,
+            "text": "Without order, division is impossible."
+          },
+          {
+            "start": 8.78,
+            "end": 16.32,
+            "text": "We maintain three key pointers: Low at the start of our search window, High at the end, and Mid right in the center."
+          },
+          {
+            "start": 16.32,
+            "end": 23.85,
+            "text": "The formula is simple: Mid equals Low plus High minus Low divided by two, avoiding integer overflow."
+          },
+          {
+            "start": 23.85,
+            "end": 27.74,
+            "text": "In each step, we inspect only the element at Mid."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_fde74a27_s2",
+        "index": 2,
+        "chapter_title": "3. The Elimination Engine: Step-by-Step Execution",
+        "pedagogical_phase": "visual_demonstration",
+        "narration_text": "Let us watch the algorithm in motion. We are searching for 23. Mid points to index 4, which holds the value 16. Since 16 is strictly less than 23, our target cannot possibly exist anywhere from index 0 to 4. We eliminate the entire left half! We shift Low to Mid plus one, which is index 5. Now our new window is from index 5 to 9. We recalculate Mid to index 7, which holds 56. 56 is greater than 23, so we eliminate the right half! Finally, Low and High converge on index 5, value 23. Target found in just three comparisons!",
+        "estimated_duration": 29.0,
+        "visual_spec": {
+          "visual_type": "algorithm_animator",
+          "title": "Live Binary Search Execution",
+          "subtitle": "Target: 23 in [2, 5, 8, 12, 16, 23, 38, 56, 72, 91]",
+          "parameters": {
+            "algorithm_type": "array_search",
+            "array": [
+              2,
+              5,
+              8,
+              12,
+              16,
+              23,
+              38,
+              56,
+              72,
+              91
+            ],
+            "target": 23,
+            "steps": [
+              {
+                "step_num": 1,
+                "low": 0,
+                "high": 9,
+                "mid": 4,
+                "mid_val": 16,
+                "comparison": "16 < 23 (Target is larger)",
+                "decision": "Eliminate left window [0..4], Move low = mid + 1",
+                "eliminated": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4
+                ]
+              },
+              {
+                "step_num": 2,
+                "low": 5,
+                "high": 9,
+                "mid": 7,
+                "mid_val": 56,
+                "comparison": "56 > 23 (Target is smaller)",
+                "decision": "Eliminate right window [7..9], Move high = mid - 1",
+                "eliminated": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  7,
+                  8,
+                  9
+                ]
+              },
+              {
+                "step_num": 3,
+                "low": 5,
+                "high": 6,
+                "mid": 5,
+                "mid_val": 23,
+                "comparison": "23 == 23 (Match Found!)",
+                "decision": "Return index 5 successfully!",
+                "eliminated": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  6,
+                  7,
+                  8,
+                  9
+                ],
+                "matched": 5
+              }
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "low": 0,
+              "high": 9,
+              "mid": 4,
+              "msg": "Mid is 16. Target 23 > 16. Discard left."
+            },
+            {
+              "step": 2,
+              "low": 5,
+              "high": 9,
+              "mid": 7,
+              "msg": "Mid is 56. Target 23 < 56. Discard right."
+            },
+            {
+              "step": 3,
+              "low": 5,
+              "high": 6,
+              "mid": 5,
+              "msg": "Mid is 23. Match found at index 5!"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_fde74a27_s2.mp3",
+        "actual_duration": 46.87,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 3.1,
+            "text": "Let us watch the algorithm in motion."
+          },
+          {
+            "start": 3.05,
+            "end": 5.62,
+            "text": "We are searching for 23."
+          },
+          {
+            "start": 5.62,
+            "end": 9.9,
+            "text": "Mid points to index 4, which holds the value 16."
+          },
+          {
+            "start": 9.9,
+            "end": 17.64,
+            "text": "Since 16 is strictly less than 23, our target cannot possibly exist anywhere from index 0 to 4."
+          },
+          {
+            "start": 17.64,
+            "end": 20.61,
+            "text": "We eliminate the entire left half!"
+          },
+          {
+            "start": 20.61,
+            "end": 24.77,
+            "text": "We shift Low to Mid plus one, which is index 5."
+          },
+          {
+            "start": 24.77,
+            "end": 28.51,
+            "text": "Now our new window is from index 5 to 9."
+          },
+          {
+            "start": 28.51,
+            "end": 33.14,
+            "text": "We recalculate Mid to index 7, which holds 56."
+          },
+          {
+            "start": 33.14,
+            "end": 37.98,
+            "text": "56 is greater than 23, so we eliminate the right half!"
+          },
+          {
+            "start": 37.98,
+            "end": 43.61,
+            "text": "Finally, Low and High converge on index 5, value 23."
+          },
+          {
+            "start": 43.61,
+            "end": 46.87,
+            "text": "Target found in just three comparisons!"
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_fde74a27_s3",
+        "index": 3,
+        "chapter_title": "4. Clean Code Implementation & Variable Watch",
+        "pedagogical_phase": "edge_cases",
+        "narration_text": "Here is the canonical Python implementation. Notice the while loop condition: while low is less than or equal to high. That 'less than or equal' is crucial for arrays with an odd length or single elements. Inside the loop, if array at mid matches target, we return mid. If the target is greater, we search the right sub-array. Otherwise, we search the left. If low crosses high without a match, we return minus one.",
+        "estimated_duration": 25.0,
+        "visual_spec": {
+          "visual_type": "code_visualizer",
+          "title": "Python Binary Search Implementation",
+          "subtitle": "Iterative Implementation with While Loop",
+          "parameters": {
+            "language": "python",
+            "code": "def binary_search(arr, target):\n    low = 0\n    high = len(arr) - 1\n    \n    while low <= high:\n        mid = low + (high - low) // 2\n        \n        if arr[mid] == target:\n            return mid\n        elif arr[mid] < target:\n            low = mid + 1\n        else:\n            high = mid - 1\n            \n    return -1",
+            "highlights": [
+              {
+                "line": 2,
+                "label": "Initialize pointers: low=0, high=9"
+              },
+              {
+                "line": 5,
+                "label": "Loop invariant: low <= high"
+              },
+              {
+                "line": 6,
+                "label": "Safe mid calculation avoiding overflow"
+              },
+              {
+                "line": 8,
+                "label": "Base case: match found"
+              },
+              {
+                "line": 10,
+                "label": "Target in right half: low = mid + 1"
+              },
+              {
+                "line": 12,
+                "label": "Target in left half: high = mid - 1"
+              },
+              {
+                "line": 14,
+                "label": "Exhausted search space: return -1"
+              }
+            ],
+            "variables": {
+              "low": 5,
+              "high": 6,
+              "mid": 5,
+              "target": 23,
+              "return": 5
+            }
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "active_line": 2,
+              "scope": "low=0, high=9"
+            },
+            {
+              "step": 2,
+              "active_line": 6,
+              "scope": "mid=4 (arr[4]=16)"
+            },
+            {
+              "step": 3,
+              "active_line": 10,
+              "scope": "low updated to 5"
+            },
+            {
+              "step": 4,
+              "active_line": 8,
+              "scope": "arr[5]==23 -> return 5"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_fde74a27_s3.mp3",
+        "actual_duration": 30.67,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 3.4,
+            "text": "Here is the canonical Python implementation."
+          },
+          {
+            "start": 3.35,
+            "end": 8.43,
+            "text": "Notice the while loop condition: while low is less than or equal to high."
+          },
+          {
+            "start": 8.43,
+            "end": 14.3,
+            "text": "That 'less than or equal' is crucial for arrays with an odd length or single elements."
+          },
+          {
+            "start": 14.3,
+            "end": 19.34,
+            "text": "Inside the loop, if array at mid matches target, we return mid."
+          },
+          {
+            "start": 19.34,
+            "end": 23.29,
+            "text": "If the target is greater, we search the right sub-array."
+          },
+          {
+            "start": 23.29,
+            "end": 26.09,
+            "text": "Otherwise, we search the left."
+          },
+          {
+            "start": 26.09,
+            "end": 30.67,
+            "text": "If low crosses high without a match, we return minus one."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_fde74a27_s4",
+        "index": 4,
+        "chapter_title": "5. Time Complexity: Why O(log N) Changes Everything",
+        "pedagogical_phase": "summary",
+        "narration_text": "The logarithmic efficiency of binary search is staggering. For an array of 1 million items, linear search would take on average 500,000 checks. Binary search takes at most 20 checks. For 4 billion items, the entire internet population, binary search finds any user in just 32 operations. It turns an impossible problem into an instantaneous lookup. Remember: sorted input, three pointers, eliminate half each step.",
+        "estimated_duration": 24.0,
+        "visual_spec": {
+          "visual_type": "math_graph",
+          "title": "Computational Scale: O(N) vs O(log N)",
+          "subtitle": "Number of Operations as Input Size (N) Grows",
+          "parameters": {
+            "curve_type": "complexity_comparison",
+            "x_label": "Input Elements (N)",
+            "y_label": "Operations Required",
+            "data_points": [
+              {
+                "n": "16",
+                "linear": 16,
+                "binary": 4
+              },
+              {
+                "n": "1,024",
+                "linear": 1024,
+                "binary": 10
+              },
+              {
+                "n": "1,000,000",
+                "linear": 1000000,
+                "binary": 20
+              },
+              {
+                "n": "4,000,000,000",
+                "linear": 4000000000,
+                "binary": 32
+              }
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "description": "Plotting linear line O(N)",
+              "highlight": "linear_curve"
+            },
+            {
+              "step": 2,
+              "description": "Plotting flat logarithmic curve O(log N)",
+              "highlight": "log_curve"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_fde74a27_s4.mp3",
+        "actual_duration": 31.49,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 4.15,
+            "text": "The logarithmic efficiency of binary search is staggering."
+          },
+          {
+            "start": 4.1,
+            "end": 10.36,
+            "text": "For an array of 1 million items, linear search would take on average 500,000 checks."
+          },
+          {
+            "start": 10.36,
+            "end": 13.64,
+            "text": "Binary search takes at most 20 checks."
+          },
+          {
+            "start": 13.64,
+            "end": 21.77,
+            "text": "For 4 billion items, the entire internet population, binary search finds any user in just 32 operations."
+          },
+          {
+            "start": 21.77,
+            "end": 26.0,
+            "text": "It turns an impossible problem into an instantaneous lookup."
+          },
+          {
+            "start": 26.0,
+            "end": 31.49,
+            "text": "Remember: sorted input, three pointers, eliminate half each step."
+          }
+        ]
+      }
+    ],
+    "video_url": "/media/videos/lecture_fde74a27.mp4",
+    "subtitles_vtt_url": "/media/subtitles/lec_fde74a27.vtt",
+    "materials": {
+      "summary": "Binary Search is a foundational divide-and-conquer algorithm that locates an element in a sorted collection in O(log n) logarithmic time. By repeatedly examining the middle element and discarding the non-viable half of the search space, it reduces a problem of billions of elements to a handful of comparisons.",
+      "notes_markdown": "# Binary Search: Complete Masterclass Notes\n\n## 1. Core Principle\nBinary Search locates a target value within a **sorted array** by halving the search space each step.\n- **Time Complexity**:\n  - Best Case: $O(1)$ (target located at initial mid)\n  - Average Case: $O(\\log n)$\n  - Worst Case: $O(\\log n)$\n- **Space Complexity**:\n  - Iterative: $O(1)$ auxiliary space\n  - Recursive: $O(\\log n)$ call stack space\n\n## 2. The 3 Pointer Pattern\n```python\ndef binary_search(arr: list[int], target: int) -> int:\n    low = 0\n    high = len(arr) - 1\n    \n    while low <= high:\n        # Avoid integer overflow (in languages like C++/Java)\n        mid = low + (high - low) // 2\n        \n        if arr[mid] == target:\n            return mid\n        elif arr[mid] < target:\n            low = mid + 1  # Target is in the right half\n        else:\n            high = mid - 1 # Target is in the left half\n            \n    return -1  # Target not found\n```\n\n## 3. Essential Edge Cases\n1. **Empty Array**: `len(arr) == 0` returns `-1`.\n2. **Single Element**: Verified correctly because `low <= high` uses `<=` instead of `<`.\n3. **Target Smaller Than Minimum**: `high` moves to `-1`, terminating properly.\n4. **Target Greater Than Maximum**: `low` exceeds `len(arr)-1`, terminating properly.\n5. **Duplicates**: Standard binary search returns any valid match index. For first/last occurrence, adjust pointer without early return.\n",
+      "key_concepts": [
+        {
+          "concept": "Sorted Invariant",
+          "definition": "The array must be ordered; without sorting, eliminating halves is mathematically invalid.",
+          "importance": "Prerequisite for algorithm correctness."
+        },
+        {
+          "concept": "Search Space Halving",
+          "definition": "Discarding $\\frac{N}{2}$ candidate items in every comparison step.",
+          "importance": "Provides $O(\\log N)$ exponential reduction in computation."
+        },
+        {
+          "concept": "Integer Overflow Guard",
+          "definition": "Calculating `mid = low + (high - low) // 2` rather than `(low + high) // 2`.",
+          "importance": "Prevents arithmetic overflow in 32-bit integer systems."
+        }
+      ],
+      "formulas_or_code": [
+        {
+          "title": "Logarithmic Steps Formula",
+          "type": "formula",
+          "content": "k = \\lceil \\log_2(N) \\rceil",
+          "explanation": "Maximum number of iterations required to find target or determine absence in an array of size N."
+        },
+        {
+          "title": "Midpoint Calculation",
+          "type": "code",
+          "content": "mid = low + (high - low) // 2",
+          "explanation": "Calculates midpoint index safely within bounds."
+        }
+      ],
+      "practice_questions": [
+        {
+          "question": "How many comparisons does Binary Search take in the worst case for an array with 1,048,576 elements?",
+          "hint": "Calculate log base 2 of 2^20.",
+          "solution": "Since 1,048,576 = 2^20, Binary Search requires at most 20 comparisons plus 1 final check, so at most 21 operations."
+        },
+        {
+          "question": "What happens if we mistakenly write `while low < high:` instead of `while low <= high:`?",
+          "hint": "Consider a single-element array like [5] with target 5.",
+          "solution": "With low < high, a single-element array (where low == high == 0) will skip the loop entirely and return -1 without checking the target."
+        }
+      ],
+      "quiz": [
+        {
+          "id": 1,
+          "question": "What is the primary prerequisite for Binary Search to function correctly?",
+          "options": [
+            "Array must contain unique elements",
+            "Array must be sorted",
+            "Array length must be an even power of 2",
+            "Elements must all be positive integers"
+          ],
+          "correct_index": 1,
+          "explanation": "Binary search fundamentally relies on order so that comparing the midpoint guarantees which half can be discarded."
+        },
+        {
+          "id": 2,
+          "question": "What is the worst-case time complexity of Binary Search on an array of size N?",
+          "options": [
+            "O(1)",
+            "O(N)",
+            "O(log N)",
+            "O(N log N)"
+          ],
+          "correct_index": 2,
+          "explanation": "Halving the search space each step produces a logarithmic time complexity of O(log N)."
+        },
+        {
+          "id": 3,
+          "question": "Why is `mid = low + (high - low) // 2` preferred over `mid = (low + high) // 2` in many programming languages?",
+          "options": [
+            "It computes faster on the CPU",
+            "It prevents 32-bit integer overflow when low + high exceeds 2^31 - 1",
+            "It handles negative numbers better",
+            "It is required by the Python interpreter"
+          ],
+          "correct_index": 1,
+          "explanation": "In statically typed languages like C, C++, and Java, low + high can overflow the maximum signed 32-bit integer, resulting in a negative index."
+        }
+      ],
+      "flashcards": [
+        {
+          "id": 1,
+          "front": "What is the time complexity of Binary Search?",
+          "back": "O(log N) in both average and worst case; O(1) in best case.",
+          "category": "Complexity"
+        },
+        {
+          "id": 2,
+          "front": "Why is the loop condition 'while low <= high' and not '<'?",
+          "back": "To allow checking the final remaining element when low and high converge on the same index.",
+          "category": "Implementation"
+        },
+        {
+          "id": 3,
+          "front": "What is the auxiliary space complexity of iterative binary search?",
+          "back": "O(1) constant auxiliary space, as only low, high, and mid pointers are stored.",
+          "category": "Memory"
+        }
+      ]
+    }
+  },
+  "fa29fac9": {
+    "id": "fa29fac9",
+    "topic": "pandas",
+    "title": "pandas: Intuitive Visual Masterclass",
+    "domain": "general",
+    "subdomain": "Educational Concepts",
+    "knowledge_level": "beginner",
+    "teaching_style": "concept_metaphor",
+    "duration_target": "standard",
+    "voice_name": "en-US-ChristopherNeural",
+    "created_at": "2026-09-24 22:07",
+    "total_duration": 85.04,
+    "scenes": [
+      {
+        "scene_id": "lec_fa29fac9_s0",
+        "index": 0,
+        "chapter_title": "1. The Core Intuition: Why pandas Matters",
+        "pedagogical_phase": "hook",
+        "narration_text": "Welcome! To truly understand pandas, we must start not with definitions or formulas, but with the fundamental problem it solves. Why do we need it? What breaks in its absence? By picturing this through an intuitive mental model, everything that follows will feel natural rather than memorized.",
+        "estimated_duration": 22.0,
+        "visual_spec": {
+          "visual_type": "concept_metaphor",
+          "title": "The Foundational Intuition of pandas",
+          "subtitle": "Connecting Everyday Intuition to Technical Reality",
+          "parameters": {
+            "left_title": "Without This Principle",
+            "left_items": [
+              "High inefficiency or ambiguity",
+              "Manual, fragile processes",
+              "Difficult to scale or optimize"
+            ],
+            "right_title": "With pandas",
+            "right_items": [
+              "Elegant, predictable structure",
+              "Automated, scalable efficiency",
+              "Clear mental clarity"
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "description": "The problem setting"
+            },
+            {
+              "step": 2,
+              "description": "The elegant solution"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_fa29fac9_s0.mp3",
+        "actual_duration": 20.33,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 1.64,
+            "text": "Welcome!"
+          },
+          {
+            "start": 1.59,
+            "end": 9.39,
+            "text": "To truly understand pandas, we must start not with definitions or formulas, but with the fundamental problem it solves."
+          },
+          {
+            "start": 9.39,
+            "end": 11.14,
+            "text": "Why do we need it?"
+          },
+          {
+            "start": 11.14,
+            "end": 13.52,
+            "text": "What breaks in its absence?"
+          },
+          {
+            "start": 13.53,
+            "end": 20.33,
+            "text": "By picturing this through an intuitive mental model, everything that follows will feel natural rather than memorized."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_fa29fac9_s1",
+        "index": 1,
+        "chapter_title": "2. The Underlying Mechanism: Core Architecture",
+        "pedagogical_phase": "foundation",
+        "narration_text": "Now let us examine the fundamental mechanics that make pandas work. At its base, it operates through a clear set of invariant rules. Signals, data, or concepts flow predictably from one stage to the next, maintaining consistency and purpose.",
+        "estimated_duration": 24.0,
+        "visual_spec": {
+          "visual_type": "process_simulation",
+          "title": "pandas Operational Pipeline",
+          "subtitle": "Stage-by-Stage Functional Architecture",
+          "parameters": {
+            "stages": [
+              {
+                "name": "Stage 1: Input & Setup",
+                "role": "Gathering preconditions"
+              },
+              {
+                "name": "Stage 2: Core Transformation",
+                "role": "Applying primary rules & invariants"
+              },
+              {
+                "name": "Stage 3: Validation & Output",
+                "role": "Delivering consistent results"
+              }
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Stage 1"
+            },
+            {
+              "step": 2,
+              "highlight": "Stage 2"
+            },
+            {
+              "step": 3,
+              "highlight": "Stage 3"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_fa29fac9_s1.mp3",
+        "actual_duration": 17.02,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 4.52,
+            "text": "Now let us examine the fundamental mechanics that make pandas work."
+          },
+          {
+            "start": 4.47,
+            "end": 9.04,
+            "text": "At its base, it operates through a clear set of invariant rules."
+          },
+          {
+            "start": 9.04,
+            "end": 17.02,
+            "text": "Signals, data, or concepts flow predictably from one stage to the next, maintaining consistency and purpose."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_fa29fac9_s2",
+        "index": 2,
+        "chapter_title": "3. Step-by-Step Walkthrough in Action",
+        "pedagogical_phase": "visual_demonstration",
+        "narration_text": "Let us observe a concrete demonstration. Watch how state transitions occur step-by-step. Each action directly addresses the objective, eliminating uncertainty and producing verifiable outcomes.",
+        "estimated_duration": 25.0,
+        "visual_spec": {
+          "visual_type": "diagram_board",
+          "title": "Live Demonstration of pandas",
+          "subtitle": "Tracking Dynamic State Transitions",
+          "parameters": {
+            "steps": [
+              {
+                "step": 1,
+                "state": "Initial Condition",
+                "note": "Establishing baseline parameters"
+              },
+              {
+                "step": 2,
+                "state": "Active Execution",
+                "note": "Processing central invariant"
+              },
+              {
+                "step": 3,
+                "state": "Convergence",
+                "note": "Reached target outcome"
+              }
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "description": "Initial parameters set"
+            },
+            {
+              "step": 2,
+              "description": "Active transformation"
+            },
+            {
+              "step": 3,
+              "description": "Final result verified"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_fa29fac9_s2.mp3",
+        "actual_duration": 13.99,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 3.29,
+            "text": "Let us observe a concrete demonstration."
+          },
+          {
+            "start": 3.24,
+            "end": 6.92,
+            "text": "Watch how state transitions occur step-by-step."
+          },
+          {
+            "start": 6.92,
+            "end": 13.99,
+            "text": "Each action directly addresses the objective, eliminating uncertainty and producing verifiable outcomes."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_fa29fac9_s3",
+        "index": 3,
+        "chapter_title": "4. Edge Cases, Nuances & Common Traps",
+        "pedagogical_phase": "edge_cases",
+        "narration_text": "Experienced practitioners know that mastery lies in understanding the edge cases. Where does pandas encounter limits? What trade-offs between speed, complexity, and memory must we navigate? Being aware of these pitfalls prevents critical failures.",
+        "estimated_duration": 23.0,
+        "visual_spec": {
+          "visual_type": "comparison_matrix",
+          "title": "Nuances, Pitfalls & Trade-Offs",
+          "subtitle": "Best Practices for Real-World Scenarios",
+          "parameters": {
+            "col1": "Common Pitfall: Misunderstanding initial boundary conditions",
+            "col2": "Trade-off: Simplicity vs. Maximum Performance",
+            "col3": "Best Practice: Verify invariants continuously"
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Pitfall"
+            },
+            {
+              "step": 2,
+              "highlight": "Trade-off"
+            },
+            {
+              "step": 3,
+              "highlight": "Best Practice"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_fa29fac9_s3.mp3",
+        "actual_duration": 17.38,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 5.51,
+            "text": "Experienced practitioners know that mastery lies in understanding the edge cases."
+          },
+          {
+            "start": 5.46,
+            "end": 8.09,
+            "text": "Where does pandas encounter limits?"
+          },
+          {
+            "start": 8.09,
+            "end": 13.38,
+            "text": "What trade-offs between speed, complexity, and memory must we navigate?"
+          },
+          {
+            "start": 13.38,
+            "end": 17.38,
+            "text": "Being aware of these pitfalls prevents critical failures."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_fa29fac9_s4",
+        "index": 4,
+        "chapter_title": "5. Real-World Applications & Key Takeaways",
+        "pedagogical_phase": "summary",
+        "narration_text": "To wrap up our lesson: pandas is a powerful concept that transforms how we solve complex challenges. By keeping the core intuition, the underlying mechanism, and the key trade-offs in mind, you are fully equipped to apply this in your studies and practical work.",
+        "estimated_duration": 22.0,
+        "visual_spec": {
+          "visual_type": "concept_metaphor",
+          "title": "pandas: Key Educational Takeaways",
+          "subtitle": "Summary of Core Principles and Applications",
+          "parameters": {
+            "takeaways": [
+              "Intuition first: Understand the problem before the implementation",
+              "Respect invariants: Consistency at every step guarantees success",
+              "Consider trade-offs: Balance elegance with practical efficiency"
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Intuition"
+            },
+            {
+              "step": 2,
+              "highlight": "Invariants"
+            },
+            {
+              "step": 3,
+              "highlight": "Application"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_fa29fac9_s4.mp3",
+        "actual_duration": 16.32,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 6.84,
+            "text": "To wrap up our lesson: pandas is a powerful concept that transforms how we solve complex challenges."
+          },
+          {
+            "start": 6.79,
+            "end": 16.32,
+            "text": "By keeping the core intuition, the underlying mechanism, and the key trade-offs in mind, you are fully equipped to apply this in your studies and practical work."
+          }
+        ]
+      }
+    ],
+    "video_url": "/media/videos/lecture_fa29fac9.mp4",
+    "subtitles_vtt_url": "/media/subtitles/lec_fa29fac9.vtt",
+    "materials": {
+      "summary": "This comprehensive lecture on pandas breaks down the foundational intuition, step-by-step mechanics, critical edge cases, and real-world practical applications to ensure thorough conceptual mastery.",
+      "notes_markdown": "# pandas: Comprehensive Masterclass Notes\n\n## 1. Executive Summary\nUnderstanding **pandas** requires building a solid mental model from simple to advanced concepts:\n- **Core Purpose**: Solving fundamental challenges with clarity and speed.\n- **Key Invariants**: Predictable rules that govern behavior throughout execution.\n- **Scope & Applicability**: Widely utilized across modern engineering, science, and analytical domains.\n\n## 2. Structural Principles\n1. **Foundation**: Setting clear preconditions.\n2. **Execution**: Systematic transformation with minimal friction.\n3. **Verification**: Ensuring results meet all necessary constraints.\n",
+      "key_concepts": [
+        {
+          "concept": "pandas Core Invariant",
+          "definition": "The defining mathematical or architectural rule that remains true throughout the lifecycle.",
+          "importance": "Guarantees system correctness."
+        },
+        {
+          "concept": "State Transition",
+          "definition": "Moving safely from an initial state through intermediate phases to a target outcome.",
+          "importance": "Provides transparent traceability."
+        }
+      ],
+      "formulas_or_code": [
+        {
+          "title": "pandas Paradigm Rule",
+          "type": "rule",
+          "content": "Invariant(State_t) == True for all t",
+          "explanation": "Ensures every intermediate state satisfies foundational requirements."
+        }
+      ],
+      "practice_questions": [
+        {
+          "question": "What is the single most critical reason to apply pandas in practice?",
+          "hint": "Think about efficiency, predictability, and safety.",
+          "solution": "Applying pandas creates a structured, verifiable approach that prevents errors, scales predictably, and optimizes resource utilization."
+        }
+      ],
+      "quiz": [
+        {
+          "id": 1,
+          "question": "What is the first step when implementing or analyzing pandas?",
+          "options": [
+            "Jump straight to advanced edge cases",
+            "Establish clear foundational preconditions and invariants",
+            "Ignore performance trade-offs",
+            "Random trial and error"
+          ],
+          "correct_index": 1,
+          "explanation": "Establishing clear baseline preconditions ensures all downstream transformations are sound."
+        },
+        {
+          "id": 2,
+          "question": "Why is understanding the edge cases of pandas essential?",
+          "options": [
+            "It is only needed for academic exams",
+            "Systems typically fail at boundary conditions if unhandled",
+            "Edge cases do not affect real-world outcomes",
+            "It replaces the need for the core mechanism"
+          ],
+          "correct_index": 1,
+          "explanation": "Failures and unexpected behavior almost always occur at boundaries and edge cases."
+        }
+      ],
+      "flashcards": [
+        {
+          "id": 1,
+          "front": "What is the primary benefit of pandas?",
+          "back": "Providing structured, predictable, and optimized outcomes for complex problems.",
+          "category": "Core Principle"
+        },
+        {
+          "id": 2,
+          "front": "How should one approach learning pandas?",
+          "back": "By understanding the intuitive problem first, then mastering the rigorous mechanism and edge cases.",
+          "category": "Pedagogy"
+        }
+      ]
+    }
+  },
+  "0d51081f": {
+    "id": "0d51081f",
+    "topic": "Binary Search",
+    "title": "Mastering Binary Search: Intuition, Algorithm & Complexity",
+    "domain": "computer_science",
+    "subdomain": "Algorithms & Data Structures",
+    "knowledge_level": "intermediate",
+    "teaching_style": "anim_sim",
+    "duration_target": "standard",
+    "voice_name": "en-US-ChristopherNeural",
+    "created_at": "2026-09-24 22:07",
+    "total_duration": 166.15,
+    "scenes": [
+      {
+        "scene_id": "lec_0d51081f_s0",
+        "index": 0,
+        "chapter_title": "1. The Dictionary Dilemma: Linear vs Logarithmic",
+        "pedagogical_phase": "hook",
+        "narration_text": "Imagine opening a 1,000-page dictionary to find the word 'Quantum'. If you started from page 1 and flipped page by page, you would waste tremendous time checking 500 pages. Instead, you naturally flip right to the middle. If you see words starting with 'M', you know immediately that 'Q' must be in the right half, instantly discarding 500 pages in a single move. This intuitive division is the exact power of Binary Search.",
+        "estimated_duration": 22.0,
+        "visual_spec": {
+          "visual_type": "concept_metaphor",
+          "title": "Search Strategy Comparison",
+          "subtitle": "Linear Page-by-Page vs. Binary Division",
+          "parameters": {
+            "metaphor": "dictionary_search",
+            "left_label": "Linear Search: O(N)",
+            "left_items": [
+              "Page 1: A",
+              "Page 2: B",
+              "Page 3: C",
+              "...",
+              "Page 500: Target Found (500 steps)"
+            ],
+            "right_label": "Binary Search: O(log N)",
+            "right_items": [
+              "Open middle (Page 500)",
+              "Target 'Q' > 'M' -> Discard 1-500",
+              "Open middle of remainder",
+              "Found in ~10 steps!"
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "description": "1,000 pages search space established",
+              "highlight": "entire_space"
+            },
+            {
+              "step": 2,
+              "description": "Dividing search space in half",
+              "highlight": "middle_split"
+            },
+            {
+              "step": 3,
+              "description": "Discarding 500 pages instantly",
+              "highlight": "eliminated_half"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_0d51081f_s0.mp3",
+        "actual_duration": 29.38,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 5.12,
+            "text": "Imagine opening a 1,000-page dictionary to find the word 'Quantum'."
+          },
+          {
+            "start": 5.08,
+            "end": 12.0,
+            "text": "If you started from page 1 and flipped page by page, you would waste tremendous time checking 500 pages."
+          },
+          {
+            "start": 12.0,
+            "end": 15.56,
+            "text": "Instead, you naturally flip right to the middle."
+          },
+          {
+            "start": 15.56,
+            "end": 24.79,
+            "text": "If you see words starting with 'M', you know immediately that 'Q' must be in the right half, instantly discarding 500 pages in a single move."
+          },
+          {
+            "start": 24.79,
+            "end": 29.38,
+            "text": "This intuitive division is the exact power of Binary Search."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_0d51081f_s1",
+        "index": 1,
+        "chapter_title": "2. The Invariant: Sorted Arrays & Three Pointers",
+        "pedagogical_phase": "foundation",
+        "narration_text": "Binary search has one non-negotiable prerequisite: the array must be sorted. Without order, division is impossible. We maintain three key pointers: Low at the start of our search window, High at the end, and Mid right in the center. The formula is simple: Mid equals Low plus High minus Low divided by two, avoiding integer overflow. In each step, we inspect only the element at Mid.",
+        "estimated_duration": 24.0,
+        "visual_spec": {
+          "visual_type": "algorithm_animator",
+          "title": "Three-Pointer Architecture",
+          "subtitle": "Tracking Low, Mid, and High on a Sorted Array",
+          "parameters": {
+            "algorithm_type": "array_search",
+            "array": [
+              2,
+              5,
+              8,
+              12,
+              16,
+              23,
+              38,
+              56,
+              72,
+              91
+            ],
+            "target": 23,
+            "low": 0,
+            "high": 9,
+            "mid": 4,
+            "state_label": "Initial State: Target = 23"
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "low": 0,
+              "high": 9,
+              "mid": 4,
+              "action": "Calculate mid = 0 + (9-0)//2 = 4",
+              "val": 16,
+              "status": "active"
+            },
+            {
+              "step": 2,
+              "low": 0,
+              "high": 9,
+              "mid": 4,
+              "action": "Compare array[mid] (16) vs Target (23)",
+              "val": 16,
+              "status": "comparing"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_0d51081f_s1.mp3",
+        "actual_duration": 27.74,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 5.52,
+            "text": "Binary search has one non-negotiable prerequisite: the array must be sorted."
+          },
+          {
+            "start": 5.47,
+            "end": 8.77,
+            "text": "Without order, division is impossible."
+          },
+          {
+            "start": 8.78,
+            "end": 16.32,
+            "text": "We maintain three key pointers: Low at the start of our search window, High at the end, and Mid right in the center."
+          },
+          {
+            "start": 16.32,
+            "end": 23.85,
+            "text": "The formula is simple: Mid equals Low plus High minus Low divided by two, avoiding integer overflow."
+          },
+          {
+            "start": 23.85,
+            "end": 27.74,
+            "text": "In each step, we inspect only the element at Mid."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_0d51081f_s2",
+        "index": 2,
+        "chapter_title": "3. The Elimination Engine: Step-by-Step Execution",
+        "pedagogical_phase": "visual_demonstration",
+        "narration_text": "Let us watch the algorithm in motion. We are searching for 23. Mid points to index 4, which holds the value 16. Since 16 is strictly less than 23, our target cannot possibly exist anywhere from index 0 to 4. We eliminate the entire left half! We shift Low to Mid plus one, which is index 5. Now our new window is from index 5 to 9. We recalculate Mid to index 7, which holds 56. 56 is greater than 23, so we eliminate the right half! Finally, Low and High converge on index 5, value 23. Target found in just three comparisons!",
+        "estimated_duration": 29.0,
+        "visual_spec": {
+          "visual_type": "algorithm_animator",
+          "title": "Live Binary Search Execution",
+          "subtitle": "Target: 23 in [2, 5, 8, 12, 16, 23, 38, 56, 72, 91]",
+          "parameters": {
+            "algorithm_type": "array_search",
+            "array": [
+              2,
+              5,
+              8,
+              12,
+              16,
+              23,
+              38,
+              56,
+              72,
+              91
+            ],
+            "target": 23,
+            "steps": [
+              {
+                "step_num": 1,
+                "low": 0,
+                "high": 9,
+                "mid": 4,
+                "mid_val": 16,
+                "comparison": "16 < 23 (Target is larger)",
+                "decision": "Eliminate left window [0..4], Move low = mid + 1",
+                "eliminated": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4
+                ]
+              },
+              {
+                "step_num": 2,
+                "low": 5,
+                "high": 9,
+                "mid": 7,
+                "mid_val": 56,
+                "comparison": "56 > 23 (Target is smaller)",
+                "decision": "Eliminate right window [7..9], Move high = mid - 1",
+                "eliminated": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  7,
+                  8,
+                  9
+                ]
+              },
+              {
+                "step_num": 3,
+                "low": 5,
+                "high": 6,
+                "mid": 5,
+                "mid_val": 23,
+                "comparison": "23 == 23 (Match Found!)",
+                "decision": "Return index 5 successfully!",
+                "eliminated": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  6,
+                  7,
+                  8,
+                  9
+                ],
+                "matched": 5
+              }
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "low": 0,
+              "high": 9,
+              "mid": 4,
+              "msg": "Mid is 16. Target 23 > 16. Discard left."
+            },
+            {
+              "step": 2,
+              "low": 5,
+              "high": 9,
+              "mid": 7,
+              "msg": "Mid is 56. Target 23 < 56. Discard right."
+            },
+            {
+              "step": 3,
+              "low": 5,
+              "high": 6,
+              "mid": 5,
+              "msg": "Mid is 23. Match found at index 5!"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_0d51081f_s2.mp3",
+        "actual_duration": 46.87,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 3.1,
+            "text": "Let us watch the algorithm in motion."
+          },
+          {
+            "start": 3.05,
+            "end": 5.62,
+            "text": "We are searching for 23."
+          },
+          {
+            "start": 5.62,
+            "end": 9.9,
+            "text": "Mid points to index 4, which holds the value 16."
+          },
+          {
+            "start": 9.9,
+            "end": 17.64,
+            "text": "Since 16 is strictly less than 23, our target cannot possibly exist anywhere from index 0 to 4."
+          },
+          {
+            "start": 17.64,
+            "end": 20.61,
+            "text": "We eliminate the entire left half!"
+          },
+          {
+            "start": 20.61,
+            "end": 24.77,
+            "text": "We shift Low to Mid plus one, which is index 5."
+          },
+          {
+            "start": 24.77,
+            "end": 28.51,
+            "text": "Now our new window is from index 5 to 9."
+          },
+          {
+            "start": 28.51,
+            "end": 33.14,
+            "text": "We recalculate Mid to index 7, which holds 56."
+          },
+          {
+            "start": 33.14,
+            "end": 37.98,
+            "text": "56 is greater than 23, so we eliminate the right half!"
+          },
+          {
+            "start": 37.98,
+            "end": 43.61,
+            "text": "Finally, Low and High converge on index 5, value 23."
+          },
+          {
+            "start": 43.61,
+            "end": 46.87,
+            "text": "Target found in just three comparisons!"
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_0d51081f_s3",
+        "index": 3,
+        "chapter_title": "4. Clean Code Implementation & Variable Watch",
+        "pedagogical_phase": "edge_cases",
+        "narration_text": "Here is the canonical Python implementation. Notice the while loop condition: while low is less than or equal to high. That 'less than or equal' is crucial for arrays with an odd length or single elements. Inside the loop, if array at mid matches target, we return mid. If the target is greater, we search the right sub-array. Otherwise, we search the left. If low crosses high without a match, we return minus one.",
+        "estimated_duration": 25.0,
+        "visual_spec": {
+          "visual_type": "code_visualizer",
+          "title": "Python Binary Search Implementation",
+          "subtitle": "Iterative Implementation with While Loop",
+          "parameters": {
+            "language": "python",
+            "code": "def binary_search(arr, target):\n    low = 0\n    high = len(arr) - 1\n    \n    while low <= high:\n        mid = low + (high - low) // 2\n        \n        if arr[mid] == target:\n            return mid\n        elif arr[mid] < target:\n            low = mid + 1\n        else:\n            high = mid - 1\n            \n    return -1",
+            "highlights": [
+              {
+                "line": 2,
+                "label": "Initialize pointers: low=0, high=9"
+              },
+              {
+                "line": 5,
+                "label": "Loop invariant: low <= high"
+              },
+              {
+                "line": 6,
+                "label": "Safe mid calculation avoiding overflow"
+              },
+              {
+                "line": 8,
+                "label": "Base case: match found"
+              },
+              {
+                "line": 10,
+                "label": "Target in right half: low = mid + 1"
+              },
+              {
+                "line": 12,
+                "label": "Target in left half: high = mid - 1"
+              },
+              {
+                "line": 14,
+                "label": "Exhausted search space: return -1"
+              }
+            ],
+            "variables": {
+              "low": 5,
+              "high": 6,
+              "mid": 5,
+              "target": 23,
+              "return": 5
+            }
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "active_line": 2,
+              "scope": "low=0, high=9"
+            },
+            {
+              "step": 2,
+              "active_line": 6,
+              "scope": "mid=4 (arr[4]=16)"
+            },
+            {
+              "step": 3,
+              "active_line": 10,
+              "scope": "low updated to 5"
+            },
+            {
+              "step": 4,
+              "active_line": 8,
+              "scope": "arr[5]==23 -> return 5"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_0d51081f_s3.mp3",
+        "actual_duration": 30.67,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 3.4,
+            "text": "Here is the canonical Python implementation."
+          },
+          {
+            "start": 3.35,
+            "end": 8.43,
+            "text": "Notice the while loop condition: while low is less than or equal to high."
+          },
+          {
+            "start": 8.43,
+            "end": 14.3,
+            "text": "That 'less than or equal' is crucial for arrays with an odd length or single elements."
+          },
+          {
+            "start": 14.3,
+            "end": 19.34,
+            "text": "Inside the loop, if array at mid matches target, we return mid."
+          },
+          {
+            "start": 19.34,
+            "end": 23.29,
+            "text": "If the target is greater, we search the right sub-array."
+          },
+          {
+            "start": 23.29,
+            "end": 26.09,
+            "text": "Otherwise, we search the left."
+          },
+          {
+            "start": 26.09,
+            "end": 30.67,
+            "text": "If low crosses high without a match, we return minus one."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_0d51081f_s4",
+        "index": 4,
+        "chapter_title": "5. Time Complexity: Why O(log N) Changes Everything",
+        "pedagogical_phase": "summary",
+        "narration_text": "The logarithmic efficiency of binary search is staggering. For an array of 1 million items, linear search would take on average 500,000 checks. Binary search takes at most 20 checks. For 4 billion items, the entire internet population, binary search finds any user in just 32 operations. It turns an impossible problem into an instantaneous lookup. Remember: sorted input, three pointers, eliminate half each step.",
+        "estimated_duration": 24.0,
+        "visual_spec": {
+          "visual_type": "math_graph",
+          "title": "Computational Scale: O(N) vs O(log N)",
+          "subtitle": "Number of Operations as Input Size (N) Grows",
+          "parameters": {
+            "curve_type": "complexity_comparison",
+            "x_label": "Input Elements (N)",
+            "y_label": "Operations Required",
+            "data_points": [
+              {
+                "n": "16",
+                "linear": 16,
+                "binary": 4
+              },
+              {
+                "n": "1,024",
+                "linear": 1024,
+                "binary": 10
+              },
+              {
+                "n": "1,000,000",
+                "linear": 1000000,
+                "binary": 20
+              },
+              {
+                "n": "4,000,000,000",
+                "linear": 4000000000,
+                "binary": 32
+              }
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "description": "Plotting linear line O(N)",
+              "highlight": "linear_curve"
+            },
+            {
+              "step": 2,
+              "description": "Plotting flat logarithmic curve O(log N)",
+              "highlight": "log_curve"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_0d51081f_s4.mp3",
+        "actual_duration": 31.49,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 4.15,
+            "text": "The logarithmic efficiency of binary search is staggering."
+          },
+          {
+            "start": 4.1,
+            "end": 10.36,
+            "text": "For an array of 1 million items, linear search would take on average 500,000 checks."
+          },
+          {
+            "start": 10.36,
+            "end": 13.64,
+            "text": "Binary search takes at most 20 checks."
+          },
+          {
+            "start": 13.64,
+            "end": 21.77,
+            "text": "For 4 billion items, the entire internet population, binary search finds any user in just 32 operations."
+          },
+          {
+            "start": 21.77,
+            "end": 26.0,
+            "text": "It turns an impossible problem into an instantaneous lookup."
+          },
+          {
+            "start": 26.0,
+            "end": 31.49,
+            "text": "Remember: sorted input, three pointers, eliminate half each step."
+          }
+        ]
+      }
+    ],
+    "video_url": "/media/videos/lecture_0d51081f.mp4",
+    "subtitles_vtt_url": "/media/subtitles/lec_0d51081f.vtt",
+    "materials": {
+      "summary": "Binary Search is a foundational divide-and-conquer algorithm that locates an element in a sorted collection in O(log n) logarithmic time. By repeatedly examining the middle element and discarding the non-viable half of the search space, it reduces a problem of billions of elements to a handful of comparisons.",
+      "notes_markdown": "# Binary Search: Complete Masterclass Notes\n\n## 1. Core Principle\nBinary Search locates a target value within a **sorted array** by halving the search space each step.\n- **Time Complexity**:\n  - Best Case: $O(1)$ (target located at initial mid)\n  - Average Case: $O(\\log n)$\n  - Worst Case: $O(\\log n)$\n- **Space Complexity**:\n  - Iterative: $O(1)$ auxiliary space\n  - Recursive: $O(\\log n)$ call stack space\n\n## 2. The 3 Pointer Pattern\n```python\ndef binary_search(arr: list[int], target: int) -> int:\n    low = 0\n    high = len(arr) - 1\n    \n    while low <= high:\n        # Avoid integer overflow (in languages like C++/Java)\n        mid = low + (high - low) // 2\n        \n        if arr[mid] == target:\n            return mid\n        elif arr[mid] < target:\n            low = mid + 1  # Target is in the right half\n        else:\n            high = mid - 1 # Target is in the left half\n            \n    return -1  # Target not found\n```\n\n## 3. Essential Edge Cases\n1. **Empty Array**: `len(arr) == 0` returns `-1`.\n2. **Single Element**: Verified correctly because `low <= high` uses `<=` instead of `<`.\n3. **Target Smaller Than Minimum**: `high` moves to `-1`, terminating properly.\n4. **Target Greater Than Maximum**: `low` exceeds `len(arr)-1`, terminating properly.\n5. **Duplicates**: Standard binary search returns any valid match index. For first/last occurrence, adjust pointer without early return.\n",
+      "key_concepts": [
+        {
+          "concept": "Sorted Invariant",
+          "definition": "The array must be ordered; without sorting, eliminating halves is mathematically invalid.",
+          "importance": "Prerequisite for algorithm correctness."
+        },
+        {
+          "concept": "Search Space Halving",
+          "definition": "Discarding $\\frac{N}{2}$ candidate items in every comparison step.",
+          "importance": "Provides $O(\\log N)$ exponential reduction in computation."
+        },
+        {
+          "concept": "Integer Overflow Guard",
+          "definition": "Calculating `mid = low + (high - low) // 2` rather than `(low + high) // 2`.",
+          "importance": "Prevents arithmetic overflow in 32-bit integer systems."
+        }
+      ],
+      "formulas_or_code": [
+        {
+          "title": "Logarithmic Steps Formula",
+          "type": "formula",
+          "content": "k = \\lceil \\log_2(N) \\rceil",
+          "explanation": "Maximum number of iterations required to find target or determine absence in an array of size N."
+        },
+        {
+          "title": "Midpoint Calculation",
+          "type": "code",
+          "content": "mid = low + (high - low) // 2",
+          "explanation": "Calculates midpoint index safely within bounds."
+        }
+      ],
+      "practice_questions": [
+        {
+          "question": "How many comparisons does Binary Search take in the worst case for an array with 1,048,576 elements?",
+          "hint": "Calculate log base 2 of 2^20.",
+          "solution": "Since 1,048,576 = 2^20, Binary Search requires at most 20 comparisons plus 1 final check, so at most 21 operations."
+        },
+        {
+          "question": "What happens if we mistakenly write `while low < high:` instead of `while low <= high:`?",
+          "hint": "Consider a single-element array like [5] with target 5.",
+          "solution": "With low < high, a single-element array (where low == high == 0) will skip the loop entirely and return -1 without checking the target."
+        }
+      ],
+      "quiz": [
+        {
+          "id": 1,
+          "question": "What is the primary prerequisite for Binary Search to function correctly?",
+          "options": [
+            "Array must contain unique elements",
+            "Array must be sorted",
+            "Array length must be an even power of 2",
+            "Elements must all be positive integers"
+          ],
+          "correct_index": 1,
+          "explanation": "Binary search fundamentally relies on order so that comparing the midpoint guarantees which half can be discarded."
+        },
+        {
+          "id": 2,
+          "question": "What is the worst-case time complexity of Binary Search on an array of size N?",
+          "options": [
+            "O(1)",
+            "O(N)",
+            "O(log N)",
+            "O(N log N)"
+          ],
+          "correct_index": 2,
+          "explanation": "Halving the search space each step produces a logarithmic time complexity of O(log N)."
+        },
+        {
+          "id": 3,
+          "question": "Why is `mid = low + (high - low) // 2` preferred over `mid = (low + high) // 2` in many programming languages?",
+          "options": [
+            "It computes faster on the CPU",
+            "It prevents 32-bit integer overflow when low + high exceeds 2^31 - 1",
+            "It handles negative numbers better",
+            "It is required by the Python interpreter"
+          ],
+          "correct_index": 1,
+          "explanation": "In statically typed languages like C, C++, and Java, low + high can overflow the maximum signed 32-bit integer, resulting in a negative index."
+        }
+      ],
+      "flashcards": [
+        {
+          "id": 1,
+          "front": "What is the time complexity of Binary Search?",
+          "back": "O(log N) in both average and worst case; O(1) in best case.",
+          "category": "Complexity"
+        },
+        {
+          "id": 2,
+          "front": "Why is the loop condition 'while low <= high' and not '<'?",
+          "back": "To allow checking the final remaining element when low and high converge on the same index.",
+          "category": "Implementation"
+        },
+        {
+          "id": 3,
+          "front": "What is the auxiliary space complexity of iterative binary search?",
+          "back": "O(1) constant auxiliary space, as only low, high, and mid pointers are stored.",
+          "category": "Memory"
+        }
+      ]
+    }
+  },
+  "22782248": {
+    "id": "22782248",
+    "topic": "Exception handling in python",
+    "title": "Exception handling in python: Intuitive Visual Masterclass",
+    "domain": "computer_science",
+    "subdomain": "Educational Concepts",
+    "knowledge_level": "intermediate",
+    "teaching_style": "anim_sim",
+    "duration_target": "standard",
+    "voice_name": "en-US-ChristopherNeural",
+    "created_at": "2026-09-24 22:19",
+    "total_duration": 89.67,
+    "scenes": [
+      {
+        "scene_id": "lec_22782248_s0",
+        "index": 0,
+        "chapter_title": "1. The Core Intuition: Why Exception handling in python Matters",
+        "pedagogical_phase": "hook",
+        "narration_text": "Welcome! To truly understand Exception handling in python, we must start not with definitions or formulas, but with the fundamental problem it solves. Why do we need it? What breaks in its absence? By picturing this through an intuitive mental model, everything that follows will feel natural rather than memorized.",
+        "estimated_duration": 22.0,
+        "visual_spec": {
+          "visual_type": "concept_metaphor",
+          "title": "The Foundational Intuition of Exception handling in python",
+          "subtitle": "Connecting Everyday Intuition to Technical Reality",
+          "parameters": {
+            "left_title": "Without This Principle",
+            "left_items": [
+              "High inefficiency or ambiguity",
+              "Manual, fragile processes",
+              "Difficult to scale or optimize"
+            ],
+            "right_title": "With Exception handling in python",
+            "right_items": [
+              "Elegant, predictable structure",
+              "Automated, scalable efficiency",
+              "Clear mental clarity"
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "description": "The problem setting"
+            },
+            {
+              "step": 2,
+              "description": "The elegant solution"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_22782248_s0.mp3",
+        "actual_duration": 21.43,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 1.64,
+            "text": "Welcome!"
+          },
+          {
+            "start": 1.59,
+            "end": 10.49,
+            "text": "To truly understand Exception handling in python, we must start not with definitions or formulas, but with the fundamental problem it solves."
+          },
+          {
+            "start": 10.49,
+            "end": 12.24,
+            "text": "Why do we need it?"
+          },
+          {
+            "start": 12.24,
+            "end": 14.62,
+            "text": "What breaks in its absence?"
+          },
+          {
+            "start": 14.62,
+            "end": 21.43,
+            "text": "By picturing this through an intuitive mental model, everything that follows will feel natural rather than memorized."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_22782248_s1",
+        "index": 1,
+        "chapter_title": "2. The Underlying Mechanism: Core Architecture",
+        "pedagogical_phase": "foundation",
+        "narration_text": "Now let us examine the fundamental mechanics that make Exception handling in python work. At its base, it operates through a clear set of invariant rules. Signals, data, or concepts flow predictably from one stage to the next, maintaining consistency and purpose.",
+        "estimated_duration": 24.0,
+        "visual_spec": {
+          "visual_type": "process_simulation",
+          "title": "Exception handling in python Operational Pipeline",
+          "subtitle": "Stage-by-Stage Functional Architecture",
+          "parameters": {
+            "stages": [
+              {
+                "name": "Stage 1: Input & Setup",
+                "role": "Gathering preconditions"
+              },
+              {
+                "name": "Stage 2: Core Transformation",
+                "role": "Applying primary rules & invariants"
+              },
+              {
+                "name": "Stage 3: Validation & Output",
+                "role": "Delivering consistent results"
+              }
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Stage 1"
+            },
+            {
+              "step": 2,
+              "highlight": "Stage 2"
+            },
+            {
+              "step": 3,
+              "highlight": "Stage 3"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_22782248_s1.mp3",
+        "actual_duration": 18.22,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 5.72,
+            "text": "Now let us examine the fundamental mechanics that make Exception handling in python work."
+          },
+          {
+            "start": 5.67,
+            "end": 10.24,
+            "text": "At its base, it operates through a clear set of invariant rules."
+          },
+          {
+            "start": 10.24,
+            "end": 18.22,
+            "text": "Signals, data, or concepts flow predictably from one stage to the next, maintaining consistency and purpose."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_22782248_s2",
+        "index": 2,
+        "chapter_title": "3. Step-by-Step Walkthrough in Action",
+        "pedagogical_phase": "visual_demonstration",
+        "narration_text": "Let us observe a concrete demonstration. Watch how state transitions occur step-by-step. Each action directly addresses the objective, eliminating uncertainty and producing verifiable outcomes.",
+        "estimated_duration": 25.0,
+        "visual_spec": {
+          "visual_type": "algorithm_animator",
+          "title": "Live Demonstration of Exception handling in python",
+          "subtitle": "Tracking Dynamic State Transitions",
+          "parameters": {
+            "steps": [
+              {
+                "step": 1,
+                "state": "Initial Condition",
+                "note": "Establishing baseline parameters"
+              },
+              {
+                "step": 2,
+                "state": "Active Execution",
+                "note": "Processing central invariant"
+              },
+              {
+                "step": 3,
+                "state": "Convergence",
+                "note": "Reached target outcome"
+              }
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "description": "Initial parameters set"
+            },
+            {
+              "step": 2,
+              "description": "Active transformation"
+            },
+            {
+              "step": 3,
+              "description": "Final result verified"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_22782248_s2.mp3",
+        "actual_duration": 13.99,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 3.29,
+            "text": "Let us observe a concrete demonstration."
+          },
+          {
+            "start": 3.24,
+            "end": 6.92,
+            "text": "Watch how state transitions occur step-by-step."
+          },
+          {
+            "start": 6.92,
+            "end": 13.99,
+            "text": "Each action directly addresses the objective, eliminating uncertainty and producing verifiable outcomes."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_22782248_s3",
+        "index": 3,
+        "chapter_title": "4. Edge Cases, Nuances & Common Traps",
+        "pedagogical_phase": "edge_cases",
+        "narration_text": "Experienced practitioners know that mastery lies in understanding the edge cases. Where does Exception handling in python encounter limits? What trade-offs between speed, complexity, and memory must we navigate? Being aware of these pitfalls prevents critical failures.",
+        "estimated_duration": 23.0,
+        "visual_spec": {
+          "visual_type": "comparison_matrix",
+          "title": "Nuances, Pitfalls & Trade-Offs",
+          "subtitle": "Best Practices for Real-World Scenarios",
+          "parameters": {
+            "col1": "Common Pitfall: Misunderstanding initial boundary conditions",
+            "col2": "Trade-off: Simplicity vs. Maximum Performance",
+            "col3": "Best Practice: Verify invariants continuously"
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Pitfall"
+            },
+            {
+              "step": 2,
+              "highlight": "Trade-off"
+            },
+            {
+              "step": 3,
+              "highlight": "Best Practice"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_22782248_s3.mp3",
+        "actual_duration": 18.58,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 5.51,
+            "text": "Experienced practitioners know that mastery lies in understanding the edge cases."
+          },
+          {
+            "start": 5.46,
+            "end": 9.29,
+            "text": "Where does Exception handling in python encounter limits?"
+          },
+          {
+            "start": 9.29,
+            "end": 14.57,
+            "text": "What trade-offs between speed, complexity, and memory must we navigate?"
+          },
+          {
+            "start": 14.57,
+            "end": 18.58,
+            "text": "Being aware of these pitfalls prevents critical failures."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_22782248_s4",
+        "index": 4,
+        "chapter_title": "5. Real-World Applications & Key Takeaways",
+        "pedagogical_phase": "summary",
+        "narration_text": "To wrap up our lesson: Exception handling in python is a powerful concept that transforms how we solve complex challenges. By keeping the core intuition, the underlying mechanism, and the key trade-offs in mind, you are fully equipped to apply this in your studies and practical work.",
+        "estimated_duration": 22.0,
+        "visual_spec": {
+          "visual_type": "concept_metaphor",
+          "title": "Exception handling in python: Key Educational Takeaways",
+          "subtitle": "Summary of Core Principles and Applications",
+          "parameters": {
+            "takeaways": [
+              "Intuition first: Understand the problem before the implementation",
+              "Respect invariants: Consistency at every step guarantees success",
+              "Consider trade-offs: Balance elegance with practical efficiency"
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Intuition"
+            },
+            {
+              "step": 2,
+              "highlight": "Invariants"
+            },
+            {
+              "step": 3,
+              "highlight": "Application"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_22782248_s4.mp3",
+        "actual_duration": 17.45,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 7.96,
+            "text": "To wrap up our lesson: Exception handling in python is a powerful concept that transforms how we solve complex challenges."
+          },
+          {
+            "start": 7.91,
+            "end": 17.45,
+            "text": "By keeping the core intuition, the underlying mechanism, and the key trade-offs in mind, you are fully equipped to apply this in your studies and practical work."
+          }
+        ]
+      }
+    ],
+    "video_url": "/media/videos/lecture_22782248.mp4",
+    "subtitles_vtt_url": "/media/subtitles/lec_22782248.vtt",
+    "materials": {
+      "summary": "This comprehensive lecture on Exception handling in python breaks down the foundational intuition, step-by-step mechanics, critical edge cases, and real-world practical applications to ensure thorough conceptual mastery.",
+      "notes_markdown": "# Exception handling in python: Comprehensive Masterclass Notes\n\n## 1. Executive Summary\nUnderstanding **Exception handling in python** requires building a solid mental model from simple to advanced concepts:\n- **Core Purpose**: Solving fundamental challenges with clarity and speed.\n- **Key Invariants**: Predictable rules that govern behavior throughout execution.\n- **Scope & Applicability**: Widely utilized across modern engineering, science, and analytical domains.\n\n## 2. Structural Principles\n1. **Foundation**: Setting clear preconditions.\n2. **Execution**: Systematic transformation with minimal friction.\n3. **Verification**: Ensuring results meet all necessary constraints.\n",
+      "key_concepts": [
+        {
+          "concept": "Exception handling in python Core Invariant",
+          "definition": "The defining mathematical or architectural rule that remains true throughout the lifecycle.",
+          "importance": "Guarantees system correctness."
+        },
+        {
+          "concept": "State Transition",
+          "definition": "Moving safely from an initial state through intermediate phases to a target outcome.",
+          "importance": "Provides transparent traceability."
+        }
+      ],
+      "formulas_or_code": [
+        {
+          "title": "Exception handling in python Paradigm Rule",
+          "type": "rule",
+          "content": "Invariant(State_t) == True for all t",
+          "explanation": "Ensures every intermediate state satisfies foundational requirements."
+        }
+      ],
+      "practice_questions": [
+        {
+          "question": "What is the single most critical reason to apply Exception handling in python in practice?",
+          "hint": "Think about efficiency, predictability, and safety.",
+          "solution": "Applying Exception handling in python creates a structured, verifiable approach that prevents errors, scales predictably, and optimizes resource utilization."
+        }
+      ],
+      "quiz": [
+        {
+          "id": 1,
+          "question": "What is the first step when implementing or analyzing Exception handling in python?",
+          "options": [
+            "Jump straight to advanced edge cases",
+            "Establish clear foundational preconditions and invariants",
+            "Ignore performance trade-offs",
+            "Random trial and error"
+          ],
+          "correct_index": 1,
+          "explanation": "Establishing clear baseline preconditions ensures all downstream transformations are sound."
+        },
+        {
+          "id": 2,
+          "question": "Why is understanding the edge cases of Exception handling in python essential?",
+          "options": [
+            "It is only needed for academic exams",
+            "Systems typically fail at boundary conditions if unhandled",
+            "Edge cases do not affect real-world outcomes",
+            "It replaces the need for the core mechanism"
+          ],
+          "correct_index": 1,
+          "explanation": "Failures and unexpected behavior almost always occur at boundaries and edge cases."
+        }
+      ],
+      "flashcards": [
+        {
+          "id": 1,
+          "front": "What is the primary benefit of Exception handling in python?",
+          "back": "Providing structured, predictable, and optimized outcomes for complex problems.",
+          "category": "Core Principle"
+        },
+        {
+          "id": 2,
+          "front": "How should one approach learning Exception handling in python?",
+          "back": "By understanding the intuitive problem first, then mastering the rigorous mechanism and edge cases.",
+          "category": "Pedagogy"
+        }
+      ]
+    }
+  },
+  "7514b78c": {
+    "id": "7514b78c",
+    "topic": "Pandas",
+    "title": "Pandas: Intuitive Visual Masterclass",
+    "domain": "general",
+    "subdomain": "Educational Concepts",
+    "knowledge_level": "intermediate",
+    "teaching_style": "concept_metaphor",
+    "duration_target": "deep",
+    "voice_name": "en-US-JennyNeural",
+    "created_at": "2026-09-24 22:21",
+    "total_duration": 83.48,
+    "scenes": [
+      {
+        "scene_id": "lec_7514b78c_s0",
+        "index": 0,
+        "chapter_title": "1. The Core Intuition: Why Pandas Matters",
+        "pedagogical_phase": "hook",
+        "narration_text": "Welcome! To truly understand Pandas, we must start not with definitions or formulas, but with the fundamental problem it solves. Why do we need it? What breaks in its absence? By picturing this through an intuitive mental model, everything that follows will feel natural rather than memorized.",
+        "estimated_duration": 22.0,
+        "visual_spec": {
+          "visual_type": "concept_metaphor",
+          "title": "The Foundational Intuition of Pandas",
+          "subtitle": "Connecting Everyday Intuition to Technical Reality",
+          "parameters": {
+            "left_title": "Without This Principle",
+            "left_items": [
+              "High inefficiency or ambiguity",
+              "Manual, fragile processes",
+              "Difficult to scale or optimize"
+            ],
+            "right_title": "With Pandas",
+            "right_items": [
+              "Elegant, predictable structure",
+              "Automated, scalable efficiency",
+              "Clear mental clarity"
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "description": "The problem setting"
+            },
+            {
+              "step": 2,
+              "description": "The elegant solution"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_7514b78c_s0.mp3",
+        "actual_duration": 20.14,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 1.55,
+            "text": "Welcome!"
+          },
+          {
+            "start": 1.5,
+            "end": 9.16,
+            "text": "To truly understand Pandas, we must start not with definitions or formulas, but with the fundamental problem it solves."
+          },
+          {
+            "start": 9.16,
+            "end": 11.04,
+            "text": "Why do we need it?"
+          },
+          {
+            "start": 11.04,
+            "end": 13.44,
+            "text": "What breaks in its absence?"
+          },
+          {
+            "start": 13.44,
+            "end": 20.14,
+            "text": "By picturing this through an intuitive mental model, everything that follows will feel natural rather than memorized."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_7514b78c_s1",
+        "index": 1,
+        "chapter_title": "2. The Underlying Mechanism: Core Architecture",
+        "pedagogical_phase": "foundation",
+        "narration_text": "Now let us examine the fundamental mechanics that make Pandas work. At its base, it operates through a clear set of invariant rules. Signals, data, or concepts flow predictably from one stage to the next, maintaining consistency and purpose.",
+        "estimated_duration": 24.0,
+        "visual_spec": {
+          "visual_type": "process_simulation",
+          "title": "Pandas Operational Pipeline",
+          "subtitle": "Stage-by-Stage Functional Architecture",
+          "parameters": {
+            "stages": [
+              {
+                "name": "Stage 1: Input & Setup",
+                "role": "Gathering preconditions"
+              },
+              {
+                "name": "Stage 2: Core Transformation",
+                "role": "Applying primary rules & invariants"
+              },
+              {
+                "name": "Stage 3: Validation & Output",
+                "role": "Delivering consistent results"
+              }
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Stage 1"
+            },
+            {
+              "step": 2,
+              "highlight": "Stage 2"
+            },
+            {
+              "step": 3,
+              "highlight": "Stage 3"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_7514b78c_s1.mp3",
+        "actual_duration": 16.49,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 4.5,
+            "text": "Now let us examine the fundamental mechanics that make Pandas work."
+          },
+          {
+            "start": 4.45,
+            "end": 8.74,
+            "text": "At its base, it operates through a clear set of invariant rules."
+          },
+          {
+            "start": 8.74,
+            "end": 16.49,
+            "text": "Signals, data, or concepts flow predictably from one stage to the next, maintaining consistency and purpose."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_7514b78c_s2",
+        "index": 2,
+        "chapter_title": "3. Step-by-Step Walkthrough in Action",
+        "pedagogical_phase": "visual_demonstration",
+        "narration_text": "Let us observe a concrete demonstration. Watch how state transitions occur step-by-step. Each action directly addresses the objective, eliminating uncertainty and producing verifiable outcomes.",
+        "estimated_duration": 25.0,
+        "visual_spec": {
+          "visual_type": "diagram_board",
+          "title": "Live Demonstration of Pandas",
+          "subtitle": "Tracking Dynamic State Transitions",
+          "parameters": {
+            "steps": [
+              {
+                "step": 1,
+                "state": "Initial Condition",
+                "note": "Establishing baseline parameters"
+              },
+              {
+                "step": 2,
+                "state": "Active Execution",
+                "note": "Processing central invariant"
+              },
+              {
+                "step": 3,
+                "state": "Convergence",
+                "note": "Reached target outcome"
+              }
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "description": "Initial parameters set"
+            },
+            {
+              "step": 2,
+              "description": "Active transformation"
+            },
+            {
+              "step": 3,
+              "description": "Final result verified"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_7514b78c_s2.mp3",
+        "actual_duration": 13.63,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 3.11,
+            "text": "Let us observe a concrete demonstration."
+          },
+          {
+            "start": 3.06,
+            "end": 6.46,
+            "text": "Watch how state transitions occur step-by-step."
+          },
+          {
+            "start": 6.46,
+            "end": 13.63,
+            "text": "Each action directly addresses the objective, eliminating uncertainty and producing verifiable outcomes."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_7514b78c_s3",
+        "index": 3,
+        "chapter_title": "4. Edge Cases, Nuances & Common Traps",
+        "pedagogical_phase": "edge_cases",
+        "narration_text": "Experienced practitioners know that mastery lies in understanding the edge cases. Where does Pandas encounter limits? What trade-offs between speed, complexity, and memory must we navigate? Being aware of these pitfalls prevents critical failures.",
+        "estimated_duration": 23.0,
+        "visual_spec": {
+          "visual_type": "comparison_matrix",
+          "title": "Nuances, Pitfalls & Trade-Offs",
+          "subtitle": "Best Practices for Real-World Scenarios",
+          "parameters": {
+            "col1": "Common Pitfall: Misunderstanding initial boundary conditions",
+            "col2": "Trade-off: Simplicity vs. Maximum Performance",
+            "col3": "Best Practice: Verify invariants continuously"
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Pitfall"
+            },
+            {
+              "step": 2,
+              "highlight": "Trade-off"
+            },
+            {
+              "step": 3,
+              "highlight": "Best Practice"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_7514b78c_s3.mp3",
+        "actual_duration": 17.02,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 5.5,
+            "text": "Experienced practitioners know that mastery lies in understanding the edge cases."
+          },
+          {
+            "start": 5.45,
+            "end": 8.14,
+            "text": "Where does Pandas encounter limits?"
+          },
+          {
+            "start": 8.14,
+            "end": 13.07,
+            "text": "What trade-offs between speed, complexity, and memory must we navigate?"
+          },
+          {
+            "start": 13.07,
+            "end": 17.02,
+            "text": "Being aware of these pitfalls prevents critical failures."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_7514b78c_s4",
+        "index": 4,
+        "chapter_title": "5. Real-World Applications & Key Takeaways",
+        "pedagogical_phase": "summary",
+        "narration_text": "To wrap up our lesson: Pandas is a powerful concept that transforms how we solve complex challenges. By keeping the core intuition, the underlying mechanism, and the key trade-offs in mind, you are fully equipped to apply this in your studies and practical work.",
+        "estimated_duration": 22.0,
+        "visual_spec": {
+          "visual_type": "concept_metaphor",
+          "title": "Pandas: Key Educational Takeaways",
+          "subtitle": "Summary of Core Principles and Applications",
+          "parameters": {
+            "takeaways": [
+              "Intuition first: Understand the problem before the implementation",
+              "Respect invariants: Consistency at every step guarantees success",
+              "Consider trade-offs: Balance elegance with practical efficiency"
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Intuition"
+            },
+            {
+              "step": 2,
+              "highlight": "Invariants"
+            },
+            {
+              "step": 3,
+              "highlight": "Application"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_7514b78c_s4.mp3",
+        "actual_duration": 16.2,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 6.79,
+            "text": "To wrap up our lesson: Pandas is a powerful concept that transforms how we solve complex challenges."
+          },
+          {
+            "start": 6.74,
+            "end": 16.2,
+            "text": "By keeping the core intuition, the underlying mechanism, and the key trade-offs in mind, you are fully equipped to apply this in your studies and practical work."
+          }
+        ]
+      }
+    ],
+    "video_url": "/media/videos/lecture_7514b78c.mp4",
+    "subtitles_vtt_url": "/media/subtitles/lec_7514b78c.vtt",
+    "materials": {
+      "summary": "This comprehensive lecture on Pandas breaks down the foundational intuition, step-by-step mechanics, critical edge cases, and real-world practical applications to ensure thorough conceptual mastery.",
+      "notes_markdown": "# Pandas: Comprehensive Masterclass Notes\n\n## 1. Executive Summary\nUnderstanding **Pandas** requires building a solid mental model from simple to advanced concepts:\n- **Core Purpose**: Solving fundamental challenges with clarity and speed.\n- **Key Invariants**: Predictable rules that govern behavior throughout execution.\n- **Scope & Applicability**: Widely utilized across modern engineering, science, and analytical domains.\n\n## 2. Structural Principles\n1. **Foundation**: Setting clear preconditions.\n2. **Execution**: Systematic transformation with minimal friction.\n3. **Verification**: Ensuring results meet all necessary constraints.\n",
+      "key_concepts": [
+        {
+          "concept": "Pandas Core Invariant",
+          "definition": "The defining mathematical or architectural rule that remains true throughout the lifecycle.",
+          "importance": "Guarantees system correctness."
+        },
+        {
+          "concept": "State Transition",
+          "definition": "Moving safely from an initial state through intermediate phases to a target outcome.",
+          "importance": "Provides transparent traceability."
+        }
+      ],
+      "formulas_or_code": [
+        {
+          "title": "Pandas Paradigm Rule",
+          "type": "rule",
+          "content": "Invariant(State_t) == True for all t",
+          "explanation": "Ensures every intermediate state satisfies foundational requirements."
+        }
+      ],
+      "practice_questions": [
+        {
+          "question": "What is the single most critical reason to apply Pandas in practice?",
+          "hint": "Think about efficiency, predictability, and safety.",
+          "solution": "Applying Pandas creates a structured, verifiable approach that prevents errors, scales predictably, and optimizes resource utilization."
+        }
+      ],
+      "quiz": [
+        {
+          "id": 1,
+          "question": "What is the first step when implementing or analyzing Pandas?",
+          "options": [
+            "Jump straight to advanced edge cases",
+            "Establish clear foundational preconditions and invariants",
+            "Ignore performance trade-offs",
+            "Random trial and error"
+          ],
+          "correct_index": 1,
+          "explanation": "Establishing clear baseline preconditions ensures all downstream transformations are sound."
+        },
+        {
+          "id": 2,
+          "question": "Why is understanding the edge cases of Pandas essential?",
+          "options": [
+            "It is only needed for academic exams",
+            "Systems typically fail at boundary conditions if unhandled",
+            "Edge cases do not affect real-world outcomes",
+            "It replaces the need for the core mechanism"
+          ],
+          "correct_index": 1,
+          "explanation": "Failures and unexpected behavior almost always occur at boundaries and edge cases."
+        }
+      ],
+      "flashcards": [
+        {
+          "id": 1,
+          "front": "What is the primary benefit of Pandas?",
+          "back": "Providing structured, predictable, and optimized outcomes for complex problems.",
+          "category": "Core Principle"
+        },
+        {
+          "id": 2,
+          "front": "How should one approach learning Pandas?",
+          "back": "By understanding the intuitive problem first, then mastering the rigorous mechanism and edge cases.",
+          "category": "Pedagogy"
+        }
+      ]
+    }
+  }
+}

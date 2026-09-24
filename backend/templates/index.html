@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Synapse AI - Animated Educational Video Lecture Generator</title>
+  <meta name="description" content="Generate professional, animated educational video lectures from any topic with AI narration, synchronized visual demonstrations, and complete study materials.">
+  
+  <!-- Modern Typography from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <a href="/" class="brand">
+      <div class="brand-icon">🎓</div>
+      <div class="brand-text">
+        <h1>Synapse AI</h1>
+        <span>Video Lecture Studio</span>
+      </div>
+    </a>
+    <div class="header-actions">
+      <button class="btn-secondary" id="settingsBtn">
+        ⚙️ Settings
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Hero Input Section -->
+    <section class="hero-section">
+      <div class="badge-hero">
+        <span>✨</span> Autonomous Pedagogical Video Producer
+      </div>
+      <h2 class="hero-title">
+        Turn Any Concept Into an <span class="gradient-text">Animated Masterclass</span>
+      </h2>
+      <p class="hero-subtitle">
+        Instructional visual simulations, synchronized neural narration, interactive code/math visualizations, and complete study packages.
+      </p>
+
+      <!-- Topic Search Input -->
+      <div class="search-box-wrapper">
+        <div class="search-box">
+          <input 
+            type="text" 
+            id="topicInput" 
+            class="search-input" 
+            placeholder="What do you want to learn? (e.g. Binary Search, Neural Networks, Async/Await...)"
+            autocomplete="off"
+          />
+          <button id="analyzeBtn" class="btn-generate">
+            ✨ Analyze Topic
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Sample Topic Pills -->
+      <div class="sample-pills-row">
+        <span class="pill-label">Popular Topics:</span>
+        <button class="topic-pill" data-topic="Binary Search">🔍 Binary Search</button>
+        <button class="topic-pill" data-topic="Neural Networks and Backpropagation">🧠 Neural Networks</button>
+        <button class="topic-pill" data-topic="Async and Await in Python">🔄 Async/Await</button>
+        <button class="topic-pill" data-topic="Calculus: The Derivative">📐 Calculus Derivative</button>
+        <button class="topic-pill" data-topic="Photosynthesis Light Reactions">🌿 Photosynthesis</button>
+      </div>
+    </section>
+
+    <!-- Intelligent Clarification Drawer (Appears after analysis) -->
+    <section id="clarificationDrawer" class="clarification-drawer glass-panel" style="display: none;">
+      <div class="drawer-header">
+        <div class="drawer-title-area">
+          <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.4rem;">
+            <span id="drawerDomainBadge" class="domain-tag">Computer Science</span>
+            <span style="font-size:0.8rem; color:#94a3b8;">Pedagogical Plan Ready</span>
+          </div>
+          <h2 id="drawerTopicTitle">Lesson Blueprint</h2>
+          <p id="drawerOverviewText" style="color:#cbd5e1; font-size:0.95rem; margin-top:0.3rem;"></p>
+        </div>
+      </div>
+
+      <!-- Clarification Questions Grid -->
+      <div id="questionsContainer" class="questions-grid"></div>
+
+      <!-- Voice Selector Option -->
+      <div class="question-block" style="margin-bottom: 2rem;">
+        <label class="question-label" for="voiceSelect">AI Narrator Voice & Persona</label>
+        <select id="voiceSelect" class="form-control" style="background:#0b0f19;">
+          <!-- Populated dynamically via /api/voices -->
+        </select>
+      </div>
+
+      <!-- Drawer Actions -->
+      <div class="drawer-actions">
+        <button id="cancelClarificationBtn" class="btn-secondary">
+          Cancel
+        </button>
+        <button id="startGenerateBtn" class="btn-generate">
+          🚀 Generate Video Lecture
+        </button>
+      </div>
+    </section>
+
+    <!-- Generation Progress Overlay -->
+    <section id="progressOverlay" class="progress-card glass-panel" style="display: none;">
+      <div class="spinner-pulse"></div>
+      <h3 style="font-family:var(--font-heading); font-size:1.8rem; margin-bottom:0.5rem;">Generating Educational Masterclass</h3>
+      <p style="color:var(--text-muted); font-size:0.95rem;">
+        Our instructional AI engine, animator, and neural voice synthesizer are collaborating to create your lesson.
+      </p>
+
+      <div class="progress-steps">
+        <div id="pStep1" class="step-row active">
+          <span class="step-icon">⏳</span>
+          <span>1. Analyzing Pedagogy & Planning Multi-Stage Curriculum</span>
+        </div>
+        <div id="pStep2" class="step-row">
+          <span class="step-icon">○</span>
+          <span>2. Designing Dynamic Visuals (Algorithms, Code & Curves)</span>
+        </div>
+        <div id="pStep3" class="step-row">
+          <span class="step-icon">○</span>
+          <span>3. Synthesizing High-Fidelity Neural Voiceover</span>
+        </div>
+        <div id="pStep4" class="step-row">
+          <span class="step-icon">○</span>
+          <span>4. Aligning Timestamps & Synchronizing Subtitles</span>
+        </div>
+        <div id="pStep5" class="step-row">
+          <span class="step-icon">○</span>
+          <span>5. Compiling Notes, Interactive Quiz & Flashcards</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Studio & Cinema Player Workspace -->
+    <section id="cinemaWorkspace" class="cinema-workspace" style="display: none;">
+      
+      <!-- Lecture Top Banner -->
+      <div class="lecture-header-banner">
+        <div class="lecture-title-box">
+          <h2 id="lectureMainTitle">Binary Search: Algorithm & Intuition</h2>
+          <div class="lecture-meta-badges">
+            <span id="lectureDomainMeta" class="badge-tag">Computer Science</span>
+            <span id="lectureTopicMeta">Topic: Binary Search</span>
+            <span>•</span>
+            <span id="lectureLevelMeta">Intermediate</span>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:0.75rem;">
+          <button id="renderVideoBtn" class="btn-secondary" style="border-color:var(--primary); color:var(--primary);">
+            🎬 Render MP4 Video
+          </button>
+          <button id="downloadVideoBtn" class="btn-secondary">
+            ⬇ Video (.mp4)
+          </button>
+          <button id="downloadNotesBtn" class="btn-secondary">
+            📄 Notes (.md)
+          </button>
+        </div>
+      </div>
+
+      <!-- Cinema Screen Player Area -->
+      <div id="cinemaPlayer" class="cinema-player-container">
+        
+        <!-- Mode Switcher Pill (Interactive Canvas vs Rendered MP4) -->
+        <div class="player-mode-switch">
+          <button id="modeCanvasBtn" class="mode-btn active">⚡ 60FPS Visual Stage</button>
+          <button id="modeVideoBtn" class="mode-btn">🎥 MP4 Video</button>
+        </div>
+
+        <!-- Video Stage Display -->
+        <div class="screen-stage">
+          <!-- 60FPS Interactive Visual Canvas -->
+          <canvas id="interactiveCanvas"></canvas>
+          <!-- Native MP4 Video Player -->
+          <video id="nativeVideoPlayer" controlsList="nodownload"></video>
+        </div>
+
+        <!-- Player Custom Controls Bar -->
+        <div class="player-controls-bar">
+          
+          <!-- Scrubber Timeline -->
+          <div id="scrubberContainer" class="scrubber-container">
+            <div class="scrubber-track">
+              <div id="scrubberFill" class="scrubber-fill">
+                <div class="scrubber-handle"></div>
+              </div>
+              <div id="chapterTicksLayer" class="chapter-ticks-layer"></div>
+            </div>
+          </div>
+
+          <!-- Controls Button Row -->
+          <div class="controls-row">
+            <div class="controls-left">
+              <button id="playPauseBtn" class="ctrl-btn" title="Play / Pause (Spacebar)">▶</button>
+              <button id="prevChapterBtn" class="ctrl-btn" title="Previous Chapter">⏮</button>
+              <button id="nextChapterBtn" class="ctrl-btn" title="Next Chapter">⏭</button>
+              
+              <div class="time-display">
+                <span id="currentTimeDisplay">00:00</span> / <span id="totalDurationDisplay">00:00</span>
+              </div>
+            </div>
+
+            <div class="controls-right">
+              <!-- Playback Speed -->
+              <select id="speedSelect" class="speed-select" title="Playback Speed">
+                <option value="0.75">0.75x</option>
+                <option value="1.0" selected>1.0x</option>
+                <option value="1.25">1.25x</option>
+                <option value="1.5">1.5x</option>
+                <option value="2.0">2.0x</option>
+              </select>
+
+              <!-- Subtitles CC Button -->
+              <button id="subtitleToggleBtn" class="ctrl-btn" style="color:var(--primary);" title="Toggle Subtitles">
+                [CC]
+              </button>
+
+              <!-- Ambient Study Music Button -->
+              <button id="musicToggleBtn" class="ctrl-btn" style="color:#64748b;" title="Background Study Music">
+                🎵
+              </button>
+
+              <!-- Fullscreen Button -->
+              <button id="fullscreenBtn" class="ctrl-btn" title="Toggle Fullscreen">
+                ⛶
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Split Layout: Side Drawer & Learning Materials Hub -->
+      <div class="content-grid-2col">
+        
+        <!-- Left Side: Interactive Transcript & Chapters -->
+        <aside class="side-drawer">
+          <div class="drawer-tabs">
+            <button class="d-tab-btn active" data-tab="transcript">💬 Synchronized Transcript</button>
+            <button class="d-tab-btn" data-tab="chapters">📑 Chapters</button>
+          </div>
+
+          <!-- Interactive Transcript List -->
+          <div id="transcriptTab" class="scroll-list">
+            <div id="transcriptList"></div>
+          </div>
+
+          <!-- Chapters List -->
+          <div id="chaptersTab" class="scroll-list" style="display: none;">
+            <div id="chaptersList"></div>
+          </div>
+        </aside>
+
+        <!-- Right Side: Learning Materials & Scene Studio Hub -->
+        <div class="materials-panel">
+          <nav class="materials-nav-tabs">
+            <button class="mat-tab-btn active" data-pane="notesPane">📑 Lecture Notes</button>
+            <button class="mat-tab-btn" data-pane="conceptsPane">💡 Key Concepts</button>
+            <button class="mat-tab-btn" data-pane="quizPane">🎯 Interactive Quiz</button>
+            <button class="mat-tab-btn" data-pane="flashcardsPane">🃏 3D Flashcards</button>
+            <button class="mat-tab-btn" data-pane="practicePane">🧪 Practice Problems</button>
+            <button class="mat-tab-btn" data-pane="studioPane">🎬 Scene Studio & Editor</button>
+          </nav>
+
+          <!-- Tab Pane 1: Lecture Notes -->
+          <div id="notesPane" class="material-tab-pane">
+            <div id="notesContent" class="notes-container"></div>
+          </div>
+
+          <!-- Tab Pane 2: Key Concepts -->
+          <div id="conceptsPane" class="material-tab-pane" style="display: none;">
+            <div id="conceptsContainer" class="concepts-grid"></div>
+          </div>
+
+          <!-- Tab Pane 3: Interactive Quiz -->
+          <div id="quizPane" class="material-tab-pane" style="display: none;">
+            <div id="quizContainer" class="quiz-wrapper"></div>
+          </div>
+
+          <!-- Tab Pane 4: 3D Flashcards -->
+          <div id="flashcardsPane" class="material-tab-pane" style="display: none;">
+            <div class="flashcards-container">
+              <div id="flashcardStage" class="flashcard-stage">
+                <div id="flashcardInner" class="flashcard-inner">
+                  <!-- Front -->
+                  <div class="flashcard-front">
+                    <span id="cardCategory" class="flashcard-category">Core Principle</span>
+                    <p id="cardFrontText" class="flashcard-text">Concept Question</p>
+                    <span class="flashcard-hint">Click card to reveal answer 🔄</span>
+                  </div>
+                  <!-- Back -->
+                  <div class="flashcard-back">
+                    <span class="flashcard-category">Key Takeaway</span>
+                    <p id="cardBackText" class="flashcard-text">Detailed explanation and answer</p>
+                    <span class="flashcard-hint">Click to flip back</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Flashcard Controls -->
+              <div class="flashcard-controls">
+                <button id="prevCardBtn" class="btn-secondary">◀ Previous</button>
+                <span id="cardProgressDisplay" style="font-weight:600; color:#38bdf8;">Card 1 of 5</span>
+                <button id="nextCardBtn" class="btn-secondary">Next ▶</button>
+                <button id="masterCardBtn" class="btn-secondary" style="border-color:#10b981; color:#10b981;">
+                  ✓ Mark Mastered
+                </button>
+                <span id="masteredCountDisplay" style="font-size:0.85rem; color:#94a3b8;">Mastered: 0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab Pane 5: Practice Problems -->
+          <div id="practicePane" class="material-tab-pane" style="display: none;">
+            <div id="practiceContainer" class="concepts-grid"></div>
+          </div>
+
+          <!-- Tab Pane 6: Scene Studio & Editor -->
+          <div id="studioPane" class="material-tab-pane" style="display: none;">
+            <div style="margin-bottom:1.5rem; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <h3 style="font-size:1.3rem;">Scene Breakdown & Regeneration</h3>
+                <p style="font-size:0.88rem; color:#94a3b8;">Inspect or regenerate specific scenes if you want to tweak narration, explanation, or visual style.</p>
+              </div>
+            </div>
+            <div id="scenesStudioList" class="scenes-studio-container"></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Scene Edit & Regenerate Modal -->
+  <div id="sceneEditModal" class="modal-overlay" style="display: none;">
+    <div class="modal-card">
+      <h3 class="modal-title">Edit & Regenerate Scene</h3>
+      <input type="hidden" id="editSceneIndex">
+      
+      <div class="form-group">
+        <label class="form-label" for="editSceneTitle">Chapter Title</label>
+        <input type="text" id="editSceneTitle" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="editSceneVisualType">Visual Animation Type</label>
+        <select id="editSceneVisualType" class="form-control">
+          <option value="algorithm_animator">Algorithm & Array Animator</option>
+          <option value="code_visualizer">Code Execution & Variable Watch</option>
+          <option value="math_graph">Mathematical Curves & Coordinate Plots</option>
+          <option value="process_simulation">Process Simulation & Pipelines</option>
+          <option value="concept_metaphor">Visual Metaphor & Analogy Board</option>
+          <option value="comparison_matrix">Comparison Matrix</option>
+          <option value="diagram_board">Diagram Board</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="editSceneNarration">Narration Script (Voiceover)</label>
+        <textarea id="editSceneNarration" class="form-control" rows="5" style="resize:vertical;"></textarea>
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; gap:1rem; margin-top:1.5rem;">
+        <button id="closeSceneEditBtn" class="btn-secondary">Cancel</button>
+        <button id="submitRegenerateSceneBtn" class="btn-generate">Regenerate Scene</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div id="settingsModal" class="modal-overlay" style="display: none;">
+    <div class="modal-card">
+      <h3 class="modal-title">Studio Settings</h3>
+      
+      <div class="form-group">
+        <label class="form-label" for="settingGeminiKey">Google Gemini API Key (Optional)</label>
+        <input type="password" id="settingGeminiKey" class="form-control" placeholder="AIzaSy... (Leave empty to use built-in pedagogical blueprints)">
+        <span style="font-size:0.75rem; color:#94a3b8; display:block; margin-top:0.3rem;">
+          Works automatically out of the box with built-in curriculum engines! Enter your key for arbitrary live topics.
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="settingVoiceSelect">Default Neural Voice</label>
+        <select id="settingVoiceSelect" class="form-control">
+          <option value="en-US-ChristopherNeural">Christopher (US Male - Clear & Authoritative Teacher)</option>
+          <option value="en-US-JennyNeural">Jenny (US Female - Engaging & Clear Professor)</option>
+          <option value="en-US-GuyNeural">Guy (US Male - Tech Lead & Practical Engineer)</option>
+          <option value="en-US-AriaNeural">Aria (US Female - Academic & Expressive)</option>
+          <option value="en-GB-SoniaNeural">Sonia (British Female - Polished & Sophisticated)</option>
+          <option value="en-US-EricNeural">Eric (US Male - Warm & Conversational)</option>
+        </select>
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; gap:1rem; margin-top:2rem;">
+        <button id="closeSettingsBtn" class="btn-secondary">Close</button>
+        <button id="saveSettingsBtn" class="btn-generate">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/static/js/visual_renderer.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
