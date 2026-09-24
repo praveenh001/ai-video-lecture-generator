@@ -53,7 +53,7 @@
             type="text" 
             id="topicInput" 
             class="search-input" 
-            placeholder="What do you want to learn? (e.g. Binary Search, Neural Networks, Async/Await...)"
+            placeholder="Learn anything: The French Revolution, How Inflation Works, Stoicism, Sleep Biology, Airplanes, Binary Search..."
             autocomplete="off"
           />
           <button id="analyzeBtn" class="btn-generate">
@@ -64,12 +64,14 @@
 
       <!-- Quick Sample Topic Pills -->
       <div class="sample-pills-row">
-        <span class="pill-label">Popular Topics:</span>
+        <span class="pill-label">Explore Any Subject:</span>
+        <button class="topic-pill" data-topic="The French Revolution">⚔️ The French Revolution</button>
+        <button class="topic-pill" data-topic="How Inflation Works">📈 How Inflation Works</button>
+        <button class="topic-pill" data-topic="Stoicism: Philosophy for Everyday Life">🏛️ Stoicism</button>
+        <button class="topic-pill" data-topic="Sleep Cycles and Circadian Rhythm">🌙 Sleep Biology</button>
+        <button class="topic-pill" data-topic="How Airplanes Fly">✈️ How Airplanes Fly</button>
+        <button class="topic-pill" data-topic="The Hero's Journey in Storytelling">📖 The Hero's Journey</button>
         <button class="topic-pill" data-topic="Binary Search">🔍 Binary Search</button>
-        <button class="topic-pill" data-topic="Neural Networks and Backpropagation">🧠 Neural Networks</button>
-        <button class="topic-pill" data-topic="Async and Await in Python">🔄 Async/Await</button>
-        <button class="topic-pill" data-topic="Calculus: The Derivative">📐 Calculus Derivative</button>
-        <button class="topic-pill" data-topic="Photosynthesis Light Reactions">🌿 Photosynthesis</button>
       </div>
     </section>
 
@@ -354,12 +356,19 @@
       <div class="form-group">
         <label class="form-label" for="editSceneVisualType">Visual Animation Type</label>
         <select id="editSceneVisualType" class="form-control">
+          <option value="timeline_journey">Chronological Timeline Journey & Milestones</option>
+          <option value="hierarchy_pyramid">Hierarchy Pyramid (Values / Needs / Structures)</option>
+          <option value="cycle_loop">Circular Process Cycle & Feedback Loop</option>
+          <option value="spectrum_meter">Trade-off & Balance Spectrum Gauge</option>
+          <option value="narrative_arc">Narrative Arc / Story Mountain Curve</option>
+          <option value="cause_and_effect">Cause and Effect Cascade</option>
+          <option value="cross_section_sim">Physical / Biological Cross-Section Cutaway</option>
+          <option value="concept_metaphor">Visual Metaphor & Analogy Board</option>
+          <option value="comparison_matrix">Multi-Column Comparison Matrix</option>
           <option value="algorithm_animator">Algorithm & Array Animator</option>
           <option value="code_visualizer">Code Execution & Variable Watch</option>
           <option value="math_graph">Mathematical Curves & Coordinate Plots</option>
           <option value="process_simulation">Process Simulation & Pipelines</option>
-          <option value="concept_metaphor">Visual Metaphor & Analogy Board</option>
-          <option value="comparison_matrix">Comparison Matrix</option>
           <option value="diagram_board">Diagram Board</option>
         </select>
       </div>

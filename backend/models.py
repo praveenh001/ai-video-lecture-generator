@@ -24,7 +24,7 @@ class TopicAnalysisRequest(BaseModel):
 
 class TopicAnalysisResponse(BaseModel):
     topic: str
-    domain: str  # computer_science, mathematics, science, engineering, general
+    domain: str  # history, economics_business, psychology_philosophy, health_biology, arts_literature, science_nature, computer_science, mathematics, general
     subdomain: str
     overview: str
     clarification_needed: bool
@@ -33,7 +33,7 @@ class TopicAnalysisResponse(BaseModel):
     clarification_questions: List[ClarificationQuestion]
 
 class VisualSpec(BaseModel):
-    visual_type: str  # algorithm_animator, code_visualizer, math_graph, process_simulation, concept_metaphor, comparison_matrix, diagram_board
+    visual_type: str  # timeline_journey, cycle_loop, hierarchy_pyramid, spectrum_meter, narrative_arc, cause_and_effect, cross_section_sim, algorithm_animator, code_visualizer, math_graph, process_simulation, concept_metaphor, comparison_matrix, diagram_board
     title: str
     subtitle: Optional[str] = ""
     parameters: Dict[str, Any] = Field(default_factory=dict)

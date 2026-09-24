@@ -126,6 +126,20 @@ class VisualEngine:
             self._render_code_visualizer(draw, params, current_step, step_idx, fonts, container_rect)
         elif vtype == "math_graph":
             self._render_math_graph(draw, params, current_step, step_idx, fonts, container_rect)
+        elif vtype == "timeline_journey":
+            self._render_timeline_journey(draw, params, current_step, step_idx, fonts, container_rect)
+        elif vtype == "hierarchy_pyramid":
+            self._render_hierarchy_pyramid(draw, params, current_step, step_idx, fonts, container_rect)
+        elif vtype == "cycle_loop":
+            self._render_cycle_loop(draw, params, current_step, step_idx, fonts, container_rect)
+        elif vtype == "spectrum_meter":
+            self._render_spectrum_meter(draw, params, current_step, step_idx, fonts, container_rect)
+        elif vtype == "narrative_arc":
+            self._render_narrative_arc(draw, params, current_step, step_idx, fonts, container_rect)
+        elif vtype == "cause_and_effect":
+            self._render_cause_and_effect(draw, params, current_step, step_idx, fonts, container_rect)
+        elif vtype == "cross_section_sim":
+            self._render_cross_section_sim(draw, params, current_step, step_idx, fonts, container_rect)
         elif vtype == "concept_metaphor":
             self._render_concept_metaphor(draw, params, current_step, step_idx, fonts, container_rect)
         elif vtype == "process_simulation":
@@ -432,16 +446,228 @@ class VisualEngine:
             draw.text((cx + 15, cy + 65), hdr, fill=(56, 189, 248), font=fonts["sub"])
             draw.text((cx + 15, cy + 115), body.strip(), fill=(203, 213, 225), font=fonts["body"])
 
-    def _render_diagram_board(self, draw, params, step, step_idx, fonts, rect):
-        """Default diagram board."""
-        draw.text((rect[0][0] + 40, 220), "📌 Core Architectural Components", fill=(255, 255, 255), font=fonts["sub"])
-        elements = params.get("elements") or params.get("layers") or ["Foundational Concept", "Transformation Invariant", "Final Output"]
-        ey = 280
-        for elem in elements:
-            label = elem if isinstance(elem, str) else elem.get("name", "Component")
-            draw.rounded_rectangle([(rect[0][0] + 40, ey), (rect[1][0] - 40, ey + 50)], radius=8, fill=(30, 41, 59), outline=(56, 189, 248), width=1)
-            draw.text((rect[0][0] + 60, ey + 14), f"• {label}", fill=(241, 245, 249), font=fonts["body"])
-            ey += 65
+    def _render_timeline_journey(self, draw, params, step, step_idx, fonts, rect):
+        """Draws chronological timeline with glowing milestone cards."""
+        milestones = params.get("milestones", [
+            {"year": "Phase 1", "title": "Inception", "desc": "Initial catalyst", "impact": "Foundational"},
+            {"year": "Phase 2", "title": "Escalation", "desc": "Turning point", "impact": "Critical change"},
+            {"year": "Phase 3", "title": "Resolution", "desc": "Final outcome", "impact": "Enduring legacy"}
+        ])
+        num_m = len(milestones)
+        card_w = min(260, (rect[1][0] - rect[0][0] - (num_m + 1) * 25) // num_m)
+        card_h = 240
+        card_y = 240
+
+        # Draw connecting timeline horizontal bar
+        draw.line([(rect[0][0] + 50, card_y - 25), (rect[1][0] - 50, card_y - 25)], fill=(71, 85, 105), width=4)
+
+        for i, m in enumerate(milestones):
+            mx = rect[0][0] + 30 + i * (card_w + 25)
+            is_active = (i == (step_idx % num_m))
+            border = (56, 189, 248) if is_active else (71, 85, 105)
+            bg = (30, 48, 80) if is_active else (20, 26, 40)
+
+            # Node circle on the timeline
+            node_x = mx + card_w // 2
+            draw.ellipse([(node_x - 12, card_y - 37), (node_x + 12, card_y - 13)], fill=(56, 189, 248) if is_active else (51, 65, 85), outline=(255, 255, 255), width=2)
+
+            # Card
+            draw.rounded_rectangle([(mx, card_y), (mx + card_w, card_y + card_h)], radius=12, fill=bg, outline=border, width=2 if is_active else 1)
+
+            # Year badge
+            year_str = m.get("year", f"Year {i+1}")
+            draw.rounded_rectangle([(mx + 15, card_y + 15), (mx + 130, card_y + 42)], radius=6, fill=(139, 92, 246))
+            draw.text((mx + 25, card_y + 20), year_str, fill=(255, 255, 255), font=fonts["badge"])
+
+            # Title
+            draw.text((mx + 15, card_y + 60), m.get("title", "Event"), fill=(255, 255, 255), font=fonts["sub"])
+            # Description
+            desc = m.get("desc", "")
+            draw.text((mx + 15, card_y + 105), desc[:65] + "...", fill=(203, 213, 225), font=fonts["body"])
+            # Impact
+            impact = m.get("impact", "")
+            if impact:
+                draw.text((mx + 15, card_y + 165), f"⭐ {impact[:40]}", fill=(254, 240, 138), font=fonts["badge"])
+
+    def _render_hierarchy_pyramid(self, draw, params, step, step_idx, fonts, rect):
+        """Draws stacked multi-tier pyramid with tier labels and details."""
+        tiers = params.get("tiers", [
+            {"tier": "Apex: Transcendence & Legacy", "note": "Peak fulfillment"},
+            {"tier": "Mid: Practical Execution & Mastery", "note": "Core discipline"},
+            {"tier": "Base: Fundamental Preconditions", "note": "Essential survival & stability"}
+        ])
+        num_t = len(tiers)
+        pyramid_w = rect[1][0] - rect[0][0] - 100
+        start_y = 210
+        tier_h = min(75, 270 // num_t)
+
+        for i, t in enumerate(tiers):
+            indent = (num_t - 1 - i) * 35
+            tx = rect[0][0] + 50 + indent
+            tw = pyramid_w - indent * 2
+            ty = start_y + i * (tier_h + 12)
+
+            is_active = (i == (step_idx % num_t))
+            bg = (40, 55, 95) if is_active else (24, 30, 48)
+            border = (56, 189, 248) if is_active else (71, 85, 105)
+
+            draw.rounded_rectangle([(tx, ty), (tx + tw, ty + tier_h)], radius=10, fill=bg, outline=border, width=2 if is_active else 1)
+
+            t_title = t.get("tier") if isinstance(t, dict) else str(t)
+            t_note = t.get("note", "") if isinstance(t, dict) else ""
+
+            draw.text((tx + 25, ty + 15), t_title, fill=(255, 255, 255) if is_active else (226, 232, 240), font=fonts["sub"])
+            if t_note:
+                draw.text((tx + 25, ty + 45), f"• {t_note}", fill=(254, 240, 138) if is_active else (148, 163, 184), font=fonts["body"])
+
+    def _render_cycle_loop(self, draw, params, step, step_idx, fonts, rect):
+        """Draws orbital circular process cycle."""
+        stages = params.get("stages", [
+            {"name": "1. Trigger / Input", "role": "Catalyst starts cycle"},
+            {"name": "2. Transformation", "role": "Active phase dynamics"},
+            {"name": "3. Reinforcement", "role": "Equilibrium output"}
+        ])
+        num_s = len(stages)
+        cw = min(270, (rect[1][0] - rect[0][0] - (num_s + 1) * 30) // num_s)
+        ch = 220
+        cy = 230
+
+        for i, s in enumerate(stages):
+            sx = rect[0][0] + 35 + i * (cw + 30)
+            is_active = (i == (step_idx % num_s))
+            bg = (30, 58, 95) if is_active else (20, 26, 42)
+            border = (56, 189, 248) if is_active else (51, 65, 85)
+
+            draw.rounded_rectangle([(sx, cy), (sx + cw, cy + ch)], radius=14, fill=bg, outline=border, width=3 if is_active else 1)
+
+            # Circular node icon
+            draw.ellipse([(sx + 15, cy + 15), (sx + 45, cy + 45)], fill=(16, 185, 129) if is_active else (71, 85, 105))
+            draw.text((sx + 24, cy + 20), str(i + 1), fill=(255, 255, 255), font=fonts["badge"])
+
+            draw.text((sx + 55, cy + 22), s.get("name", f"Phase {i+1}"), fill=(255, 255, 255), font=fonts["sub"])
+            draw.text((sx + 15, cy + 70), s.get("role", ""), fill=(203, 213, 225), font=fonts["body"])
+
+            if i < num_s - 1:
+                draw.text((sx + cw + 8, cy + 90), "➔", fill=(56, 189, 248), font=fonts["title"])
+
+        # Loop back arrow indicator at bottom
+        draw.text((rect[0][0] + 60, cy + ch + 25), "🔁 Continuous Feedback Loop: Each completed cycle reinforces the baseline conditions.", fill=(254, 240, 138), font=fonts["body"])
+
+    def _render_spectrum_meter(self, draw, params, step, step_idx, fonts, rect):
+        """Draws horizontal spectrum gauge with poles and balance markers."""
+        left_lbl = params.get("left_label", "Extreme Left")
+        right_lbl = params.get("right_label", "Extreme Right")
+        center_lbl = params.get("center_balance", "Dynamic Equilibrium")
+        markers = params.get("markers", ["Conservative", "Balanced Center", "Radical"])
+
+        bar_x = rect[0][0] + 50
+        bar_y = 300
+        bar_w = rect[1][0] - rect[0][0] - 100
+        bar_h = 24
+
+        # Draw gradient bar
+        for bx in range(bar_w):
+            f = bx / bar_w
+            r = int(239 * (1 - f) + 56 * f)
+            g = int(68 * (1 - f) + 189 * f)
+            b = int(68 * (1 - f) + 248 * f)
+            draw.line([(bar_x + bx, bar_y), (bar_x + bx, bar_y + bar_h)], fill=(r, g, b))
+
+        # Pole Labels
+        draw.text((bar_x, bar_y - 50), f"◀  {left_lbl}", fill=(248, 113, 113), font=fonts["sub"])
+        rw = draw.textlength(right_lbl, font=fonts["sub"])
+        draw.text((bar_x + bar_w - rw - 30, bar_y - 50), f"{right_lbl}  ▶", fill=(56, 189, 248), font=fonts["sub"])
+
+        # Center Balance Card
+        cw = 400
+        cx = bar_x + (bar_w - cw) // 2
+        cy = bar_y + 60
+        draw.rounded_rectangle([(cx, cy), (cx + cw, cy + 100)], radius=12, fill=(24, 32, 54), outline=(250, 204, 21), width=2)
+        draw.text((cx + 20, cy + 20), "⚖️ OPTIMAL EQUILIBRIUM", fill=(250, 204, 21), font=fonts["badge"])
+        draw.text((cx + 20, cy + 50), center_lbl, fill=(255, 255, 255), font=fonts["body"])
+
+    def _render_narrative_arc(self, draw, params, step, step_idx, fonts, rect):
+        """Draws story mountain narrative arc curve."""
+        phases = params.get("phases", [
+            {"phase": "Exposition", "event": "World introduced"},
+            {"phase": "Rising Action", "event": "Tension mounts"},
+            {"phase": "Climax Peak", "event": "Supreme ordeal"},
+            {"phase": "Resolution", "event": "New normal"}
+        ])
+        ox = rect[0][0] + 60
+        oy = 460
+        total_w = rect[1][0] - rect[0][0] - 120
+
+        # Draw Story Mountain Curve
+        pts = [
+            (ox, oy),
+            (ox + int(total_w * 0.25), oy - 60),
+            (ox + int(total_w * 0.55), oy - 220), # Climax Peak
+            (ox + int(total_w * 0.8), oy - 80),
+            (ox + total_w, oy)
+        ]
+        for i in range(len(pts) - 1):
+            draw.line([pts[i], pts[i+1]], fill=(56, 189, 248), width=4)
+            draw.ellipse([(pts[i][0] - 6, pts[i][1] - 6), (pts[i][0] + 6, pts[i][1] + 6)], fill=(250, 204, 21))
+
+        # Peak indicator
+        draw.text((pts[2][0] - 50, pts[2][1] - 35), "⚡ CLIMAX / ORDEAL", fill=(250, 204, 21), font=fonts["badge"])
+
+        # Phase description cards
+        cy = 205
+        cw = total_w // min(4, len(phases))
+        for idx, p in enumerate(phases[:4]):
+            px = ox + idx * cw
+            draw.rounded_rectangle([(px, cy), (px + cw - 15, cy + 85)], radius=8, fill=(20, 26, 42), outline=(71, 85, 105), width=1)
+            draw.text((px + 12, cy + 12), p.get("phase", "Phase"), fill=(56, 189, 248), font=fonts["badge"])
+            draw.text((px + 12, cy + 38), p.get("event", "")[:35], fill=(226, 232, 240), font=fonts["body"])
+
+    def _render_cause_and_effect(self, draw, params, step, step_idx, fonts, rect):
+        """Draws causal chain cascade."""
+        root = params.get("root_catalyst", "Initial Catalyst Trigger")
+        effects = params.get("intermediate_effects", ["Intermediate reaction A", "Intermediate reaction B"])
+        outcome = params.get("ultimate_consequence", "Lasting Global Consequence")
+
+        sy = 205
+        # Root Catalyst
+        draw.rounded_rectangle([(rect[0][0] + 40, sy), (rect[1][0] - 40, sy + 65)], radius=10, fill=(40, 20, 30), outline=(239, 68, 68), width=2)
+        draw.text((rect[0][0] + 60, sy + 12), "🔥 ROOT CATALYST", fill=(239, 68, 68), font=fonts["badge"])
+        draw.text((rect[0][0] + 60, sy + 35), root, fill=(255, 255, 255), font=fonts["body"])
+
+        # Arrow down
+        draw.text((rect[0][0] + 80, sy + 75), "⬇ Intermediate Chain Reaction", fill=(148, 163, 184), font=fonts["badge"])
+
+        # Intermediate effects
+        iy = sy + 105
+        for eff in effects[:2]:
+            draw.rounded_rectangle([(rect[0][0] + 60, iy), (rect[1][0] - 60, iy + 55)], radius=8, fill=(24, 32, 50), outline=(56, 189, 248), width=1)
+            draw.text((rect[0][0] + 80, iy + 16), f"• {eff}", fill=(226, 232, 240), font=fonts["body"])
+            iy += 65
+
+        # Ultimate outcome
+        draw.rounded_rectangle([(rect[0][0] + 40, iy + 10), (rect[1][0] - 40, iy + 80)], radius=10, fill=(20, 45, 35), outline=(16, 185, 129), width=2)
+        draw.text((rect[0][0] + 60, iy + 20), "🏆 ULTIMATE CONSEQUENCE / ENDURING IMPACT", fill=(16, 185, 129), font=fonts["badge"])
+        draw.text((rect[0][0] + 60, iy + 45), outcome, fill=(255, 255, 255), font=fonts["body"])
+
+    def _render_cross_section_sim(self, draw, params, step, step_idx, fonts, rect):
+        """Draws physical or biological cross-section with stacked cutaways."""
+        subject = params.get("subject", "Physical System Profile")
+        layers = params.get("layers", [
+            {"name": "Upper Layer", "role": "Boundary interactions"},
+            {"name": "Core Layer", "role": "Primary dynamic forces"},
+            {"name": "Base Layer", "role": "Structural anchor"}
+        ])
+
+        sy = 215
+        draw.text((rect[0][0] + 40, sy), f"🔬 Cutaway Profile: {subject}", fill=(250, 204, 21), font=fonts["sub"])
+        ly = sy + 45
+        for idx, l in enumerate(layers):
+            draw.rounded_rectangle([(rect[0][0] + 40, ly), (rect[1][0] - 40, ly + 65)], radius=10, fill=(22, 30, 48), outline=(56, 189, 248), width=1)
+            draw.rounded_rectangle([(rect[0][0] + 55, ly + 15), (rect[0][0] + 160, ly + 45)], radius=6, fill=(59, 130, 246))
+            draw.text((rect[0][0] + 65, ly + 20), f"LAYER {idx+1}", fill=(255, 255, 255), font=fonts["badge"])
+            draw.text((rect[0][0] + 180, ly + 15), l.get("name", "Layer"), fill=(255, 255, 255), font=fonts["sub"])
+            draw.text((rect[0][0] + 180, ly + 40), l.get("role", ""), fill=(148, 163, 184), font=fonts["body"])
+            ly += 78
 
     def render_scene_video(self, scene: Dict[str, Any], audio_path: str, output_path: str) -> str:
         """

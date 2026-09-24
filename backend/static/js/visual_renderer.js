@@ -146,6 +146,27 @@ class LectureVisualRenderer {
       case 'math_graph':
         this.renderMathGraph(ctx, params, activeStep, cX, cY, cW, cH);
         break;
+      case 'timeline_journey':
+        this.renderTimelineJourney(ctx, params, activeStep, cX, cY, cW, cH);
+        break;
+      case 'hierarchy_pyramid':
+        this.renderHierarchyPyramid(ctx, params, activeStep, cX, cY, cW, cH);
+        break;
+      case 'cycle_loop':
+        this.renderCycleLoop(ctx, params, activeStep, cX, cY, cW, cH);
+        break;
+      case 'spectrum_meter':
+        this.renderSpectrumMeter(ctx, params, activeStep, cX, cY, cW, cH);
+        break;
+      case 'narrative_arc':
+        this.renderNarrativeArc(ctx, params, activeStep, cX, cY, cW, cH);
+        break;
+      case 'cause_and_effect':
+        this.renderCauseAndEffect(ctx, params, activeStep, cX, cY, cW, cH);
+        break;
+      case 'cross_section_sim':
+        this.renderCrossSectionSim(ctx, params, activeStep, cX, cY, cW, cH);
+        break;
       case 'concept_metaphor':
         this.renderConceptMetaphor(ctx, params, activeStep, cX, cY, cW, cH);
         break;
@@ -630,6 +651,353 @@ class LectureVisualRenderer {
       ctx.font = '16px Inter, sans-serif';
       ctx.fillText(`• ${text}`, cX + 60, ey + 32);
       ey += 65;
+    }
+  }
+
+  // Specialized: Timeline Journey (History & Sequential Milestones)
+  renderTimelineJourney(ctx, params, step, cX, cY, cW, cH) {
+    const milestones = params.milestones || [
+      { year: "Phase 1", title: "Inception", desc: "Foundational trigger" },
+      { year: "Phase 2", title: "Turning Point", desc: "Critical shift" },
+      { year: "Phase 3", title: "Culmination", desc: "Long-term legacy" }
+    ];
+    const n = milestones.length;
+    const cardW = Math.min(260, Math.floor((cW - (n + 1) * 25) / n));
+    const cardH = 220;
+    const cardY = cY + 120;
+
+    // Timeline connecting line
+    ctx.strokeStyle = '#475569';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(cX + 50, cardY - 25);
+    ctx.lineTo(cX + cW - 50, cardY - 25);
+    ctx.stroke();
+
+    for (let i = 0; i < n; i++) {
+      const mx = cX + 30 + i * (cardW + 25);
+      const isCur = (i === (this.currentStepIdx % n));
+      const nodeX = mx + cardW / 2;
+
+      // Milestone Node on Line
+      const pulseSize = isCur ? 14 + this.pulsePhase * 4 : 10;
+      ctx.fillStyle = isCur ? '#38bdf8' : '#334155';
+      ctx.beginPath();
+      ctx.arc(nodeX, cardY - 25, pulseSize, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Card
+      ctx.fillStyle = isCur ? 'rgba(30, 48, 80, 0.95)' : 'rgba(20, 26, 40, 0.85)';
+      ctx.strokeStyle = isCur ? '#38bdf8' : '#334155';
+      ctx.lineWidth = isCur ? 2.5 : 1;
+      this.roundRect(ctx, mx, cardY, cardW, cardH, 12, true, true);
+
+      // Year badge
+      ctx.fillStyle = '#8b5cf6';
+      this.roundRect(ctx, mx + 15, cardY + 15, 110, 26, 6, true, false);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 12px Inter, sans-serif';
+      ctx.fillText(milestones[i].year || `Year ${i+1}`, mx + 25, cardY + 33);
+
+      // Title
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 16px Outfit, sans-serif';
+      ctx.fillText(milestones[i].title || 'Milestone', mx + 15, cardY + 68);
+
+      // Desc
+      ctx.fillStyle = '#cbd5e1';
+      ctx.font = '13px Inter, sans-serif';
+      const desc = milestones[i].desc || '';
+      ctx.fillText(desc.slice(0, 35) + '...', mx + 15, cardY + 98);
+
+      // Impact
+      if (milestones[i].impact) {
+        ctx.fillStyle = '#fef08a';
+        ctx.font = 'bold 11px Inter, sans-serif';
+        ctx.fillText(`⭐ ${milestones[i].impact.slice(0, 28)}`, mx + 15, cardY + 185);
+      }
+    }
+  }
+
+  // Specialized: Hierarchy Pyramid
+  renderHierarchyPyramid(ctx, params, step, cX, cY, cW, cH) {
+    const tiers = params.tiers || [
+      { tier: "Apex: Self-Actualization", note: "Peak fulfillment" },
+      { tier: "Mid: Social & Esteem", note: "Connection & respect" },
+      { tier: "Base: Physiological & Safety", note: "Core survival" }
+    ];
+    const n = tiers.length;
+    const pyrW = cW - 120;
+    const startY = cY + 95;
+    const tierH = Math.min(65, Math.floor(250 / n));
+
+    for (let i = 0; i < n; i++) {
+      const indent = (n - 1 - i) * 35;
+      const tx = cX + 60 + indent;
+      const tw = pyrW - indent * 2;
+      const ty = startY + i * (tierH + 10);
+      const isCur = (i === (this.currentStepIdx % n));
+
+      ctx.fillStyle = isCur ? 'rgba(40, 58, 100, 0.95)' : 'rgba(24, 30, 48, 0.85)';
+      ctx.strokeStyle = isCur ? '#38bdf8' : '#475569';
+      ctx.lineWidth = isCur ? 2.5 : 1;
+      this.roundRect(ctx, tx, ty, tw, tierH, 10, true, true);
+
+      const item = tiers[i];
+      const title = typeof item === 'string' ? item : item.tier;
+      const note = item.note || '';
+
+      ctx.fillStyle = isCur ? '#ffffff' : '#e2e8f0';
+      ctx.font = 'bold 16px Outfit, sans-serif';
+      ctx.fillText(title, tx + 20, ty + 26);
+
+      if (note) {
+        ctx.fillStyle = isCur ? '#fef08a' : '#94a3b8';
+        ctx.font = '13px Inter, sans-serif';
+        ctx.fillText(`• ${note}`, tx + 20, ty + 48);
+      }
+    }
+  }
+
+  // Specialized: Cycle Loop
+  renderCycleLoop(ctx, params, step, cX, cY, cW, cH) {
+    const stages = params.stages || [
+      { name: "Trigger", role: "Initial stimulus" },
+      { name: "Routine", role: "Active behavioral cycle" },
+      { name: "Reward", role: "Reinforces the habit loop" }
+    ];
+    const n = stages.length;
+    const cardW = Math.min(270, Math.floor((cW - (n + 1) * 30) / n));
+    const cardH = 200;
+    const cardY = cY + 110;
+
+    for (let i = 0; i < n; i++) {
+      const sx = cX + 35 + i * (cardW + 30);
+      const isCur = (i === (this.currentStepIdx % n));
+
+      ctx.fillStyle = isCur ? 'rgba(30, 58, 95, 0.95)' : 'rgba(20, 26, 42, 0.85)';
+      ctx.strokeStyle = isCur ? '#38bdf8' : '#334155';
+      ctx.lineWidth = isCur ? 2.5 : 1;
+      this.roundRect(ctx, sx, cardY, cardW, cardH, 12, true, true);
+
+      // Node number circle
+      ctx.fillStyle = isCur ? '#10b981' : '#475569';
+      ctx.beginPath();
+      ctx.arc(sx + 30, cardY + 30, 14, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 12px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(String(i + 1), sx + 30, cardY + 35);
+      ctx.textAlign = 'left';
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 16px Outfit, sans-serif';
+      ctx.fillText(stages[i].name || `Stage ${i + 1}`, sx + 55, cardY + 35);
+
+      ctx.fillStyle = '#cbd5e1';
+      ctx.font = '13px Inter, sans-serif';
+      ctx.fillText(stages[i].role || '', sx + 15, cardY + 75);
+
+      if (i < n - 1) {
+        ctx.fillStyle = '#38bdf8';
+        ctx.font = '22px sans-serif';
+        ctx.fillText('➔', sx + cardW + 8, cardY + cardH / 2);
+      }
+    }
+
+    ctx.fillStyle = '#fef08a';
+    ctx.font = '13px Inter, sans-serif';
+    ctx.fillText('🔁 Continuous Loop: Outputs continually loop back to feed the initial stage.', cX + 50, cardY + cardH + 30);
+  }
+
+  // Specialized: Spectrum Meter
+  renderSpectrumMeter(ctx, params, step, cX, cY, cW, cH) {
+    const leftLbl = params.left_label || "Extreme Pole 1";
+    const rightLbl = params.right_label || "Extreme Pole 2";
+    const centerLbl = params.center_balance || "Equilibrium Balance";
+
+    const barX = cX + 60;
+    const barY = cY + 160;
+    const barW = cW - 120;
+    const barH = 20;
+
+    // Gradient bar
+    const barGrad = ctx.createLinearGradient(barX, 0, barX + barW, 0);
+    barGrad.addColorStop(0, '#ef4444');
+    barGrad.addColorStop(0.5, '#facc15');
+    barGrad.addColorStop(1, '#38bdf8');
+    ctx.fillStyle = barGrad;
+    this.roundRect(ctx, barX, barY, barW, barH, 10, true, false);
+
+    // Labels
+    ctx.fillStyle = '#f87171';
+    ctx.font = 'bold 16px Outfit, sans-serif';
+    ctx.fillText(`◀ ${leftLbl}`, barX, barY - 25);
+
+    ctx.fillStyle = '#38bdf8';
+    ctx.textAlign = 'right';
+    ctx.fillText(`${rightLbl} ▶`, barX + barW, barY - 25);
+    ctx.textAlign = 'left';
+
+    // Center Card
+    const cCardW = 380;
+    const cCardX = barX + (barW - cCardW) / 2;
+    const cCardY = barY + 50;
+    ctx.fillStyle = 'rgba(24, 32, 54, 0.95)';
+    ctx.strokeStyle = '#facc15';
+    ctx.lineWidth = 1.5;
+    this.roundRect(ctx, cCardX, cCardY, cCardW, 85, 10, true, true);
+
+    ctx.fillStyle = '#facc15';
+    ctx.font = 'bold 12px Inter, sans-serif';
+    ctx.fillText('⚖️ PRAGMATIC EQUILIBRIUM', cCardX + 16, cCardY + 26);
+
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '14px Inter, sans-serif';
+    ctx.fillText(centerLbl, cCardX + 16, cCardY + 52);
+  }
+
+  // Specialized: Narrative Arc (Story Mountain)
+  renderNarrativeArc(ctx, params, step, cX, cY, cW, cH) {
+    const phases = params.phases || [
+      { phase: "1. Exposition", event: "Ordinary world introduced" },
+      { phase: "2. Rising Tension", event: "Trials and thresholds" },
+      { phase: "3. Climax Peak", event: "Supreme ordeal" },
+      { phase: "4. Return", event: "Transformed with elixir" }
+    ];
+    const oX = cX + 60;
+    const oY = cY + cH - 60;
+    const totalW = cW - 120;
+
+    // Draw Mountain Path
+    const pts = [
+      { x: oX, y: oY },
+      { x: oX + totalW * 0.25, y: oY - 50 },
+      { x: oX + totalW * 0.55, y: oY - 180 }, // Peak
+      { x: oX + totalW * 0.8, y: oY - 60 },
+      { x: oX + totalW, y: oY }
+    ];
+
+    ctx.strokeStyle = '#38bdf8';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(pts[0].x, pts[0].y);
+    for (let i = 1; i < pts.length; i++) {
+      ctx.lineTo(pts[i].x, pts[i].y);
+    }
+    ctx.stroke();
+
+    // Peak beacon
+    ctx.fillStyle = '#facc15';
+    ctx.beginPath();
+    ctx.arc(pts[2].x, pts[2].y, 8, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = '#facc15';
+    ctx.font = 'bold 13px Inter, sans-serif';
+    ctx.fillText('⚡ SUPREME CLIMAX', pts[2].x - 60, pts[2].y - 20);
+
+    // Cards
+    const cy = cY + 90;
+    const cw = Math.floor(totalW / Math.min(4, phases.length));
+    for (let i = 0; i < Math.min(4, phases.length); i++) {
+      const px = oX + i * cw;
+      ctx.fillStyle = 'rgba(20, 26, 42, 0.85)';
+      ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 1;
+      this.roundRect(ctx, px, cy, cw - 12, 70, 8, true, true);
+
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = 'bold 12px Inter, sans-serif';
+      ctx.fillText(phases[i].phase, px + 10, cy + 22);
+
+      ctx.fillStyle = '#e2e8f0';
+      ctx.font = '12px Inter, sans-serif';
+      ctx.fillText((phases[i].event || '').slice(0, 30), px + 10, cy + 45);
+    }
+  }
+
+  // Specialized: Cause and Effect Cascade
+  renderCauseAndEffect(ctx, params, step, cX, cY, cW, cH) {
+    const root = params.root_catalyst || "Root Catalyst Trigger";
+    const effects = params.intermediate_effects || ["Reaction A", "Reaction B"];
+    const outcome = params.ultimate_consequence || "Lasting Enduring Impact";
+
+    const sy = cY + 90;
+    // Root
+    ctx.fillStyle = 'rgba(45, 20, 30, 0.9)';
+    ctx.strokeStyle = '#ef4444';
+    ctx.lineWidth = 1.5;
+    this.roundRect(ctx, cX + 40, sy, cW - 80, 50, 8, true, true);
+    ctx.fillStyle = '#ef4444';
+    ctx.font = 'bold 12px Inter, sans-serif';
+    ctx.fillText('🔥 ROOT CATALYST:', cX + 55, sy + 22);
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '14px Inter, sans-serif';
+    ctx.fillText(root, cX + 185, sy + 22);
+
+    // Intermediate effects
+    let iy = sy + 75;
+    for (const eff of effects.slice(0, 2)) {
+      ctx.fillStyle = 'rgba(24, 32, 50, 0.85)';
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 1;
+      this.roundRect(ctx, cX + 60, iy, cW - 120, 42, 6, true, true);
+      ctx.fillStyle = '#e2e8f0';
+      ctx.font = '13px Inter, sans-serif';
+      ctx.fillText(`↳ ${eff}`, cX + 75, iy + 26);
+      iy += 50;
+    }
+
+    // Outcome
+    ctx.fillStyle = 'rgba(20, 45, 35, 0.9)';
+    ctx.strokeStyle = '#10b981';
+    ctx.lineWidth = 1.5;
+    this.roundRect(ctx, cX + 40, iy + 10, cW - 80, 55, 8, true, true);
+    ctx.fillStyle = '#10b981';
+    ctx.font = 'bold 12px Inter, sans-serif';
+    ctx.fillText('🏆 ULTIMATE CONSEQUENCE:', cX + 55, iy + 35);
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '14px Inter, sans-serif';
+    ctx.fillText(outcome, cX + 240, iy + 35);
+  }
+
+  // Specialized: Cross Section Simulation
+  renderCrossSectionSim(ctx, params, step, cX, cY, cW, cH) {
+    const subject = params.subject || "Cross-Section System Profile";
+    const layers = params.layers || [
+      { name: "Outer Boundary", role: "External interface layer" },
+      { name: "Core Dynamics", role: "Primary energy / biological transformation" },
+      { name: "Substrate Base", role: "Foundational anchor" }
+    ];
+
+    let ly = cY + 95;
+    for (let i = 0; i < layers.length; i++) {
+      ctx.fillStyle = 'rgba(22, 30, 48, 0.85)';
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 1;
+      this.roundRect(ctx, cX + 40, ly, cW - 80, 55, 8, true, true);
+
+      ctx.fillStyle = '#3b82f6';
+      this.roundRect(ctx, cX + 55, ly + 14, 85, 26, 4, true, false);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 11px Inter, sans-serif';
+      ctx.fillText(`LAYER ${i + 1}`, cX + 70, ly + 31);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 15px Outfit, sans-serif';
+      ctx.fillText(layers[i].name || 'Layer', cX + 160, ly + 25);
+
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '13px Inter, sans-serif';
+      ctx.fillText(layers[i].role || '', cX + 160, ly + 46);
+
+      ly += 68;
     }
   }
 

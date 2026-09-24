@@ -2440,5 +2440,1544 @@
         }
       ]
     }
+  },
+  "4e71dc89": {
+    "id": "4e71dc89",
+    "topic": "earth",
+    "title": "earth: Intuitive Visual Masterclass",
+    "domain": "general",
+    "subdomain": "Educational Concepts",
+    "knowledge_level": "intermediate",
+    "teaching_style": "concept_metaphor",
+    "duration_target": "standard",
+    "voice_name": "en-US-JennyNeural",
+    "created_at": "2026-09-24 22:35",
+    "total_duration": 82.66,
+    "scenes": [
+      {
+        "scene_id": "lec_4e71dc89_s0",
+        "index": 0,
+        "chapter_title": "1. The Core Intuition: Why earth Matters",
+        "pedagogical_phase": "hook",
+        "narration_text": "Welcome! To truly understand earth, we must start not with definitions or formulas, but with the fundamental problem it solves. Why do we need it? What breaks in its absence? By picturing this through an intuitive mental model, everything that follows will feel natural rather than memorized.",
+        "estimated_duration": 22.0,
+        "visual_spec": {
+          "visual_type": "concept_metaphor",
+          "title": "The Foundational Intuition of earth",
+          "subtitle": "Connecting Everyday Intuition to Technical Reality",
+          "parameters": {
+            "left_title": "Without This Principle",
+            "left_items": [
+              "High inefficiency or ambiguity",
+              "Manual, fragile processes",
+              "Difficult to scale or optimize"
+            ],
+            "right_title": "With earth",
+            "right_items": [
+              "Elegant, predictable structure",
+              "Automated, scalable efficiency",
+              "Clear mental clarity"
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "description": "The problem setting"
+            },
+            {
+              "step": 2,
+              "description": "The elegant solution"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_4e71dc89_s0.mp3",
+        "actual_duration": 19.9,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 1.55,
+            "text": "Welcome!"
+          },
+          {
+            "start": 1.5,
+            "end": 8.9,
+            "text": "To truly understand earth, we must start not with definitions or formulas, but with the fundamental problem it solves."
+          },
+          {
+            "start": 8.9,
+            "end": 10.78,
+            "text": "Why do we need it?"
+          },
+          {
+            "start": 10.78,
+            "end": 13.18,
+            "text": "What breaks in its absence?"
+          },
+          {
+            "start": 13.18,
+            "end": 19.9,
+            "text": "By picturing this through an intuitive mental model, everything that follows will feel natural rather than memorized."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_4e71dc89_s1",
+        "index": 1,
+        "chapter_title": "2. The Underlying Mechanism: Core Architecture",
+        "pedagogical_phase": "foundation",
+        "narration_text": "Now let us examine the fundamental mechanics that make earth work. At its base, it operates through a clear set of invariant rules. Signals, data, or concepts flow predictably from one stage to the next, maintaining consistency and purpose.",
+        "estimated_duration": 24.0,
+        "visual_spec": {
+          "visual_type": "process_simulation",
+          "title": "earth Operational Pipeline",
+          "subtitle": "Stage-by-Stage Functional Architecture",
+          "parameters": {
+            "stages": [
+              {
+                "name": "Stage 1: Input & Setup",
+                "role": "Gathering preconditions"
+              },
+              {
+                "name": "Stage 2: Core Transformation",
+                "role": "Applying primary rules & invariants"
+              },
+              {
+                "name": "Stage 3: Validation & Output",
+                "role": "Delivering consistent results"
+              }
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Stage 1"
+            },
+            {
+              "step": 2,
+              "highlight": "Stage 2"
+            },
+            {
+              "step": 3,
+              "highlight": "Stage 3"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_4e71dc89_s1.mp3",
+        "actual_duration": 16.3,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 4.3,
+            "text": "Now let us examine the fundamental mechanics that make earth work."
+          },
+          {
+            "start": 4.25,
+            "end": 8.54,
+            "text": "At its base, it operates through a clear set of invariant rules."
+          },
+          {
+            "start": 8.54,
+            "end": 16.3,
+            "text": "Signals, data, or concepts flow predictably from one stage to the next, maintaining consistency and purpose."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_4e71dc89_s2",
+        "index": 2,
+        "chapter_title": "3. Step-by-Step Walkthrough in Action",
+        "pedagogical_phase": "visual_demonstration",
+        "narration_text": "Let us observe a concrete demonstration. Watch how state transitions occur step-by-step. Each action directly addresses the objective, eliminating uncertainty and producing verifiable outcomes.",
+        "estimated_duration": 25.0,
+        "visual_spec": {
+          "visual_type": "diagram_board",
+          "title": "Live Demonstration of earth",
+          "subtitle": "Tracking Dynamic State Transitions",
+          "parameters": {
+            "steps": [
+              {
+                "step": 1,
+                "state": "Initial Condition",
+                "note": "Establishing baseline parameters"
+              },
+              {
+                "step": 2,
+                "state": "Active Execution",
+                "note": "Processing central invariant"
+              },
+              {
+                "step": 3,
+                "state": "Convergence",
+                "note": "Reached target outcome"
+              }
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "description": "Initial parameters set"
+            },
+            {
+              "step": 2,
+              "description": "Active transformation"
+            },
+            {
+              "step": 3,
+              "description": "Final result verified"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_4e71dc89_s2.mp3",
+        "actual_duration": 13.63,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 3.11,
+            "text": "Let us observe a concrete demonstration."
+          },
+          {
+            "start": 3.06,
+            "end": 6.46,
+            "text": "Watch how state transitions occur step-by-step."
+          },
+          {
+            "start": 6.46,
+            "end": 13.63,
+            "text": "Each action directly addresses the objective, eliminating uncertainty and producing verifiable outcomes."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_4e71dc89_s3",
+        "index": 3,
+        "chapter_title": "4. Edge Cases, Nuances & Common Traps",
+        "pedagogical_phase": "edge_cases",
+        "narration_text": "Experienced practitioners know that mastery lies in understanding the edge cases. Where does earth encounter limits? What trade-offs between speed, complexity, and memory must we navigate? Being aware of these pitfalls prevents critical failures.",
+        "estimated_duration": 23.0,
+        "visual_spec": {
+          "visual_type": "comparison_matrix",
+          "title": "Nuances, Pitfalls & Trade-Offs",
+          "subtitle": "Best Practices for Real-World Scenarios",
+          "parameters": {
+            "col1": "Common Pitfall: Misunderstanding initial boundary conditions",
+            "col2": "Trade-off: Simplicity vs. Maximum Performance",
+            "col3": "Best Practice: Verify invariants continuously"
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Pitfall"
+            },
+            {
+              "step": 2,
+              "highlight": "Trade-off"
+            },
+            {
+              "step": 3,
+              "highlight": "Best Practice"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_4e71dc89_s3.mp3",
+        "actual_duration": 16.8,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 5.5,
+            "text": "Experienced practitioners know that mastery lies in understanding the edge cases."
+          },
+          {
+            "start": 5.45,
+            "end": 7.93,
+            "text": "Where does earth encounter limits?"
+          },
+          {
+            "start": 7.92,
+            "end": 12.86,
+            "text": "What trade-offs between speed, complexity, and memory must we navigate?"
+          },
+          {
+            "start": 12.86,
+            "end": 16.8,
+            "text": "Being aware of these pitfalls prevents critical failures."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_4e71dc89_s4",
+        "index": 4,
+        "chapter_title": "5. Real-World Applications & Key Takeaways",
+        "pedagogical_phase": "summary",
+        "narration_text": "To wrap up our lesson: earth is a powerful concept that transforms how we solve complex challenges. By keeping the core intuition, the underlying mechanism, and the key trade-offs in mind, you are fully equipped to apply this in your studies and practical work.",
+        "estimated_duration": 22.0,
+        "visual_spec": {
+          "visual_type": "concept_metaphor",
+          "title": "earth: Key Educational Takeaways",
+          "subtitle": "Summary of Core Principles and Applications",
+          "parameters": {
+            "takeaways": [
+              "Intuition first: Understand the problem before the implementation",
+              "Respect invariants: Consistency at every step guarantees success",
+              "Consider trade-offs: Balance elegance with practical efficiency"
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Intuition"
+            },
+            {
+              "step": 2,
+              "highlight": "Invariants"
+            },
+            {
+              "step": 3,
+              "highlight": "Application"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_4e71dc89_s4.mp3",
+        "actual_duration": 16.03,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 6.6,
+            "text": "To wrap up our lesson: earth is a powerful concept that transforms how we solve complex challenges."
+          },
+          {
+            "start": 6.55,
+            "end": 16.03,
+            "text": "By keeping the core intuition, the underlying mechanism, and the key trade-offs in mind, you are fully equipped to apply this in your studies and practical work."
+          }
+        ]
+      }
+    ],
+    "video_url": "/media/videos/lecture_4e71dc89.mp4",
+    "subtitles_vtt_url": "/media/subtitles/lec_4e71dc89.vtt",
+    "materials": {
+      "summary": "This comprehensive lecture on earth breaks down the foundational intuition, step-by-step mechanics, critical edge cases, and real-world practical applications to ensure thorough conceptual mastery.",
+      "notes_markdown": "# earth: Comprehensive Masterclass Notes\n\n## 1. Executive Summary\nUnderstanding **earth** requires building a solid mental model from simple to advanced concepts:\n- **Core Purpose**: Solving fundamental challenges with clarity and speed.\n- **Key Invariants**: Predictable rules that govern behavior throughout execution.\n- **Scope & Applicability**: Widely utilized across modern engineering, science, and analytical domains.\n\n## 2. Structural Principles\n1. **Foundation**: Setting clear preconditions.\n2. **Execution**: Systematic transformation with minimal friction.\n3. **Verification**: Ensuring results meet all necessary constraints.\n",
+      "key_concepts": [
+        {
+          "concept": "earth Core Invariant",
+          "definition": "The defining mathematical or architectural rule that remains true throughout the lifecycle.",
+          "importance": "Guarantees system correctness."
+        },
+        {
+          "concept": "State Transition",
+          "definition": "Moving safely from an initial state through intermediate phases to a target outcome.",
+          "importance": "Provides transparent traceability."
+        }
+      ],
+      "formulas_or_code": [
+        {
+          "title": "earth Paradigm Rule",
+          "type": "rule",
+          "content": "Invariant(State_t) == True for all t",
+          "explanation": "Ensures every intermediate state satisfies foundational requirements."
+        }
+      ],
+      "practice_questions": [
+        {
+          "question": "What is the single most critical reason to apply earth in practice?",
+          "hint": "Think about efficiency, predictability, and safety.",
+          "solution": "Applying earth creates a structured, verifiable approach that prevents errors, scales predictably, and optimizes resource utilization."
+        }
+      ],
+      "quiz": [
+        {
+          "id": 1,
+          "question": "What is the first step when implementing or analyzing earth?",
+          "options": [
+            "Jump straight to advanced edge cases",
+            "Establish clear foundational preconditions and invariants",
+            "Ignore performance trade-offs",
+            "Random trial and error"
+          ],
+          "correct_index": 1,
+          "explanation": "Establishing clear baseline preconditions ensures all downstream transformations are sound."
+        },
+        {
+          "id": 2,
+          "question": "Why is understanding the edge cases of earth essential?",
+          "options": [
+            "It is only needed for academic exams",
+            "Systems typically fail at boundary conditions if unhandled",
+            "Edge cases do not affect real-world outcomes",
+            "It replaces the need for the core mechanism"
+          ],
+          "correct_index": 1,
+          "explanation": "Failures and unexpected behavior almost always occur at boundaries and edge cases."
+        }
+      ],
+      "flashcards": [
+        {
+          "id": 1,
+          "front": "What is the primary benefit of earth?",
+          "back": "Providing structured, predictable, and optimized outcomes for complex problems.",
+          "category": "Core Principle"
+        },
+        {
+          "id": 2,
+          "front": "How should one approach learning earth?",
+          "back": "By understanding the intuitive problem first, then mastering the rigorous mechanism and edge cases.",
+          "category": "Pedagogy"
+        }
+      ]
+    }
+  },
+  "c17b3bb8": {
+    "id": "c17b3bb8",
+    "topic": "The French Revolution",
+    "title": "The French Revolution: Storming the Bastille to the Birth of Democracy",
+    "domain": "history",
+    "subdomain": "Modern European History & Political Revolutions",
+    "knowledge_level": "intermediate",
+    "teaching_style": "timeline",
+    "duration_target": "standard",
+    "voice_name": "en-US-ChristopherNeural",
+    "created_at": "2026-09-24 22:44",
+    "total_duration": 135.03,
+    "scenes": [
+      {
+        "scene_id": "lec_c17b3bb8_s0",
+        "index": 0,
+        "chapter_title": "1. The Spark: Starvation, Debt & The Three Estates",
+        "pedagogical_phase": "hook",
+        "narration_text": "In the summer of 1789, France was bankrupt, frozen by terrible crop failures, and suffocating under an unjust social order known as the Three Estates. While the clergy and nobility paid virtually zero taxes and feasted in Versailles, the commoners, 98 percent of the population, paid for everything while starving in the streets of Paris. When the price of a single loaf of bread soared to equal a month of peasant wages, centuries of royal absolute power were about to collapse.",
+        "estimated_duration": 25.0,
+        "visual_spec": {
+          "visual_type": "hierarchy_pyramid",
+          "title": "The Ancien Régime: The Three Estates",
+          "subtitle": "A Society Built on Extreme Inequality",
+          "parameters": {
+            "pyramid_title": "Feudal Estate Pyramid (1789)",
+            "tiers": [
+              {
+                "tier": "1st Estate: The Clergy (0.5% Pop)",
+                "note": "Owned 10% of land, paid 0% taxes, collected tithes"
+              },
+              {
+                "tier": "2nd Estate: The Nobility (1.5% Pop)",
+                "note": "Held top military & court posts, exempted from taxes"
+              },
+              {
+                "tier": "3rd Estate: Commoners & Bourgeoisie (98% Pop)",
+                "note": "Peasants, merchants, laborers who bore the entire tax burden"
+              }
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "3rd Estate tax burden"
+            },
+            {
+              "step": 2,
+              "highlight": "1st and 2nd Estate tax exemption"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_c17b3bb8_s0.mp3",
+        "actual_duration": 30.24,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 10.5,
+            "text": "In the summer of 1789, France was bankrupt, frozen by terrible crop failures, and suffocating under an unjust social order known as the Three Estates."
+          },
+          {
+            "start": 10.45,
+            "end": 21.92,
+            "text": "While the clergy and nobility paid virtually zero taxes and feasted in Versailles, the commoners, 98 percent of the population, paid for everything while starving in the streets of Paris."
+          },
+          {
+            "start": 21.93,
+            "end": 30.24,
+            "text": "When the price of a single loaf of bread soared to equal a month of peasant wages, centuries of royal absolute power were about to collapse."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_c17b3bb8_s1",
+        "index": 1,
+        "chapter_title": "2. Chronology of Rebellion: From Bastille to Republic",
+        "pedagogical_phase": "foundation",
+        "narration_text": "Let us trace the pivotal turning points that shook the Western world. On July 14, 1789, enraged citizens stormed the medieval Bastille fortress, seizing gunpowder and declaring popular sovereignty. Within weeks, the National Assembly abolished feudalism and proclaimed the Declaration of the Rights of Man. By 1792, King Louis the Sixteenth was deposed, and France declared itself a Republic.",
+        "estimated_duration": 24.0,
+        "visual_spec": {
+          "visual_type": "timeline_journey",
+          "title": "The Revolutionary Timeline: 1789 - 1799",
+          "subtitle": "From Royal Absolutism to the Rise of Napoleon",
+          "parameters": {
+            "milestones": [
+              {
+                "year": "May 1789",
+                "title": "Estates-General Convenes",
+                "desc": "Third Estate breaks away to form National Assembly",
+                "impact": "Birth of popular sovereignty"
+              },
+              {
+                "year": "July 1789",
+                "title": "Storming of the Bastille",
+                "desc": "Parisians seize the fortress armory",
+                "impact": "Symbolic fall of tyranny"
+              },
+              {
+                "year": "Aug 1789",
+                "title": "Declaration of Rights of Man",
+                "desc": "'Liberty, Equality, Fraternity' enshrined",
+                "impact": "End of feudal privilege"
+              },
+              {
+                "year": "Jan 1793",
+                "title": "Execution of Louis XVI",
+                "desc": "The King is guillotined for treason",
+                "impact": "Point of no return for Europe"
+              }
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "1789"
+            },
+            {
+              "step": 2,
+              "highlight": "1793"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_c17b3bb8_s1.mp3",
+        "actual_duration": 27.91,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 4.31,
+            "text": "Let us trace the pivotal turning points that shook the Western world."
+          },
+          {
+            "start": 4.26,
+            "end": 14.39,
+            "text": "On July 14, 1789, enraged citizens stormed the medieval Bastille fortress, seizing gunpowder and declaring popular sovereignty."
+          },
+          {
+            "start": 14.39,
+            "end": 20.95,
+            "text": "Within weeks, the National Assembly abolished feudalism and proclaimed the Declaration of the Rights of Man."
+          },
+          {
+            "start": 20.95,
+            "end": 27.91,
+            "text": "By 1792, King Louis the Sixteenth was deposed, and France declared itself a Republic."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_c17b3bb8_s2",
+        "index": 2,
+        "chapter_title": "3. The Clashing Ideologies: Girondins vs. The Mountain",
+        "pedagogical_phase": "visual_demonstration",
+        "narration_text": "As foreign monarchies invaded France to crush the uprising, the revolution turned radically inwards. The National Convention split into two fierce factions: the moderate Girondins, who advocated decentralized democracy and constitutional caution, and the radical Jacobins, led by Maximilien Robespierre, who demanded ruthless central power to save the revolution at any cost.",
+        "estimated_duration": 24.0,
+        "visual_spec": {
+          "visual_type": "comparison_matrix",
+          "title": "The Ideological Civil War",
+          "subtitle": "Moderate Reformers vs. Radical Jacobins",
+          "parameters": {
+            "col1": "The Royalists: Preserve monarchy, aristocratic tradition, and Catholic authority",
+            "col2": "The Girondins: Moderate republicans, free markets, rule of law, anti-violence",
+            "col3": "The Jacobin Mountain: Radical centralization, price controls, state terror to purge counter-revolutionaries"
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Girondins"
+            },
+            {
+              "step": 2,
+              "highlight": "Jacobins"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_c17b3bb8_s2.mp3",
+        "actual_duration": 23.57,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 6.59,
+            "text": "As foreign monarchies invaded France to crush the uprising, the revolution turned radically inwards."
+          },
+          {
+            "start": 6.54,
+            "end": 23.57,
+            "text": "The National Convention split into two fierce factions: the moderate Girondins, who advocated decentralized democracy and constitutional caution, and the radical Jacobins, led by Maximilien Robespierre, who demanded ruthless central power to save the revolution at any cost."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_c17b3bb8_s3",
+        "index": 3,
+        "chapter_title": "4. The Reign of Terror: The Revolution Devours Its Children",
+        "pedagogical_phase": "edge_cases",
+        "narration_text": "Robespierre declared that without virtue, terror is fatal; and without terror, virtue is impotent. The Committee of Public Safety suspended constitutional liberties, executing over 17,000 citizens by guillotine in just one year. But paranoia escalated until Robespierre himself was arrested and guillotined in the Thermidorian Reaction, proving that revolutions often consume the very leaders who unleash them.",
+        "estimated_duration": 25.0,
+        "visual_spec": {
+          "visual_type": "cause_and_effect",
+          "title": "The Cascade of Radicalization",
+          "subtitle": "How War and Paranoia Led to the Reign of Terror",
+          "parameters": {
+            "root_catalyst": "Foreign Monarchies Invade France (1792)",
+            "intermediate_effects": [
+              "War panic & bread shortages radicalize Parisian sans-culottes",
+              "Committee of Public Safety established under Robespierre",
+              "Law of Suspects: Anyone accused of treason is guillotined"
+            ],
+            "ultimate_consequence": "Thermidorian Reaction: Robespierre executed, ending the Terror"
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Foreign Invasion"
+            },
+            {
+              "step": 2,
+              "highlight": "Reign of Terror"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_c17b3bb8_s3.mp3",
+        "actual_duration": 25.85,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 6.81,
+            "text": "Robespierre declared that without virtue, terror is fatal; and without terror, virtue is impotent."
+          },
+          {
+            "start": 6.76,
+            "end": 15.21,
+            "text": "The Committee of Public Safety suspended constitutional liberties, executing over 17,000 citizens by guillotine in just one year."
+          },
+          {
+            "start": 15.21,
+            "end": 25.85,
+            "text": "But paranoia escalated until Robespierre himself was arrested and guillotined in the Thermidorian Reaction, proving that revolutions often consume the very leaders who unleash them."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_c17b3bb8_s4",
+        "index": 4,
+        "chapter_title": "5. Global Legacy: How 1789 Shaped Modern Democracy",
+        "pedagogical_phase": "summary",
+        "narration_text": "Out of the revolutionary ashes rose Napoleon Bonaparte, whose Napoleonic Code modernized European law. The French Revolution forever dismantled divine right monarchy, introduced universal human rights into international law, invented modern political left and right, and demonstrated that ordinary citizens possess the power to reshape history. Its ideals of Liberty, Equality, and Fraternity remain the bedrock of modern democracy.",
+        "estimated_duration": 24.0,
+        "visual_spec": {
+          "visual_type": "spectrum_meter",
+          "title": "The Birth of the Modern Political Spectrum",
+          "subtitle": "Where Lawmakers Sat in the 1789 National Assembly",
+          "parameters": {
+            "left_label": "The Left: Radical Change, Equality, Republicanism",
+            "right_label": "The Right: Tradition, Monarchy, Order, Hierarchy",
+            "center_balance": "Constitutional Liberalism & Human Rights",
+            "markers": [
+              "Left: Jacobins",
+              "Center: Plain / Marais",
+              "Right: Monarchists & Aristocracy"
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "The Left"
+            },
+            {
+              "step": 2,
+              "highlight": "The Right"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_c17b3bb8_s4.mp3",
+        "actual_duration": 27.46,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 7.15,
+            "text": "Out of the revolutionary ashes rose Napoleon Bonaparte, whose Napoleonic Code modernized European law."
+          },
+          {
+            "start": 7.1,
+            "end": 21.14,
+            "text": "The French Revolution forever dismantled divine right monarchy, introduced universal human rights into international law, invented modern political left and right, and demonstrated that ordinary citizens possess the power to reshape history."
+          },
+          {
+            "start": 21.14,
+            "end": 27.46,
+            "text": "Its ideals of Liberty, Equality, and Fraternity remain the bedrock of modern democracy."
+          }
+        ]
+      }
+    ],
+    "video_url": "/media/videos/lecture_c17b3bb8.mp4",
+    "subtitles_vtt_url": "/media/subtitles/lec_c17b3bb8.vtt",
+    "materials": {
+      "summary": "The French Revolution (1789-1799) was a watershed moment in human history. Driven by acute financial insolvency, hunger, and extreme inequality under the Three Estates, the French people overthrew centuries of feudal monarchy, enacted the Declaration of the Rights of Man, weathered the radical Reign of Terror, and established foundational principles of secular democracy and human rights.",
+      "notes_markdown": "# The French Revolution: Comprehensive Masterclass Notes\n\n## 1. Root Causes of 1789\n- **Financial Crisis**: Royal debts from funding the American Revolution and Seven Years' War.\n- **Agricultural Crisis**: The 1788-1789 crop failure caused bread prices to consume 80% of peasants' income.\n- **Social Inequality**: The Three Estates structure exempting the top 2% from taxation.\n\n## 2. Chronological Milestones\n- **June 1789**: The Tennis Court Oath establishes the National Assembly.\n- **July 14, 1789**: Storming of the Bastille.\n- **August 1789**: Declaration of the Rights of Man and of the Citizen.\n- **1793-1794**: Reign of Terror under Robespierre.\n- **1799**: Coup of 18 Brumaire by Napoleon Bonaparte.\n\n## 3. Enduring Legacies\n1. **The Political Spectrum**: The terms 'Left-wing' and 'Right-wing' originated from where deputies sat in the 1789 National Assembly.\n2. **Secular Law**: The Napoleonic Code abolished aristocratic privileges and established civil equality.\n3. **National Sovereignty**: Power derives from the people, not divine right.\n",
+      "key_concepts": [
+        {
+          "concept": "The Three Estates",
+          "definition": "The feudal social hierarchy dividing France into Clergy (1st), Nobility (2nd), and Commoners (3rd).",
+          "importance": "Extreme tax inequality between estates sparked the rebellion."
+        },
+        {
+          "concept": "Reign of Terror",
+          "definition": "A 10-month period (1793-1794) of state-sponsored executions during internal and external war.",
+          "importance": "Demonstrates the dangers of ideological radicalization and paranoia."
+        },
+        {
+          "concept": "Popular Sovereignty",
+          "definition": "The principle that authority of a state and government is created and sustained by the consent of its people.",
+          "importance": "Replaced divine right monarchy with democratic legitimacy."
+        }
+      ],
+      "formulas_or_code": [
+        {
+          "title": "The National Motto",
+          "type": "principle",
+          "content": "Liberté, Égalité, Fraternité",
+          "explanation": "Liberty, Equality, Fraternity: the universal triad defining modern republican democracies."
+        },
+        {
+          "title": "Article 1 (Rights of Man)",
+          "type": "quote",
+          "content": "Men are born and remain free and equal in rights.",
+          "explanation": "Foundational premise dissolving aristocratic hereditary entitlement."
+        }
+      ],
+      "practice_questions": [
+        {
+          "question": "Why did King Louis XVI call the Estates-General in May 1789 after a 175-year hiatus?",
+          "hint": "Consider France's sovereign financial situation.",
+          "solution": "France was facing complete national bankruptcy, and the aristocracy refused to surrender their tax exemptions without approval from the Estates-General."
+        }
+      ],
+      "quiz": [
+        {
+          "id": 1,
+          "question": "What percentage of the French population belonged to the Third Estate in 1789?",
+          "options": [
+            "Around 50%",
+            "Around 75%",
+            "Around 98%",
+            "Less than 20%"
+          ],
+          "correct_index": 2,
+          "explanation": "Commoners, peasants, and the bourgeoisie accounted for roughly 98% of the kingdom's populace."
+        },
+        {
+          "id": 2,
+          "question": "What was the significance of the storming of the Bastille on July 14, 1789?",
+          "options": [
+            "It was where the King lived",
+            "It symbolized the fall of royal tyranny and secured gunpowder for the revolution",
+            "It was where all national tax money was kept",
+            "It ended the French Revolution in a single day"
+          ],
+          "correct_index": 1,
+          "explanation": "The Bastille was a dreaded symbol of royal oppression and contained the gunpowder needed by the newly formed National Guard."
+        }
+      ],
+      "flashcards": [
+        {
+          "id": 1,
+          "front": "What did the Tennis Court Oath pledge?",
+          "back": "The Third Estate vowed not to disband until they had drafted a written constitution for France.",
+          "category": "Milestones"
+        },
+        {
+          "id": 2,
+          "front": "Who led the Committee of Public Safety during the Reign of Terror?",
+          "back": "Maximilien Robespierre.",
+          "category": "Key Figures"
+        }
+      ]
+    }
+  },
+  "3f971ee1": {
+    "id": "3f971ee1",
+    "topic": "How Inflation Works",
+    "title": "How Inflation Works: The Hidden Tax on Money",
+    "domain": "economics_business",
+    "subdomain": "Macroeconomics & Personal Finance",
+    "knowledge_level": "intermediate",
+    "teaching_style": "money_cycle",
+    "duration_target": "standard",
+    "voice_name": "en-US-ChristopherNeural",
+    "created_at": "2026-09-24 22:44",
+    "total_duration": 135.14,
+    "scenes": [
+      {
+        "scene_id": "lec_3f971ee1_s0",
+        "index": 0,
+        "chapter_title": "1. The Coffee Shop Dilemma: What is Inflation?",
+        "pedagogical_phase": "hook",
+        "narration_text": "In 1970, a cup of coffee cost twenty-five cents. Today, that exact same coffee costs four dollars. Did the coffee beans become sixteen times more delicious? Of course not. The coffee didn't change; the value of the dollar did! Inflation is not simply prices rising; it is the silent evaporation of your money's purchasing power over time.",
+        "estimated_duration": 22.0,
+        "visual_spec": {
+          "visual_type": "concept_metaphor",
+          "title": "Purchasing Power Shrinkage",
+          "subtitle": "What $20 Bought in 1970 vs Today",
+          "parameters": {
+            "left_title": "1970: $20 Bill",
+            "left_items": [
+              "Full grocery cart (Eggs, Milk, Bread, Meat)",
+              "Full tank of gasoline",
+              "Dinner for two at a restaurant"
+            ],
+            "right_title": "Today: $20 Bill",
+            "right_items": [
+              "A modest sandwich and drink",
+              "A few gallons of gas",
+              "Purchasing power eroded by ~85%!"
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "1970 basket"
+            },
+            {
+              "step": 2,
+              "highlight": "Current basket"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_3f971ee1_s0.mp3",
+        "actual_duration": 26.04,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 4.81,
+            "text": "In 1970, a cup of coffee cost twenty-five cents."
+          },
+          {
+            "start": 4.76,
+            "end": 9.1,
+            "text": "Today, that exact same coffee costs four dollars."
+          },
+          {
+            "start": 9.1,
+            "end": 13.18,
+            "text": "Did the coffee beans become sixteen times more delicious?"
+          },
+          {
+            "start": 13.18,
+            "end": 14.98,
+            "text": "Of course not."
+          },
+          {
+            "start": 14.97,
+            "end": 18.89,
+            "text": "The coffee didn't change; the value of the dollar did!"
+          },
+          {
+            "start": 18.89,
+            "end": 26.04,
+            "text": "Inflation is not simply prices rising; it is the silent evaporation of your money's purchasing power over time."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_3f971ee1_s1",
+        "index": 1,
+        "chapter_title": "2. The Twin Drivers: Demand-Pull vs. Cost-Push",
+        "pedagogical_phase": "foundation",
+        "narration_text": "Economists categorize inflation into two primary engines. First is Demand-Pull inflation: too much money chasing too few goods, like when stimulus cash arrives but factories cannot produce goods fast enough. Second is Cost-Push inflation: when production costs spike, such as an oil embargo or war that makes transportation and electricity expensive across the entire economy.",
+        "estimated_duration": 24.0,
+        "visual_spec": {
+          "visual_type": "comparison_matrix",
+          "title": "The Two Engines of Inflation",
+          "subtitle": "Demand-Pull vs. Cost-Push Economics",
+          "parameters": {
+            "col1": "Demand-Pull: High consumer spending & cheap credit pull prices upward",
+            "col2": "Cost-Push: Rising supply costs (oil, raw materials, wages) push prices higher",
+            "col3": "Built-In (Wage-Price Spiral): Workers demand higher wages, forcing businesses to raise prices again"
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Demand-Pull"
+            },
+            {
+              "step": 2,
+              "highlight": "Cost-Push"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_3f971ee1_s1.mp3",
+        "actual_duration": 25.2,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 4.75,
+            "text": "Economists categorize inflation into two primary engines."
+          },
+          {
+            "start": 4.7,
+            "end": 14.41,
+            "text": "First is Demand-Pull inflation: too much money chasing too few goods, like when stimulus cash arrives but factories cannot produce goods fast enough."
+          },
+          {
+            "start": 14.41,
+            "end": 25.2,
+            "text": "Second is Cost-Push inflation: when production costs spike, such as an oil embargo or war that makes transportation and electricity expensive across the entire economy."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_3f971ee1_s2",
+        "index": 2,
+        "chapter_title": "3. The Money Supply Cycle: Milton Friedman's Rule",
+        "pedagogical_phase": "visual_demonstration",
+        "narration_text": "As Nobel laureate Milton Friedman famously argued, inflation is always and everywhere a monetary phenomenon. If an economy produces 100 apples, and there is 100 dollars in circulation, an apple costs 1 dollar. If the central bank prints another 100 dollars without growing more apples, an apple naturally rises to 2 dollars. The money supply cycle connects central bank interest rates, commercial bank lending, and the velocity of money.",
+        "estimated_duration": 25.0,
+        "visual_spec": {
+          "visual_type": "cycle_loop",
+          "title": "The Monetary Cycle & Price Equilibrium",
+          "subtitle": "Central Bank -> Commercial Lending -> Consumer Spending -> Price Pressures",
+          "parameters": {
+            "cycle_title": "Credit & Monetary Expansion Loop",
+            "stages": [
+              {
+                "name": "1. Low Interest Rates",
+                "role": "Central Bank cuts rates, making borrowing cheap"
+              },
+              {
+                "name": "2. Bank Credit Surges",
+                "role": "Mortgages, business loans, and consumer credit multiply"
+              },
+              {
+                "name": "3. Aggregate Demand Exceeds Supply",
+                "role": "Purchasing volume outpaces factory capacity"
+              },
+              {
+                "name": "4. Broad Price Increases",
+                "role": "Sellers raise prices across housing, food, and energy"
+              }
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Cheap Credit"
+            },
+            {
+              "step": 2,
+              "highlight": "Surging Demand"
+            },
+            {
+              "step": 3,
+              "highlight": "Price Increase"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_3f971ee1_s2.mp3",
+        "actual_duration": 29.42,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 7.46,
+            "text": "As Nobel laureate Milton Friedman famously argued, inflation is always and everywhere a monetary phenomenon."
+          },
+          {
+            "start": 7.41,
+            "end": 14.85,
+            "text": "If an economy produces 100 apples, and there is 100 dollars in circulation, an apple costs 1 dollar."
+          },
+          {
+            "start": 14.85,
+            "end": 22.36,
+            "text": "If the central bank prints another 100 dollars without growing more apples, an apple naturally rises to 2 dollars."
+          },
+          {
+            "start": 22.36,
+            "end": 29.42,
+            "text": "The money supply cycle connects central bank interest rates, commercial bank lending, and the velocity of money."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_3f971ee1_s3",
+        "index": 3,
+        "chapter_title": "4. The Central Bank's Sledgehammer: Raising Rates",
+        "pedagogical_phase": "edge_cases",
+        "narration_text": "To stop runaway inflation, central banks have one primary lever: hiking interest rates. When the Federal Reserve raises rates, borrowing costs for credit cards, cars, and home mortgages skyrocket. Consumers stop buying homes, companies freeze hiring, demand cools down, and prices stabilize. But the risk is immense: tighten too fast, and you trigger a painful economic recession.",
+        "estimated_duration": 24.0,
+        "visual_spec": {
+          "visual_type": "spectrum_meter",
+          "title": "The Central Bank Balancing Act",
+          "subtitle": "Controlling Inflation vs. Preventing Economic Recession",
+          "parameters": {
+            "left_label": "Loose Money: Low Rates, High Growth, High Inflation Risk",
+            "right_label": "Tight Money: High Rates, Crushed Inflation, High Recession Risk",
+            "center_balance": "The 'Goldilocks' 2% Annual Inflation Target",
+            "markers": [
+              "Dovish (Stimulate Economy)",
+              "Neutral (Sustainable Equilibrium)",
+              "Hawkish (Aggressive Rate Hikes)"
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Loose Money"
+            },
+            {
+              "step": 2,
+              "highlight": "Tight Money"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_3f971ee1_s3.mp3",
+        "actual_duration": 27.41,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 6.36,
+            "text": "To stop runaway inflation, central banks have one primary lever: hiking interest rates."
+          },
+          {
+            "start": 6.31,
+            "end": 13.91,
+            "text": "When the Federal Reserve raises rates, borrowing costs for credit cards, cars, and home mortgages skyrocket."
+          },
+          {
+            "start": 13.91,
+            "end": 21.2,
+            "text": "Consumers stop buying homes, companies freeze hiring, demand cools down, and prices stabilize."
+          },
+          {
+            "start": 21.2,
+            "end": 27.41,
+            "text": "But the risk is immense: tighten too fast, and you trigger a painful economic recession."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_3f971ee1_s4",
+        "index": 4,
+        "chapter_title": "5. Protecting Your Wealth: Assets That Beat Inflation",
+        "pedagogical_phase": "summary",
+        "narration_text": "Inflation is an invisible tax on savers. Holding cash in a zero-interest savings account guarantees you lose real wealth every single year. To thrive, smart investors allocate capital into inflation-hedging assets: productive businesses with pricing power, real estate with rent growth, and Treasury Inflation-Protected Securities. Understanding inflation turns you from an economic victim into an informed investor.",
+        "estimated_duration": 23.0,
+        "visual_spec": {
+          "visual_type": "comparison_matrix",
+          "title": "Asset Performance During Inflation",
+          "subtitle": "Winners vs. Losers When Purchasing Power Drops",
+          "parameters": {
+            "col1": "Cash & Fixed Savings: Guaranteed losers. Purchasing power drops year after year.",
+            "col2": "Fixed-Rate Debtors: Relative winners. They pay back old mortgages with cheaper, inflated dollars.",
+            "col3": "Equities & Real Assets: Resilient performers. Companies raise prices, preserving real returns."
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Cash"
+            },
+            {
+              "step": 2,
+              "highlight": "Real Assets"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_3f971ee1_s4.mp3",
+        "actual_duration": 27.07,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 3.61,
+            "text": "Inflation is an invisible tax on savers."
+          },
+          {
+            "start": 3.56,
+            "end": 9.62,
+            "text": "Holding cash in a zero-interest savings account guarantees you lose real wealth every single year."
+          },
+          {
+            "start": 9.62,
+            "end": 21.71,
+            "text": "To thrive, smart investors allocate capital into inflation-hedging assets: productive businesses with pricing power, real estate with rent growth, and Treasury Inflation-Protected Securities."
+          },
+          {
+            "start": 21.71,
+            "end": 27.07,
+            "text": "Understanding inflation turns you from an economic victim into an informed investor."
+          }
+        ]
+      }
+    ],
+    "video_url": "/media/videos/lecture_3f971ee1.mp4",
+    "subtitles_vtt_url": "/media/subtitles/lec_3f971ee1.vtt",
+    "materials": {
+      "summary": "Inflation is the sustained increase in the general price level of goods and services, which corresponds directly to a decline in purchasing power. It is propelled by Demand-Pull factors, Cost-Push shocks, and expansion of the money supply, and managed by Central Banks through interest rate policies.",
+      "notes_markdown": "# Economics: Understanding Inflation & Monetary Policy\n\n## 1. Defining Inflation\n$$\\text{Inflation Rate} = \\frac{\\text{CPI}_{\\text{current}} - \\text{CPI}_{\\text{previous}}}{\\text{CPI}_{\\text{previous}}} \\times 100$$\n- **Purchasing Power**: The quantity of goods and services one unit of currency can buy.\n- **Consumer Price Index (CPI)**: A weighted basket of typical goods (food, shelter, transportation, healthcare).\n\n## 2. Core Causes\n1. **Demand-Pull**: Aggregate demand exceeding aggregate supply.\n2. **Cost-Push**: Exogenous supply shocks (e.g. oil crisis, natural disasters).\n3. **Monetary Expansion**: When the growth of broad money supply ($M_2$) significantly outpaces real economic output ($GDP$).\n\n## 3. The Quantity Theory of Money\n$$M \\cdot V = P \\cdot Y$$\nwhere:\n- $M$: Money Supply\n- $V$: Velocity of Money (how many times a dollar is spent per year)\n- $P$: Price Level\n- $Y$: Real Output (Real GDP)\n",
+      "key_concepts": [
+        {
+          "concept": "Purchasing Power",
+          "definition": "The real value of currency expressed in terms of the amount of goods or services one unit can buy.",
+          "importance": "Core reason why long-term cash holding is risky."
+        },
+        {
+          "concept": "Consumer Price Index (CPI)",
+          "definition": "A statistical measure tracking changes in prices paid by consumers for a representative basket of goods.",
+          "importance": "Standard government benchmark for inflation."
+        },
+        {
+          "concept": "Interest Rate Lever",
+          "definition": "Central bank policy of adjusting the cost of borrowing to accelerate or cool down economic demand.",
+          "importance": "Primary monetary mechanism for stabilizing prices."
+        }
+      ],
+      "formulas_or_code": [
+        {
+          "title": "Equation of Exchange",
+          "type": "formula",
+          "content": "M \\cdot V = P \\cdot Y",
+          "explanation": "Relates money supply and velocity to the general price level and economic output."
+        },
+        {
+          "title": "The Rule of 72",
+          "type": "rule",
+          "content": "\\text{Years to Halve Purchasing Power} \\approx \\frac{72}{\\text{Inflation Rate}}",
+          "explanation": "At 7% inflation, your money loses half its buying power in approximately 10 years."
+        }
+      ],
+      "practice_questions": [
+        {
+          "question": "Why does a moderate 2% inflation target benefit an economy more than 0% inflation or deflation?",
+          "hint": "Think about consumer behavior when prices are expected to drop.",
+          "solution": "Deflation causes consumers and businesses to postpone purchases expecting lower prices later, triggering economic paralysis. A predictable 2% inflation greases wages and encourages investment."
+        }
+      ],
+      "quiz": [
+        {
+          "id": 1,
+          "question": "What happens to the purchasing power of cash during inflation?",
+          "options": [
+            "It increases",
+            "It stays exactly constant",
+            "It decreases",
+            "It doubles every five years"
+          ],
+          "correct_index": 2,
+          "explanation": "As prices rise, each dollar buys fewer goods and services, diminishing purchasing power."
+        },
+        {
+          "id": 2,
+          "question": "How do central banks combat high inflation?",
+          "options": [
+            "By printing more money",
+            "By raising interest rates to cool borrowing and demand",
+            "By cutting taxes for corporations",
+            "By lowering interest rates to zero"
+          ],
+          "correct_index": 1,
+          "explanation": "Raising interest rates makes credit expensive, slowing spending and bringing supply and demand into balance."
+        }
+      ],
+      "flashcards": [
+        {
+          "id": 1,
+          "front": "What is Demand-Pull Inflation?",
+          "back": "When aggregate demand for goods outstrips available production capacity ('too much money chasing too few goods').",
+          "category": "Mechanisms"
+        },
+        {
+          "id": 2,
+          "front": "Who benefits from unexpected inflation?",
+          "back": "Borrowers with fixed-rate debt, because they repay loans with devalued currency.",
+          "category": "Impact"
+        }
+      ]
+    }
+  },
+  "59ca0ef2": {
+    "id": "59ca0ef2",
+    "topic": "The French Revolution",
+    "title": "The French Revolution: Storming the Bastille to the Birth of Democracy",
+    "domain": "history",
+    "subdomain": "Modern European History & Political Revolutions",
+    "knowledge_level": "intermediate",
+    "teaching_style": "timeline",
+    "duration_target": "standard",
+    "voice_name": "en-US-ChristopherNeural",
+    "created_at": "2026-09-24 22:47",
+    "total_duration": 135.03,
+    "scenes": [
+      {
+        "scene_id": "lec_59ca0ef2_s0",
+        "index": 0,
+        "chapter_title": "1. The Spark: Starvation, Debt & The Three Estates",
+        "pedagogical_phase": "hook",
+        "narration_text": "In the summer of 1789, France was bankrupt, frozen by terrible crop failures, and suffocating under an unjust social order known as the Three Estates. While the clergy and nobility paid virtually zero taxes and feasted in Versailles, the commoners, 98 percent of the population, paid for everything while starving in the streets of Paris. When the price of a single loaf of bread soared to equal a month of peasant wages, centuries of royal absolute power were about to collapse.",
+        "estimated_duration": 25.0,
+        "visual_spec": {
+          "visual_type": "hierarchy_pyramid",
+          "title": "The Ancien Régime: The Three Estates",
+          "subtitle": "A Society Built on Extreme Inequality",
+          "parameters": {
+            "pyramid_title": "Feudal Estate Pyramid (1789)",
+            "tiers": [
+              {
+                "tier": "1st Estate: The Clergy (0.5% Pop)",
+                "note": "Owned 10% of land, paid 0% taxes, collected tithes"
+              },
+              {
+                "tier": "2nd Estate: The Nobility (1.5% Pop)",
+                "note": "Held top military & court posts, exempted from taxes"
+              },
+              {
+                "tier": "3rd Estate: Commoners & Bourgeoisie (98% Pop)",
+                "note": "Peasants, merchants, laborers who bore the entire tax burden"
+              }
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "3rd Estate tax burden"
+            },
+            {
+              "step": 2,
+              "highlight": "1st and 2nd Estate tax exemption"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_59ca0ef2_s0.mp3",
+        "actual_duration": 30.24,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 10.5,
+            "text": "In the summer of 1789, France was bankrupt, frozen by terrible crop failures, and suffocating under an unjust social order known as the Three Estates."
+          },
+          {
+            "start": 10.45,
+            "end": 21.92,
+            "text": "While the clergy and nobility paid virtually zero taxes and feasted in Versailles, the commoners, 98 percent of the population, paid for everything while starving in the streets of Paris."
+          },
+          {
+            "start": 21.93,
+            "end": 30.24,
+            "text": "When the price of a single loaf of bread soared to equal a month of peasant wages, centuries of royal absolute power were about to collapse."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_59ca0ef2_s1",
+        "index": 1,
+        "chapter_title": "2. Chronology of Rebellion: From Bastille to Republic",
+        "pedagogical_phase": "foundation",
+        "narration_text": "Let us trace the pivotal turning points that shook the Western world. On July 14, 1789, enraged citizens stormed the medieval Bastille fortress, seizing gunpowder and declaring popular sovereignty. Within weeks, the National Assembly abolished feudalism and proclaimed the Declaration of the Rights of Man. By 1792, King Louis the Sixteenth was deposed, and France declared itself a Republic.",
+        "estimated_duration": 24.0,
+        "visual_spec": {
+          "visual_type": "timeline_journey",
+          "title": "The Revolutionary Timeline: 1789 - 1799",
+          "subtitle": "From Royal Absolutism to the Rise of Napoleon",
+          "parameters": {
+            "milestones": [
+              {
+                "year": "May 1789",
+                "title": "Estates-General Convenes",
+                "desc": "Third Estate breaks away to form National Assembly",
+                "impact": "Birth of popular sovereignty"
+              },
+              {
+                "year": "July 1789",
+                "title": "Storming of the Bastille",
+                "desc": "Parisians seize the fortress armory",
+                "impact": "Symbolic fall of tyranny"
+              },
+              {
+                "year": "Aug 1789",
+                "title": "Declaration of Rights of Man",
+                "desc": "'Liberty, Equality, Fraternity' enshrined",
+                "impact": "End of feudal privilege"
+              },
+              {
+                "year": "Jan 1793",
+                "title": "Execution of Louis XVI",
+                "desc": "The King is guillotined for treason",
+                "impact": "Point of no return for Europe"
+              }
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "1789"
+            },
+            {
+              "step": 2,
+              "highlight": "1793"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_59ca0ef2_s1.mp3",
+        "actual_duration": 27.91,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 4.31,
+            "text": "Let us trace the pivotal turning points that shook the Western world."
+          },
+          {
+            "start": 4.26,
+            "end": 14.39,
+            "text": "On July 14, 1789, enraged citizens stormed the medieval Bastille fortress, seizing gunpowder and declaring popular sovereignty."
+          },
+          {
+            "start": 14.39,
+            "end": 20.95,
+            "text": "Within weeks, the National Assembly abolished feudalism and proclaimed the Declaration of the Rights of Man."
+          },
+          {
+            "start": 20.95,
+            "end": 27.91,
+            "text": "By 1792, King Louis the Sixteenth was deposed, and France declared itself a Republic."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_59ca0ef2_s2",
+        "index": 2,
+        "chapter_title": "3. The Clashing Ideologies: Girondins vs. The Mountain",
+        "pedagogical_phase": "visual_demonstration",
+        "narration_text": "As foreign monarchies invaded France to crush the uprising, the revolution turned radically inwards. The National Convention split into two fierce factions: the moderate Girondins, who advocated decentralized democracy and constitutional caution, and the radical Jacobins, led by Maximilien Robespierre, who demanded ruthless central power to save the revolution at any cost.",
+        "estimated_duration": 24.0,
+        "visual_spec": {
+          "visual_type": "comparison_matrix",
+          "title": "The Ideological Civil War",
+          "subtitle": "Moderate Reformers vs. Radical Jacobins",
+          "parameters": {
+            "col1": "The Royalists: Preserve monarchy, aristocratic tradition, and Catholic authority",
+            "col2": "The Girondins: Moderate republicans, free markets, rule of law, anti-violence",
+            "col3": "The Jacobin Mountain: Radical centralization, price controls, state terror to purge counter-revolutionaries"
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Girondins"
+            },
+            {
+              "step": 2,
+              "highlight": "Jacobins"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_59ca0ef2_s2.mp3",
+        "actual_duration": 23.57,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 6.59,
+            "text": "As foreign monarchies invaded France to crush the uprising, the revolution turned radically inwards."
+          },
+          {
+            "start": 6.54,
+            "end": 23.57,
+            "text": "The National Convention split into two fierce factions: the moderate Girondins, who advocated decentralized democracy and constitutional caution, and the radical Jacobins, led by Maximilien Robespierre, who demanded ruthless central power to save the revolution at any cost."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_59ca0ef2_s3",
+        "index": 3,
+        "chapter_title": "4. The Reign of Terror: The Revolution Devours Its Children",
+        "pedagogical_phase": "edge_cases",
+        "narration_text": "Robespierre declared that without virtue, terror is fatal; and without terror, virtue is impotent. The Committee of Public Safety suspended constitutional liberties, executing over 17,000 citizens by guillotine in just one year. But paranoia escalated until Robespierre himself was arrested and guillotined in the Thermidorian Reaction, proving that revolutions often consume the very leaders who unleash them.",
+        "estimated_duration": 25.0,
+        "visual_spec": {
+          "visual_type": "cause_and_effect",
+          "title": "The Cascade of Radicalization",
+          "subtitle": "How War and Paranoia Led to the Reign of Terror",
+          "parameters": {
+            "root_catalyst": "Foreign Monarchies Invade France (1792)",
+            "intermediate_effects": [
+              "War panic & bread shortages radicalize Parisian sans-culottes",
+              "Committee of Public Safety established under Robespierre",
+              "Law of Suspects: Anyone accused of treason is guillotined"
+            ],
+            "ultimate_consequence": "Thermidorian Reaction: Robespierre executed, ending the Terror"
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Foreign Invasion"
+            },
+            {
+              "step": 2,
+              "highlight": "Reign of Terror"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_59ca0ef2_s3.mp3",
+        "actual_duration": 25.85,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 6.81,
+            "text": "Robespierre declared that without virtue, terror is fatal; and without terror, virtue is impotent."
+          },
+          {
+            "start": 6.76,
+            "end": 15.21,
+            "text": "The Committee of Public Safety suspended constitutional liberties, executing over 17,000 citizens by guillotine in just one year."
+          },
+          {
+            "start": 15.21,
+            "end": 25.85,
+            "text": "But paranoia escalated until Robespierre himself was arrested and guillotined in the Thermidorian Reaction, proving that revolutions often consume the very leaders who unleash them."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_59ca0ef2_s4",
+        "index": 4,
+        "chapter_title": "5. Global Legacy: How 1789 Shaped Modern Democracy",
+        "pedagogical_phase": "summary",
+        "narration_text": "Out of the revolutionary ashes rose Napoleon Bonaparte, whose Napoleonic Code modernized European law. The French Revolution forever dismantled divine right monarchy, introduced universal human rights into international law, invented modern political left and right, and demonstrated that ordinary citizens possess the power to reshape history. Its ideals of Liberty, Equality, and Fraternity remain the bedrock of modern democracy.",
+        "estimated_duration": 24.0,
+        "visual_spec": {
+          "visual_type": "spectrum_meter",
+          "title": "The Birth of the Modern Political Spectrum",
+          "subtitle": "Where Lawmakers Sat in the 1789 National Assembly",
+          "parameters": {
+            "left_label": "The Left: Radical Change, Equality, Republicanism",
+            "right_label": "The Right: Tradition, Monarchy, Order, Hierarchy",
+            "center_balance": "Constitutional Liberalism & Human Rights",
+            "markers": [
+              "Left: Jacobins",
+              "Center: Plain / Marais",
+              "Right: Monarchists & Aristocracy"
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "The Left"
+            },
+            {
+              "step": 2,
+              "highlight": "The Right"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_59ca0ef2_s4.mp3",
+        "actual_duration": 27.46,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 7.15,
+            "text": "Out of the revolutionary ashes rose Napoleon Bonaparte, whose Napoleonic Code modernized European law."
+          },
+          {
+            "start": 7.1,
+            "end": 21.14,
+            "text": "The French Revolution forever dismantled divine right monarchy, introduced universal human rights into international law, invented modern political left and right, and demonstrated that ordinary citizens possess the power to reshape history."
+          },
+          {
+            "start": 21.14,
+            "end": 27.46,
+            "text": "Its ideals of Liberty, Equality, and Fraternity remain the bedrock of modern democracy."
+          }
+        ]
+      }
+    ],
+    "video_url": "/media/videos/lecture_59ca0ef2.mp4",
+    "subtitles_vtt_url": "/media/subtitles/lec_59ca0ef2.vtt",
+    "materials": {
+      "summary": "The French Revolution (1789-1799) was a watershed moment in human history. Driven by acute financial insolvency, hunger, and extreme inequality under the Three Estates, the French people overthrew centuries of feudal monarchy, enacted the Declaration of the Rights of Man, weathered the radical Reign of Terror, and established foundational principles of secular democracy and human rights.",
+      "notes_markdown": "# The French Revolution: Comprehensive Masterclass Notes\n\n## 1. Root Causes of 1789\n- **Financial Crisis**: Royal debts from funding the American Revolution and Seven Years' War.\n- **Agricultural Crisis**: The 1788-1789 crop failure caused bread prices to consume 80% of peasants' income.\n- **Social Inequality**: The Three Estates structure exempting the top 2% from taxation.\n\n## 2. Chronological Milestones\n- **June 1789**: The Tennis Court Oath establishes the National Assembly.\n- **July 14, 1789**: Storming of the Bastille.\n- **August 1789**: Declaration of the Rights of Man and of the Citizen.\n- **1793-1794**: Reign of Terror under Robespierre.\n- **1799**: Coup of 18 Brumaire by Napoleon Bonaparte.\n\n## 3. Enduring Legacies\n1. **The Political Spectrum**: The terms 'Left-wing' and 'Right-wing' originated from where deputies sat in the 1789 National Assembly.\n2. **Secular Law**: The Napoleonic Code abolished aristocratic privileges and established civil equality.\n3. **National Sovereignty**: Power derives from the people, not divine right.\n",
+      "key_concepts": [
+        {
+          "concept": "The Three Estates",
+          "definition": "The feudal social hierarchy dividing France into Clergy (1st), Nobility (2nd), and Commoners (3rd).",
+          "importance": "Extreme tax inequality between estates sparked the rebellion."
+        },
+        {
+          "concept": "Reign of Terror",
+          "definition": "A 10-month period (1793-1794) of state-sponsored executions during internal and external war.",
+          "importance": "Demonstrates the dangers of ideological radicalization and paranoia."
+        },
+        {
+          "concept": "Popular Sovereignty",
+          "definition": "The principle that authority of a state and government is created and sustained by the consent of its people.",
+          "importance": "Replaced divine right monarchy with democratic legitimacy."
+        }
+      ],
+      "formulas_or_code": [
+        {
+          "title": "The National Motto",
+          "type": "principle",
+          "content": "Liberté, Égalité, Fraternité",
+          "explanation": "Liberty, Equality, Fraternity: the universal triad defining modern republican democracies."
+        },
+        {
+          "title": "Article 1 (Rights of Man)",
+          "type": "quote",
+          "content": "Men are born and remain free and equal in rights.",
+          "explanation": "Foundational premise dissolving aristocratic hereditary entitlement."
+        }
+      ],
+      "practice_questions": [
+        {
+          "question": "Why did King Louis XVI call the Estates-General in May 1789 after a 175-year hiatus?",
+          "hint": "Consider France's sovereign financial situation.",
+          "solution": "France was facing complete national bankruptcy, and the aristocracy refused to surrender their tax exemptions without approval from the Estates-General."
+        }
+      ],
+      "quiz": [
+        {
+          "id": 1,
+          "question": "What percentage of the French population belonged to the Third Estate in 1789?",
+          "options": [
+            "Around 50%",
+            "Around 75%",
+            "Around 98%",
+            "Less than 20%"
+          ],
+          "correct_index": 2,
+          "explanation": "Commoners, peasants, and the bourgeoisie accounted for roughly 98% of the kingdom's populace."
+        },
+        {
+          "id": 2,
+          "question": "What was the significance of the storming of the Bastille on July 14, 1789?",
+          "options": [
+            "It was where the King lived",
+            "It symbolized the fall of royal tyranny and secured gunpowder for the revolution",
+            "It was where all national tax money was kept",
+            "It ended the French Revolution in a single day"
+          ],
+          "correct_index": 1,
+          "explanation": "The Bastille was a dreaded symbol of royal oppression and contained the gunpowder needed by the newly formed National Guard."
+        }
+      ],
+      "flashcards": [
+        {
+          "id": 1,
+          "front": "What did the Tennis Court Oath pledge?",
+          "back": "The Third Estate vowed not to disband until they had drafted a written constitution for France.",
+          "category": "Milestones"
+        },
+        {
+          "id": 2,
+          "front": "Who led the Committee of Public Safety during the Reign of Terror?",
+          "back": "Maximilien Robespierre.",
+          "category": "Key Figures"
+        }
+      ]
+    }
   }
 }

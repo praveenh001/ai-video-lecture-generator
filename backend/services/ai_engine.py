@@ -17,7 +17,6 @@ class EducationalAIEngine:
         key = custom_key or self.api_key or os.getenv("GEMINI_API_KEY", "")
         if key:
             genai.configure(api_key=key)
-            # Try gemini-2.0-flash, gemini-1.5-flash
             try:
                 return genai.GenerativeModel("gemini-2.0-flash")
             except Exception:
@@ -26,49 +25,75 @@ class EducationalAIEngine:
 
     def analyze_topic(self, topic: str, api_key: Optional[str] = None) -> TopicAnalysisResponse:
         """
-        Analyzes a topic to determine its domain, pedagogical structure,
-        and provide intelligent clarification questions.
+        Analyzes ANY topic (History, Economics, Psychology, Medicine, Science, Literature, Tech)
+        to identify its pedagogical domain and select tailored visual teaching styles.
         """
         topic_lower = topic.lower().strip()
         model = self._get_configured_gemini(api_key)
 
-        # Domain heuristic detection
         domain = "general"
-        subdomain = "General Knowledge"
-        
-        if any(w in topic_lower for w in ["search", "sort", "algorithm", "tree", "graph", "dp", "dynamic programming", "hash", "array", "linked list", "recursion", "dijkstra", "binary"]):
-            domain = "computer_science"
-            subdomain = "Algorithms & Data Structures"
-        elif any(w in topic_lower for w in ["python", "javascript", "react", "fastapi", "async", "await", "promise", "api", "database", "sql", "thread", "memory", "pointer", "oop", "class"]):
-            domain = "computer_science"
-            subdomain = "Software Engineering & Programming"
-        elif any(w in topic_lower for w in ["calculus", "derivative", "integral", "matrix", "linear algebra", "bayes", "probability", "statistics", "geometry", "trigonometry", "equation", "eigen"]):
-            domain = "mathematics"
-            subdomain = "Mathematics & Calculus"
-        elif any(w in topic_lower for w in ["neural", "backpropagation", "transformer", "attention", "machine learning", "deep learning", "gradient descent", "ai", "llm", "cnn", "rnn"]):
-            domain = "computer_science"
-            subdomain = "Artificial Intelligence & Machine Learning"
-        elif any(w in topic_lower for w in ["physics", "quantum", "gravity", "thermodynamics", "cell", "photosynthesis", "dna", "chemistry", "atom", "molecule", "biology", "optics"]):
-            domain = "science"
-            subdomain = "Natural Sciences & Physics"
+        subdomain = "General Knowledge & Life Skills"
+        recommended_style = "Visual Metaphor & Conceptual Blueprint"
 
-        # Default recommended style based on domain
-        style_map = {
-            "computer_science": "Interactive Code & Algorithm Simulation",
-            "mathematics": "Mathematical Curve & Formula Walkthrough",
-            "science": "Process Flow & Animated Simulation",
-            "general": "Animated Visual First"
-        }
-        recommended_style = style_map.get(domain, "Animated Visual First")
+        # 1. History & Geopolitics
+        if any(w in topic_lower for w in ["history", "war", "revolution", "empire", "roman", "french revolution", "silk road", "civil war", "ancient", "dynasty", "treaty", "medieval", "cold war", "renaissance"]):
+            domain = "history"
+            subdomain = "World History & Civilization"
+            recommended_style = "Chronological Timeline Journey & Faction Map"
+
+        # 2. Economics, Finance & Business
+        elif any(w in topic_lower for w in ["inflation", "stock", "market", "economy", "money", "interest rate", "finance", "supply and demand", "crypto", "bitcoin", "business", "monopoly", "venture capital", "trade", "banking"]):
+            domain = "economics_business"
+            subdomain = "Economics, Markets & Finance"
+            recommended_style = "Market Equilibrium Curve & Money Flow Cycle"
+
+        # 3. Psychology, Philosophy & Cognitive Science
+        elif any(w in topic_lower for w in ["stoic", "philosophy", "psychology", "bias", "cognitive", "maslow", "habit", "mindset", "plato", "behavior", "freud", "ego", "emotion", "happiness", "existential", "decision"]):
+            domain = "psychology_philosophy"
+            subdomain = "Cognitive Psychology & Philosophy"
+            recommended_style = "Cognitive Feedback Loop & Hierarchy Pyramid"
+
+        # 4. Health, Medicine & Human Biology
+        elif any(w in topic_lower for w in ["sleep", "circadian", "immune", "virus", "heart", "brain", "fasting", "diet", "nutrition", "cancer", "blood", "organ", "exercise", "hormone", "dopamine", "medicine"]):
+            domain = "health_biology"
+            subdomain = "Health Sciences & Human Biology"
+            recommended_style = "Biological Pathway Simulation & Rhythm Cycle"
+
+        # 5. Arts, Literature & Storytelling
+        elif any(w in topic_lower for w in ["story", "hero's journey", "literature", "writing", "music", "harmony", "art", "film", "cinema", "poetry", "novel", "narrative", "painting", "aesthetic"]):
+            domain = "arts_literature"
+            subdomain = "Arts, Humanities & Narrative Design"
+            recommended_style = "Narrative Arc Curve & Aesthetic Harmony Board"
+
+        # 6. Everyday Science & Nature
+        elif any(w in topic_lower for w in ["sky", "airplane", "fly", "earthquake", "weather", "ocean", "climate", "space", "gravity", "energy", "physics", "solar", "biology", "photosynthesis", "black hole", "evolution"]):
+            domain = "science_nature"
+            subdomain = "Natural Sciences & Phenomenon Exploration"
+            recommended_style = "Physical Cross-Section & Force Dynamics Simulation"
+
+        # 7. Computer Science & Software
+        elif any(w in topic_lower for w in ["algorithm", "search", "sort", "python", "code", "programming", "database", "async", "await", "tree", "graph", "ai", "neural", "software", "api", "web"]):
+            domain = "computer_science"
+            subdomain = "Computer Science & Software Systems"
+            recommended_style = "Step-by-step Algorithm Simulator & Code Execution"
+
+        # 8. Mathematics
+        elif any(w in topic_lower for w in ["calculus", "derivative", "integral", "matrix", "algebra", "geometry", "probability", "statistics", "equation"]):
+            domain = "mathematics"
+            subdomain = "Mathematics & Mathematical Thinking"
+            recommended_style = "Mathematical Curves & Dynamic Limit Visualizer"
+
+        # Tailor clarification questions specifically to domain
+        style_options = self._get_style_options_for_domain(domain)
 
         questions = [
             ClarificationQuestion(
                 id="knowledge_level",
                 question="What is your current familiarity with this topic?",
                 options=[
-                    ClarificationOption(id="beginner", label="Beginner (Focus on visual intuition, simple analogies, zero jargon)"),
-                    ClarificationOption(id="intermediate", label="Intermediate (Practical implementation, core mechanics, real use cases)"),
-                    ClarificationOption(id="advanced", label="Advanced (Rigorous edge cases, time/space trade-offs, architecture)")
+                    ClarificationOption(id="beginner", label="Beginner (Focus on visual intuition, relatable analogies, zero technical jargon)"),
+                    ClarificationOption(id="intermediate", label="Intermediate (Core mechanisms, cause-and-effect, practical implications)"),
+                    ClarificationOption(id="advanced", label="Advanced (Deep nuances, historical/theoretical controversies, edge conditions)")
                 ],
                 default_value="intermediate"
             ),
@@ -76,49 +101,43 @@ class EducationalAIEngine:
                 id="purpose",
                 question="What is your primary goal for this lecture?",
                 options=[
-                    ClarificationOption(id="interview", label="Coding / Technical Interview Prep (Focus on optimal approach & complexity)"),
-                    ClarificationOption(id="academic", label="Academic Exam & Homework (Theoretical clarity & step-by-step proofs)"),
-                    ClarificationOption(id="practical", label="Practical Engineering (Production code, patterns, building real systems)"),
-                    ClarificationOption(id="conceptual", label="Curiosity & Conceptual Intuition (Clear mental models & visual metaphors)")
+                    ClarificationOption(id="conceptual", label="Deep Conceptual Intuition (Build a rock-solid, intuitive mental model)"),
+                    ClarificationOption(id="practical", label="Practical Real-World Application (Apply directly in life, career, or decisions)"),
+                    ClarificationOption(id="academic", label="Academic / Exam Mastery (Structured arguments, key definitions & evidence)")
                 ],
-                default_value="interview" if domain == "computer_science" else "conceptual"
+                default_value="conceptual"
             ),
             ClarificationQuestion(
                 id="teaching_style",
-                question="Which visual teaching style helps you learn best?",
-                options=[
-                    ClarificationOption(id="anim_sim", label="Step-by-step Algorithm / Process Simulator (Dynamic animated state updates)"),
-                    ClarificationOption(id="code_flow", label="Code Execution Walkthrough (Line-by-line highlight, variables watch window)"),
-                    ClarificationOption(id="math_curves", label="Mathematical Curves & Animated Equations (Visual coordinate plots)"),
-                    ClarificationOption(id="concept_metaphor", label="Visual Metaphor & Architecture Diagrams (Intuitive spatial illustrations)")
-                ],
-                default_value="anim_sim" if domain == "computer_science" else "concept_metaphor"
+                question="Which visual teaching style will help you absorb this best?",
+                options=style_options,
+                default_value=style_options[0].id
             ),
             ClarificationQuestion(
                 id="lecture_duration",
                 question="Desired lecture length?",
                 options=[
-                    ClarificationOption(id="quick", label="Quick Concept (3 scenes, ~2-3 minutes)"),
-                    ClarificationOption(id="standard", label="Standard Lesson (5 scenes, ~4-5 minutes)"),
-                    ClarificationOption(id="deep", label="Comprehensive Deep Dive (7 scenes, ~7-9 minutes)")
+                    ClarificationOption(id="quick", label="Quick Overview (3 scenes, ~2-3 minutes)"),
+                    ClarificationOption(id="standard", label="Standard Masterclass (5 scenes, ~4-5 minutes)"),
+                    ClarificationOption(id="deep", label="Comprehensive Deep Dive (6-7 scenes, ~7-9 minutes)")
                 ],
                 default_value="standard"
             )
         ]
 
-        overview_text = f"We will construct an instructional video lecture on '{topic}'. The lesson will cover foundational principles, a live animated visualization demonstrating the core mechanism, complexity and trade-offs, and practical real-world applications."
+        overview_text = f"We will design an educational lecture on '{topic}', structured from intuitive foundational principles to dynamic visual demonstrations and real-world implications."
 
         # If LLM model is available, refine analysis with live model
         if model:
             try:
                 prompt = f"""
                 Analyze the educational topic: "{topic}".
-                Respond in valid JSON format only with these keys:
-                - "domain": string (computer_science, mathematics, science, engineering, or general)
+                Respond in valid JSON only with keys:
+                - "domain": string (history, economics_business, psychology_philosophy, health_biology, arts_literature, science_nature, computer_science, mathematics, or general)
                 - "subdomain": string
                 - "overview": concise 2-sentence instructional summary
                 - "recommended_level": "Beginner", "Intermediate", or "Advanced"
-                - "recommended_style": string describing the best visual explanation technique
+                - "recommended_style": string describing the ideal visual explanation technique
                 """
                 res = model.generate_content(prompt)
                 raw = res.text.strip()
@@ -149,6 +168,61 @@ class EducationalAIEngine:
             clarification_questions=questions
         )
 
+    def _get_style_options_for_domain(self, domain: str) -> List[ClarificationOption]:
+        if domain == "history":
+            return [
+                ClarificationOption(id="timeline", label="Chronological Timeline & Turning Points (Visual chronological roadmap)"),
+                ClarificationOption(id="cause_effect", label="Cause-and-Effect Cascade (Tracking catalysts to lasting global ripple effects)"),
+                ClarificationOption(id="opposing_forces", label="Clashing Factions Matrix (Comparing motivations, alliances, and strategies)")
+            ]
+        elif domain == "economics_business":
+            return [
+                ClarificationOption(id="market_equilibrium", label="Market Dynamics & Equilibrium Shift (Dynamic supply/demand curves)"),
+                ClarificationOption(id="money_cycle", label="Economic Money Flow Cycle (Tracking capital between households, banks & markets)"),
+                ClarificationOption(id="spectrum_tradeoff", label="Trade-off & Policy Spectrum (Inflation vs. Unemployment, Risk vs. Reward)")
+            ]
+        elif domain == "psychology_philosophy":
+            return [
+                ClarificationOption(id="pyramid_hierarchy", label="Structural Hierarchy (Multi-tier pyramid like Maslow's or value systems)"),
+                ClarificationOption(id="cognitive_loop", label="Cognitive Feedback Loop (Trigger -> Thought -> Emotion -> Habit Action)"),
+                ClarificationOption(id="metaphor_allegory", label="Philosophical Allegory Board (Concrete spatial analogies for abstract truths)")
+            ]
+        elif domain == "health_biology":
+            return [
+                ClarificationOption(id="biological_cycle", label="Circadian / Bio-Rhythm Cycle (Tracking hormones, energy & bodily phases)"),
+                ClarificationOption(id="cellular_pathway", label="Microscopic Defense / Cellular Pathway (Step-by-step immune/biological action)"),
+                ClarificationOption(id="cross_section", label="Organ & Physiological Cross-Section (Anatomy, input-output mechanics)")
+            ]
+        elif domain == "arts_literature":
+            return [
+                ClarificationOption(id="narrative_arc", label="Narrative Arc / Story Mountain (Exposition, rising tension, climax & resolution)"),
+                ClarificationOption(id="harmony_waves", label="Harmonic Structure & Contrast Board (Motifs, tension, and resolution)"),
+                ClarificationOption(id="creative_breakdown", label="Comparative Masterwork Dissection (Key scene/masterpiece analysis)")
+            ]
+        elif domain == "science_nature":
+            return [
+                ClarificationOption(id="cross_section_sim", label="Cross-Section & Force Interactions (Aerodynamic wing, earth crust, light rays)"),
+                ClarificationOption(id="process_flow", label="Physical Energy Flow Simulation (Energy transfer from source to outcome)"),
+                ClarificationOption(id="natural_cycle", label="Natural Planetary Cycle (Water cycle, plate subduction, solar fusion)")
+            ]
+        elif domain == "computer_science":
+            return [
+                ClarificationOption(id="algorithm_animator", label="Step-by-Step Algorithm & Memory Simulator (Animated pointers & state updates)"),
+                ClarificationOption(id="code_visualizer", label="Live Code Execution & Call Stack (Syntax line highlight, variables watch)"),
+                ClarificationOption(id="architecture_flow", label="System Architecture & Concurrency Pipeline (Non-blocking I/O event flow)")
+            ]
+        elif domain == "mathematics":
+            return [
+                ClarificationOption(id="math_graph", label="Mathematical Curves & Moving Tangent Lines (Visual coordinates and limits)"),
+                ClarificationOption(id="geometric_proof", label="Geometric & Algebraic Proof Breakdown (Visual spatial transformations)")
+            ]
+        else:
+            return [
+                ClarificationOption(id="concept_metaphor", label="Relatable Visual Metaphor (Comparing complex realities to everyday concepts)"),
+                ClarificationOption(id="process_simulation", label="Stage-by-Stage Functional Architecture (Inputs, transformations, outputs)"),
+                ClarificationOption(id="comparison_matrix", label="Multi-Dimensional Comparison Matrix (Contrasting options, styles & trade-offs)")
+            ]
+
     def plan_and_generate_lecture(
         self,
         topic: str,
@@ -161,19 +235,17 @@ class EducationalAIEngine:
         api_key: Optional[str] = None
     ) -> Dict[str, Any]:
         """
-        Plans the lecture structure, scenes, visual specifications, scripts,
-        and learning materials.
+        Dynamically constructs a tailored pedagogical video lecture for ANY subject matter.
         """
         model = self._get_configured_gemini(api_key)
         
-        # Determine scene count based on requested duration
         num_scenes = 5
         if "quick" in lecture_duration.lower() or "2-3" in lecture_duration.lower():
             num_scenes = 3
         elif "deep" in lecture_duration.lower() or "7" in lecture_duration.lower() or "8" in lecture_duration.lower():
             num_scenes = 6
 
-        # Try generating via Gemini if key is provided and valid
+        # Live Gemini generation if API key is provided
         if model:
             try:
                 gemini_data = self._generate_with_gemini(
@@ -183,9 +255,9 @@ class EducationalAIEngine:
                 if gemini_data:
                     return gemini_data
             except Exception as ex:
-                print(f"Gemini full generation error: {ex}. Using built-in pedagogical generator.")
+                print(f"Gemini live generation fallback: {ex}")
 
-        # Built-in Pedagogical Generation Engine with rich domain blueprints
+        # Built-in multi-domain generator
         return self._generate_with_pedagogical_engine(
             topic, knowledge_level, purpose, preferred_language,
             teaching_style, num_scenes, voice_name
@@ -196,7 +268,7 @@ class EducationalAIEngine:
         preferred_language: str, teaching_style: str, num_scenes: int
     ) -> Optional[Dict[str, Any]]:
         prompt = f"""
-        You are a world-class instructional designer, master educator, animator, and video producer.
+        You are an elite educator, master instructional designer, animator, and video producer.
         Topic: "{topic}"
         Knowledge Level: {knowledge_level}
         Purpose: {purpose}
@@ -204,58 +276,65 @@ class EducationalAIEngine:
         Teaching Style: {teaching_style}
         Number of Scenes: {num_scenes}
 
-        You must design a complete, pedagogical video lecture that teaches through intuitive step-by-step visual animation (NOT static slides!).
+        You are creating a comprehensive, educational video lecture that is deeply tailored to this specific subject matter.
+        Do NOT use a generic tech template for non-technical topics!
         
-        Available visual types:
-        1. "algorithm_animator": Step-by-step state changes on data structures (array, pointers, search space elimination, trees, nodes).
-        2. "code_visualizer": Syntax-highlighted code with animated execution pointer line, call stack, variables watch window, and simulated console output.
-        3. "math_graph": Function curves, axes, coordinate points, tangent lines, animated slope, LaTeX formulas.
-        4. "process_simulation": Multi-step flow diagram with animated signals/packets moving between nodes.
-        5. "concept_metaphor": Concrete visual analogy cards comparing everyday concepts to technical reality.
-        6. "comparison_matrix": Side-by-side feature comparison with animated indicators.
+        Visual types available to you:
+        - "timeline_journey": For historical / chronological milestones (parameters: {{"milestones": [{{"year": "1789", "title": "Storming of Bastille", "desc": "...", "impact": "..."}}]}})
+        - "cycle_loop": For circular processes (parameters: {{"cycle_title": "...", "stages": [{{"name": "Stage 1", "role": "..."}}]}})
+        - "hierarchy_pyramid": For multi-tier value/need systems (parameters: {{"tiers": ["Base tier", "Middle tier", "Apex tier"]}})
+        - "spectrum_meter": For trade-offs or cognitive polarities (parameters: {{"left_label": "...", "right_label": "...", "center_balance": "...", "markers": [...]}})
+        - "narrative_arc": For storytelling / artistic arcs (parameters: {{"phases": [{{"phase": "Exposition", "event": "..."}}, {{"phase": "Climax", "event": "..."}}]}})
+        - "cause_and_effect": For causal chains (parameters: {{"root_catalyst": "...", "intermediate_effects": [...], "ultimate_consequence": "..."}})
+        - "cross_section_sim": For physical / anatomical cutaways (parameters: {{"subject": "...", "layers": [...]}})
+        - "algorithm_animator": For arrays / pointers / step search
+        - "code_visualizer": For syntax & variables
+        - "math_graph": For function curves & tangents
+        - "concept_metaphor": For contrasting analogies
+        - "comparison_matrix": For 3-column comparisons
+        - "diagram_board": For modular architecture diagrams
 
         Return a single valid JSON object with NO extra text or markdown formatting. The schema must match:
         {{
-            "title": "Clear educational lecture title",
-            "domain": "computer_science" | "mathematics" | "science" | "engineering" | "general",
-            "subdomain": "string",
+            "title": "Inspiring educational lecture title",
+            "domain": "history" | "economics_business" | "psychology_philosophy" | "health_biology" | "arts_literature" | "science_nature" | "computer_science" | "mathematics" | "general",
+            "subdomain": "Specific Field Name",
             "scenes": [
                 {{
                     "scene_id": "scene_1",
                     "index": 0,
-                    "chapter_title": "1. Hook & Intuition",
-                    "pedagogical_phase": "hook",
-                    "narration_text": "engaging 3-5 sentence spoken script written for a natural human voice. Clear, enthusiastic, teacher-like.",
+                    "chapter_title": "Chapter title",
+                    "pedagogical_phase": "hook" | "foundation" | "visual_demonstration" | "edge_cases" | "summary",
+                    "narration_text": "Spoken script (3-5 sentences), warm, engaging, teacher-like.",
                     "estimated_duration": 25.0,
                     "visual_spec": {{
-                        "visual_type": "concept_metaphor" | "algorithm_animator" | "code_visualizer" | "math_graph" | "process_simulation",
+                        "visual_type": "timeline_journey" | "cycle_loop" | "hierarchy_pyramid" | "spectrum_meter" | "narrative_arc" | "cause_and_effect" | "cross_section_sim" | "concept_metaphor" | "comparison_matrix" | "math_graph" | "algorithm_animator" | "code_visualizer",
                         "title": "Visual Title",
                         "subtitle": "Visual Subtitle",
                         "parameters": {{}},
                         "keyframe_steps": [
-                            {{"step": 1, "description": "initial state", "highlight": "element"}},
-                            {{"step": 2, "description": "active operation", "highlight": "element"}}
+                            {{"step": 1, "description": "...", "highlight": "..."}}
                         ]
                     }}
                 }}
             ],
             "materials": {{
-                "summary": "2-3 paragraph comprehensive summary of the lecture",
-                "notes_markdown": "# Topic Notes\\n\\nStructured detailed markdown notes with bullet points and code/math.",
+                "summary": "Comprehensive 2-3 paragraph summary",
+                "notes_markdown": "# Topic Notes\\n\\nDetailed structured notes with headings and bullet points.",
                 "key_concepts": [
                     {{"concept": "Name", "definition": "Clear definition", "importance": "Why it matters"}}
                 ],
                 "formulas_or_code": [
-                    {{"title": "Title", "type": "code"|"formula"|"rule", "content": "snippet or formula", "explanation": "how it works"}}
+                    {{"title": "Title", "type": "rule"|"principle"|"quote"|"formula"|"code", "content": "...", "explanation": "..."}}
                 ],
                 "practice_questions": [
-                    {{"question": "Problem statement", "hint": "Useful hint", "solution": "Full walkthrough"}}
+                    {{"question": "Thought-provoking problem or real-life scenario", "hint": "...", "solution": "..."}}
                 ],
                 "quiz": [
-                    {{"id": 1, "question": "Question?", "options": ["A", "B", "C", "D"], "correct_index": 0, "explanation": "Why A is correct."}}
+                    {{"id": 1, "question": "...", "options": ["A", "B", "C", "D"], "correct_index": 0, "explanation": "..."}}
                 ],
                 "flashcards": [
-                    {{"id": 1, "front": "Concept / Question", "back": "Answer / Key takeaway", "category": "Core Principle"}}
+                    {{"id": 1, "front": "...", "back": "...", "category": "..."}}
                 ]
             }}
         }}
@@ -266,8 +345,7 @@ class EducationalAIEngine:
             text = text.split("```json")[1].split("```")[0].strip()
         elif "```" in text:
             text = text.split("```")[1].split("```")[0].strip()
-        data = json.loads(text)
-        return data
+        return json.loads(text)
 
     def _generate_with_pedagogical_engine(
         self,
@@ -280,14 +358,54 @@ class EducationalAIEngine:
         voice_name: str
     ) -> Dict[str, Any]:
         """
-        Built-in high-fidelity instructional engine with dedicated blueprints for
-        Algorithms, Programming, Mathematics, AI/ML, and Science.
+        Built-in multi-domain generator featuring rich curated masterclasses across:
+        - History & Civilization (e.g. French Revolution, Fall of Roman Empire)
+        - Economics & Finance (e.g. How Inflation Works)
+        - Psychology & Philosophy (e.g. Stoicism, Cognitive Biases, Maslow)
+        - Health & Medicine (e.g. Circadian Rhythm & Sleep)
+        - Arts & Storytelling (e.g. The Hero's Journey)
+        - Everyday Science (e.g. Why the Sky is Blue, How Airplanes Fly)
+        - Plus CS & Math (Binary Search, Neural Networks, Async/Await, Calculus)
+        - Plus an adaptive general-purpose synthesizer for ANY topic!
         """
-        topic_clean = topic.strip()
-        t_low = topic_clean.lower()
+        t_low = topic.lower().strip()
 
-        # Check for specialized blueprints
-        if "binary search" in t_low:
+        # 1. History
+        if any(w in t_low for w in ["french revolution", "bastille", "robespierre", "monarchy"]):
+            return self._build_french_revolution_lecture(knowledge_level, purpose, num_scenes, voice_name)
+        elif any(w in t_low for w in ["roman empire", "rome", "fall of rome", "caesar"]):
+            return self._build_roman_empire_lecture(knowledge_level, purpose, num_scenes, voice_name)
+
+        # 2. Economics
+        elif any(w in t_low for w in ["inflation", "purchasing power", "cpi", "central bank", "money supply"]):
+            return self._build_inflation_lecture(knowledge_level, purpose, num_scenes, voice_name)
+
+        # 3. Psychology & Philosophy
+        elif any(w in t_low for w in ["stoic", "stoicism", "marcus aurelius", "seneca", "epictetus"]):
+            return self._build_stoicism_lecture(knowledge_level, purpose, num_scenes, voice_name)
+        elif any(w in t_low for w in ["cognitive bias", "confirmation bias", "anchoring", "heuristic"]):
+            return self._build_cognitive_biases_lecture(knowledge_level, purpose, num_scenes, voice_name)
+        elif any(w in t_low for w in ["maslow", "hierarchy of needs"]):
+            return self._build_maslow_hierarchy_lecture(knowledge_level, purpose, num_scenes, voice_name)
+
+        # 4. Health & Biology
+        elif any(w in t_low for w in ["sleep", "circadian", "melatonin", "rem sleep", "sleep cycle"]):
+            return self._build_sleep_circadian_lecture(knowledge_level, purpose, num_scenes, voice_name)
+        elif any(w in t_low for w in ["photosynthesis", "light reaction", "chloroplast"]):
+            return self._build_photosynthesis_lecture(knowledge_level, purpose, num_scenes, voice_name)
+
+        # 5. Arts & Literature
+        elif any(w in t_low for w in ["hero's journey", "monomyth", "joseph campbell", "storytelling"]):
+            return self._build_heros_journey_lecture(knowledge_level, purpose, num_scenes, voice_name)
+
+        # 6. Everyday Science
+        elif any(w in t_low for w in ["sky is blue", "rayleigh scattering", "blue sky", "atmosphere"]):
+            return self._build_why_sky_is_blue_lecture(knowledge_level, purpose, num_scenes, voice_name)
+        elif any(w in t_low for w in ["airplane", "fly", "aerodynamic", "lift", "bernoulli"]):
+            return self._build_how_airplanes_fly_lecture(knowledge_level, purpose, num_scenes, voice_name)
+
+        # 7. Computer Science & Math
+        elif "binary search" in t_low:
             return self._build_binary_search_lecture(knowledge_level, purpose, num_scenes, voice_name)
         elif any(k in t_low for k in ["neural network", "backpropagation", "gradient descent", "deep learning"]):
             return self._build_neural_networks_lecture(knowledge_level, purpose, num_scenes, voice_name)
@@ -295,1157 +413,1481 @@ class EducationalAIEngine:
             return self._build_async_await_lecture(knowledge_level, purpose, num_scenes, voice_name)
         elif any(k in t_low for k in ["derivative", "calculus", "rate of change", "tangent"]):
             return self._build_calculus_derivative_lecture(knowledge_level, purpose, num_scenes, voice_name)
-        elif any(k in t_low for k in ["photosynthesis", "light reaction", "chloroplast"]):
-            return self._build_photosynthesis_lecture(knowledge_level, purpose, num_scenes, voice_name)
-        else:
-            return self._build_adaptive_topic_lecture(topic_clean, knowledge_level, purpose, teaching_style, num_scenes, voice_name)
 
-    # ------------------- SPECIFIC RICH BLUEPRINTS -------------------
+        # 8. Adaptive Domain Synthesizer for ANY General Purpose Topic
+        return self._build_adaptive_topic_lecture(topic, knowledge_level, purpose, teaching_style, num_scenes, voice_name)
 
-    def _build_binary_search_lecture(self, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
+    # ------------------- GENERAL PURPOSE DOMAIN BLUEPRINTS -------------------
+
+    def _build_french_revolution_lecture(self, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
         scenes = [
             {
                 "scene_id": "scene_1",
                 "index": 0,
-                "chapter_title": "1. The Dictionary Dilemma: Linear vs Logarithmic",
+                "chapter_title": "1. The Spark: Starvation, Debt & The Three Estates",
                 "pedagogical_phase": "hook",
-                "narration_text": "Imagine opening a 1,000-page dictionary to find the word 'Quantum'. If you started from page 1 and flipped page by page, you would waste tremendous time checking 500 pages. Instead, you naturally flip right to the middle. If you see words starting with 'M', you know immediately that 'Q' must be in the right half, instantly discarding 500 pages in a single move. This intuitive division is the exact power of Binary Search.",
-                "estimated_duration": 22.0,
+                "narration_text": "In the summer of 1789, France was bankrupt, frozen by terrible crop failures, and suffocating under an unjust social order known as the Three Estates. While the clergy and nobility paid virtually zero taxes and feasted in Versailles, the commoners, 98 percent of the population, paid for everything while starving in the streets of Paris. When the price of a single loaf of bread soared to equal a month of peasant wages, centuries of royal absolute power were about to collapse.",
+                "estimated_duration": 25.0,
                 "visual_spec": {
-                    "visual_type": "concept_metaphor",
-                    "title": "Search Strategy Comparison",
-                    "subtitle": "Linear Page-by-Page vs. Binary Division",
+                    "visual_type": "hierarchy_pyramid",
+                    "title": "The Ancien Régime: The Three Estates",
+                    "subtitle": "A Society Built on Extreme Inequality",
                     "parameters": {
-                        "metaphor": "dictionary_search",
-                        "left_label": "Linear Search: O(N)",
-                        "left_items": ["Page 1: A", "Page 2: B", "Page 3: C", "...", "Page 500: Target Found (500 steps)"],
-                        "right_label": "Binary Search: O(log N)",
-                        "right_items": ["Open middle (Page 500)", "Target 'Q' > 'M' -> Discard 1-500", "Open middle of remainder", "Found in ~10 steps!"]
+                        "pyramid_title": "Feudal Estate Pyramid (1789)",
+                        "tiers": [
+                            {"tier": "1st Estate: The Clergy (0.5% Pop)", "note": "Owned 10% of land, paid 0% taxes, collected tithes"},
+                            {"tier": "2nd Estate: The Nobility (1.5% Pop)", "note": "Held top military & court posts, exempted from taxes"},
+                            {"tier": "3rd Estate: Commoners & Bourgeoisie (98% Pop)", "note": "Peasants, merchants, laborers who bore the entire tax burden"}
+                        ]
                     },
                     "keyframe_steps": [
-                        {"step": 1, "description": "1,000 pages search space established", "highlight": "entire_space"},
-                        {"step": 2, "description": "Dividing search space in half", "highlight": "middle_split"},
-                        {"step": 3, "description": "Discarding 500 pages instantly", "highlight": "eliminated_half"}
+                        {"step": 1, "highlight": "3rd Estate tax burden"},
+                        {"step": 2, "highlight": "1st and 2nd Estate tax exemption"}
                     ]
                 }
             },
             {
                 "scene_id": "scene_2",
                 "index": 1,
-                "chapter_title": "2. The Invariant: Sorted Arrays & Three Pointers",
+                "chapter_title": "2. Chronology of Rebellion: From Bastille to Republic",
                 "pedagogical_phase": "foundation",
-                "narration_text": "Binary search has one non-negotiable prerequisite: the array must be sorted. Without order, division is impossible. We maintain three key pointers: Low at the start of our search window, High at the end, and Mid right in the center. The formula is simple: Mid equals Low plus High minus Low divided by two, avoiding integer overflow. In each step, we inspect only the element at Mid.",
+                "narration_text": "Let us trace the pivotal turning points that shook the Western world. On July 14, 1789, enraged citizens stormed the medieval Bastille fortress, seizing gunpowder and declaring popular sovereignty. Within weeks, the National Assembly abolished feudalism and proclaimed the Declaration of the Rights of Man. By 1792, King Louis the Sixteenth was deposed, and France declared itself a Republic.",
                 "estimated_duration": 24.0,
                 "visual_spec": {
-                    "visual_type": "algorithm_animator",
-                    "title": "Three-Pointer Architecture",
-                    "subtitle": "Tracking Low, Mid, and High on a Sorted Array",
+                    "visual_type": "timeline_journey",
+                    "title": "The Revolutionary Timeline: 1789 - 1799",
+                    "subtitle": "From Royal Absolutism to the Rise of Napoleon",
                     "parameters": {
-                        "algorithm_type": "array_search",
-                        "array": [2, 5, 8, 12, 16, 23, 38, 56, 72, 91],
-                        "target": 23,
-                        "low": 0,
-                        "high": 9,
-                        "mid": 4,
-                        "state_label": "Initial State: Target = 23"
+                        "milestones": [
+                            {"year": "May 1789", "title": "Estates-General Convenes", "desc": "Third Estate breaks away to form National Assembly", "impact": "Birth of popular sovereignty"},
+                            {"year": "July 1789", "title": "Storming of the Bastille", "desc": "Parisians seize the fortress armory", "impact": "Symbolic fall of tyranny"},
+                            {"year": "Aug 1789", "title": "Declaration of Rights of Man", "desc": "'Liberty, Equality, Fraternity' enshrined", "impact": "End of feudal privilege"},
+                            {"year": "Jan 1793", "title": "Execution of Louis XVI", "desc": "The King is guillotined for treason", "impact": "Point of no return for Europe"}
+                        ]
                     },
                     "keyframe_steps": [
-                        {"step": 1, "low": 0, "high": 9, "mid": 4, "action": "Calculate mid = 0 + (9-0)//2 = 4", "val": 16, "status": "active"},
-                        {"step": 2, "low": 0, "high": 9, "mid": 4, "action": "Compare array[mid] (16) vs Target (23)", "val": 16, "status": "comparing"}
+                        {"step": 1, "highlight": "1789"},
+                        {"step": 2, "highlight": "1793"}
                     ]
                 }
             },
             {
                 "scene_id": "scene_3",
                 "index": 2,
-                "chapter_title": "3. The Elimination Engine: Step-by-Step Execution",
+                "chapter_title": "3. The Clashing Ideologies: Girondins vs. The Mountain",
                 "pedagogical_phase": "visual_demonstration",
-                "narration_text": "Let us watch the algorithm in motion. We are searching for 23. Mid points to index 4, which holds the value 16. Since 16 is strictly less than 23, our target cannot possibly exist anywhere from index 0 to 4. We eliminate the entire left half! We shift Low to Mid plus one, which is index 5. Now our new window is from index 5 to 9. We recalculate Mid to index 7, which holds 56. 56 is greater than 23, so we eliminate the right half! Finally, Low and High converge on index 5, value 23. Target found in just three comparisons!",
-                "estimated_duration": 29.0,
+                "narration_text": "As foreign monarchies invaded France to crush the uprising, the revolution turned radically inwards. The National Convention split into two fierce factions: the moderate Girondins, who advocated decentralized democracy and constitutional caution, and the radical Jacobins, led by Maximilien Robespierre, who demanded ruthless central power to save the revolution at any cost.",
+                "estimated_duration": 24.0,
                 "visual_spec": {
-                    "visual_type": "algorithm_animator",
-                    "title": "Live Binary Search Execution",
-                    "subtitle": "Target: 23 in [2, 5, 8, 12, 16, 23, 38, 56, 72, 91]",
+                    "visual_type": "comparison_matrix",
+                    "title": "The Ideological Civil War",
+                    "subtitle": "Moderate Reformers vs. Radical Jacobins",
                     "parameters": {
-                        "algorithm_type": "array_search",
-                        "array": [2, 5, 8, 12, 16, 23, 38, 56, 72, 91],
-                        "target": 23,
-                        "steps": [
-                            {
-                                "step_num": 1,
-                                "low": 0,
-                                "high": 9,
-                                "mid": 4,
-                                "mid_val": 16,
-                                "comparison": "16 < 23 (Target is larger)",
-                                "decision": "Eliminate left window [0..4], Move low = mid + 1",
-                                "eliminated": [0, 1, 2, 3, 4]
-                            },
-                            {
-                                "step_num": 2,
-                                "low": 5,
-                                "high": 9,
-                                "mid": 7,
-                                "mid_val": 56,
-                                "comparison": "56 > 23 (Target is smaller)",
-                                "decision": "Eliminate right window [7..9], Move high = mid - 1",
-                                "eliminated": [0, 1, 2, 3, 4, 7, 8, 9]
-                            },
-                            {
-                                "step_num": 3,
-                                "low": 5,
-                                "high": 6,
-                                "mid": 5,
-                                "mid_val": 23,
-                                "comparison": "23 == 23 (Match Found!)",
-                                "decision": "Return index 5 successfully!",
-                                "eliminated": [0, 1, 2, 3, 4, 6, 7, 8, 9],
-                                "matched": 5
-                            }
-                        ]
+                        "col1": "The Royalists: Preserve monarchy, aristocratic tradition, and Catholic authority",
+                        "col2": "The Girondins: Moderate republicans, free markets, rule of law, anti-violence",
+                        "col3": "The Jacobin Mountain: Radical centralization, price controls, state terror to purge counter-revolutionaries"
                     },
                     "keyframe_steps": [
-                        {"step": 1, "low": 0, "high": 9, "mid": 4, "msg": "Mid is 16. Target 23 > 16. Discard left."},
-                        {"step": 2, "low": 5, "high": 9, "mid": 7, "msg": "Mid is 56. Target 23 < 56. Discard right."},
-                        {"step": 3, "low": 5, "high": 6, "mid": 5, "msg": "Mid is 23. Match found at index 5!"}
+                        {"step": 1, "highlight": "Girondins"},
+                        {"step": 2, "highlight": "Jacobins"}
                     ]
                 }
             },
             {
                 "scene_id": "scene_4",
                 "index": 3,
-                "chapter_title": "4. Clean Code Implementation & Variable Watch",
+                "chapter_title": "4. The Reign of Terror: The Revolution Devours Its Children",
                 "pedagogical_phase": "edge_cases",
-                "narration_text": "Here is the canonical Python implementation. Notice the while loop condition: while low is less than or equal to high. That 'less than or equal' is crucial for arrays with an odd length or single elements. Inside the loop, if array at mid matches target, we return mid. If the target is greater, we search the right sub-array. Otherwise, we search the left. If low crosses high without a match, we return minus one.",
+                "narration_text": "Robespierre declared that without virtue, terror is fatal; and without terror, virtue is impotent. The Committee of Public Safety suspended constitutional liberties, executing over 17,000 citizens by guillotine in just one year. But paranoia escalated until Robespierre himself was arrested and guillotined in the Thermidorian Reaction, proving that revolutions often consume the very leaders who unleash them.",
                 "estimated_duration": 25.0,
                 "visual_spec": {
-                    "visual_type": "code_visualizer",
-                    "title": "Python Binary Search Implementation",
-                    "subtitle": "Iterative Implementation with While Loop",
+                    "visual_type": "cause_and_effect",
+                    "title": "The Cascade of Radicalization",
+                    "subtitle": "How War and Paranoia Led to the Reign of Terror",
                     "parameters": {
-                        "language": "python",
-                        "code": "def binary_search(arr, target):\n    low = 0\n    high = len(arr) - 1\n    \n    while low <= high:\n        mid = low + (high - low) // 2\n        \n        if arr[mid] == target:\n            return mid\n        elif arr[mid] < target:\n            low = mid + 1\n        else:\n            high = mid - 1\n            \n    return -1",
-                        "highlights": [
-                            {"line": 2, "label": "Initialize pointers: low=0, high=9"},
-                            {"line": 5, "label": "Loop invariant: low <= high"},
-                            {"line": 6, "label": "Safe mid calculation avoiding overflow"},
-                            {"line": 8, "label": "Base case: match found"},
-                            {"line": 10, "label": "Target in right half: low = mid + 1"},
-                            {"line": 12, "label": "Target in left half: high = mid - 1"},
-                            {"line": 14, "label": "Exhausted search space: return -1"}
+                        "root_catalyst": "Foreign Monarchies Invade France (1792)",
+                        "intermediate_effects": [
+                            "War panic & bread shortages radicalize Parisian sans-culottes",
+                            "Committee of Public Safety established under Robespierre",
+                            "Law of Suspects: Anyone accused of treason is guillotined"
                         ],
-                        "variables": {"low": 5, "high": 6, "mid": 5, "target": 23, "return": 5}
+                        "ultimate_consequence": "Thermidorian Reaction: Robespierre executed, ending the Terror"
                     },
                     "keyframe_steps": [
-                        {"step": 1, "active_line": 2, "scope": "low=0, high=9"},
-                        {"step": 2, "active_line": 6, "scope": "mid=4 (arr[4]=16)"},
-                        {"step": 3, "active_line": 10, "scope": "low updated to 5"},
-                        {"step": 4, "active_line": 8, "scope": "arr[5]==23 -> return 5"}
+                        {"step": 1, "highlight": "Foreign Invasion"},
+                        {"step": 2, "highlight": "Reign of Terror"}
                     ]
                 }
             },
             {
                 "scene_id": "scene_5",
                 "index": 4,
-                "chapter_title": "5. Time Complexity: Why O(log N) Changes Everything",
+                "chapter_title": "5. Global Legacy: How 1789 Shaped Modern Democracy",
                 "pedagogical_phase": "summary",
-                "narration_text": "The logarithmic efficiency of binary search is staggering. For an array of 1 million items, linear search would take on average 500,000 checks. Binary search takes at most 20 checks. For 4 billion items, the entire internet population, binary search finds any user in just 32 operations. It turns an impossible problem into an instantaneous lookup. Remember: sorted input, three pointers, eliminate half each step.",
+                "narration_text": "Out of the revolutionary ashes rose Napoleon Bonaparte, whose Napoleonic Code modernized European law. The French Revolution forever dismantled divine right monarchy, introduced universal human rights into international law, invented modern political left and right, and demonstrated that ordinary citizens possess the power to reshape history. Its ideals of Liberty, Equality, and Fraternity remain the bedrock of modern democracy.",
                 "estimated_duration": 24.0,
                 "visual_spec": {
-                    "visual_type": "math_graph",
-                    "title": "Computational Scale: O(N) vs O(log N)",
-                    "subtitle": "Number of Operations as Input Size (N) Grows",
+                    "visual_type": "spectrum_meter",
+                    "title": "The Birth of the Modern Political Spectrum",
+                    "subtitle": "Where Lawmakers Sat in the 1789 National Assembly",
                     "parameters": {
-                        "curve_type": "complexity_comparison",
-                        "x_label": "Input Elements (N)",
-                        "y_label": "Operations Required",
-                        "data_points": [
-                            {"n": "16", "linear": 16, "binary": 4},
-                            {"n": "1,024", "linear": 1024, "binary": 10},
-                            {"n": "1,000,000", "linear": 1000000, "binary": 20},
-                            {"n": "4,000,000,000", "linear": 4000000000, "binary": 32}
+                        "left_label": "The Left: Radical Change, Equality, Republicanism",
+                        "right_label": "The Right: Tradition, Monarchy, Order, Hierarchy",
+                        "center_balance": "Constitutional Liberalism & Human Rights",
+                        "markers": [
+                            "Left: Jacobins",
+                            "Center: Plain / Marais",
+                            "Right: Monarchists & Aristocracy"
                         ]
                     },
                     "keyframe_steps": [
-                        {"step": 1, "description": "Plotting linear line O(N)", "highlight": "linear_curve"},
-                        {"step": 2, "description": "Plotting flat logarithmic curve O(log N)", "highlight": "log_curve"}
+                        {"step": 1, "highlight": "The Left"},
+                        {"step": 2, "highlight": "The Right"}
                     ]
                 }
             }
         ]
 
-        if num_scenes == 3:
-            scenes = [scenes[0], scenes[2], scenes[4]]
-            for i, s in enumerate(scenes):
-                s["index"] = i
-
         materials = {
-            "summary": "Binary Search is a foundational divide-and-conquer algorithm that locates an element in a sorted collection in O(log n) logarithmic time. By repeatedly examining the middle element and discarding the non-viable half of the search space, it reduces a problem of billions of elements to a handful of comparisons.",
-            "notes_markdown": """# Binary Search: Complete Masterclass Notes
+            "summary": "The French Revolution (1789-1799) was a watershed moment in human history. Driven by acute financial insolvency, hunger, and extreme inequality under the Three Estates, the French people overthrew centuries of feudal monarchy, enacted the Declaration of the Rights of Man, weathered the radical Reign of Terror, and established foundational principles of secular democracy and human rights.",
+            "notes_markdown": """# The French Revolution: Comprehensive Masterclass Notes
 
-## 1. Core Principle
-Binary Search locates a target value within a **sorted array** by halving the search space each step.
-- **Time Complexity**:
-  - Best Case: $O(1)$ (target located at initial mid)
-  - Average Case: $O(\\log n)$
-  - Worst Case: $O(\\log n)$
-- **Space Complexity**:
-  - Iterative: $O(1)$ auxiliary space
-  - Recursive: $O(\\log n)$ call stack space
+## 1. Root Causes of 1789
+- **Financial Crisis**: Royal debts from funding the American Revolution and Seven Years' War.
+- **Agricultural Crisis**: The 1788-1789 crop failure caused bread prices to consume 80% of peasants' income.
+- **Social Inequality**: The Three Estates structure exempting the top 2% from taxation.
 
-## 2. The 3 Pointer Pattern
-```python
-def binary_search(arr: list[int], target: int) -> int:
-    low = 0
-    high = len(arr) - 1
-    
-    while low <= high:
-        # Avoid integer overflow (in languages like C++/Java)
-        mid = low + (high - low) // 2
-        
-        if arr[mid] == target:
-            return mid
-        elif arr[mid] < target:
-            low = mid + 1  # Target is in the right half
-        else:
-            high = mid - 1 # Target is in the left half
-            
-    return -1  # Target not found
-```
+## 2. Chronological Milestones
+- **June 1789**: The Tennis Court Oath establishes the National Assembly.
+- **July 14, 1789**: Storming of the Bastille.
+- **August 1789**: Declaration of the Rights of Man and of the Citizen.
+- **1793-1794**: Reign of Terror under Robespierre.
+- **1799**: Coup of 18 Brumaire by Napoleon Bonaparte.
 
-## 3. Essential Edge Cases
-1. **Empty Array**: `len(arr) == 0` returns `-1`.
-2. **Single Element**: Verified correctly because `low <= high` uses `<=` instead of `<`.
-3. **Target Smaller Than Minimum**: `high` moves to `-1`, terminating properly.
-4. **Target Greater Than Maximum**: `low` exceeds `len(arr)-1`, terminating properly.
-5. **Duplicates**: Standard binary search returns any valid match index. For first/last occurrence, adjust pointer without early return.
+## 3. Enduring Legacies
+1. **The Political Spectrum**: The terms 'Left-wing' and 'Right-wing' originated from where deputies sat in the 1789 National Assembly.
+2. **Secular Law**: The Napoleonic Code abolished aristocratic privileges and established civil equality.
+3. **National Sovereignty**: Power derives from the people, not divine right.
 """,
             "key_concepts": [
-                {"concept": "Sorted Invariant", "definition": "The array must be ordered; without sorting, eliminating halves is mathematically invalid.", "importance": "Prerequisite for algorithm correctness."},
-                {"concept": "Search Space Halving", "definition": "Discarding $\\frac{N}{2}$ candidate items in every comparison step.", "importance": "Provides $O(\\log N)$ exponential reduction in computation."},
-                {"concept": "Integer Overflow Guard", "definition": "Calculating `mid = low + (high - low) // 2` rather than `(low + high) // 2`.", "importance": "Prevents arithmetic overflow in 32-bit integer systems."}
+                {"concept": "The Three Estates", "definition": "The feudal social hierarchy dividing France into Clergy (1st), Nobility (2nd), and Commoners (3rd).", "importance": "Extreme tax inequality between estates sparked the rebellion."},
+                {"concept": "Reign of Terror", "definition": "A 10-month period (1793-1794) of state-sponsored executions during internal and external war.", "importance": "Demonstrates the dangers of ideological radicalization and paranoia."},
+                {"concept": "Popular Sovereignty", "definition": "The principle that authority of a state and government is created and sustained by the consent of its people.", "importance": "Replaced divine right monarchy with democratic legitimacy."}
             ],
             "formulas_or_code": [
-                {"title": "Logarithmic Steps Formula", "type": "formula", "content": "k = \\lceil \\log_2(N) \\rceil", "explanation": "Maximum number of iterations required to find target or determine absence in an array of size N."},
-                {"title": "Midpoint Calculation", "type": "code", "content": "mid = low + (high - low) // 2", "explanation": "Calculates midpoint index safely within bounds."}
+                {"title": "The National Motto", "type": "principle", "content": "Liberté, Égalité, Fraternité", "explanation": "Liberty, Equality, Fraternity: the universal triad defining modern republican democracies."},
+                {"title": "Article 1 (Rights of Man)", "type": "quote", "content": "Men are born and remain free and equal in rights.", "explanation": "Foundational premise dissolving aristocratic hereditary entitlement."}
             ],
             "practice_questions": [
-                {"question": "How many comparisons does Binary Search take in the worst case for an array with 1,048,576 elements?", "hint": "Calculate log base 2 of 2^20.", "solution": "Since 1,048,576 = 2^20, Binary Search requires at most 20 comparisons plus 1 final check, so at most 21 operations."},
-                {"question": "What happens if we mistakenly write `while low < high:` instead of `while low <= high:`?", "hint": "Consider a single-element array like [5] with target 5.", "solution": "With low < high, a single-element array (where low == high == 0) will skip the loop entirely and return -1 without checking the target."}
+                {"question": "Why did King Louis XVI call the Estates-General in May 1789 after a 175-year hiatus?", "hint": "Consider France's sovereign financial situation.", "solution": "France was facing complete national bankruptcy, and the aristocracy refused to surrender their tax exemptions without approval from the Estates-General."}
             ],
             "quiz": [
-                {"id": 1, "question": "What is the primary prerequisite for Binary Search to function correctly?", "options": ["Array must contain unique elements", "Array must be sorted", "Array length must be an even power of 2", "Elements must all be positive integers"], "correct_index": 1, "explanation": "Binary search fundamentally relies on order so that comparing the midpoint guarantees which half can be discarded."},
-                {"id": 2, "question": "What is the worst-case time complexity of Binary Search on an array of size N?", "options": ["O(1)", "O(N)", "O(log N)", "O(N log N)"], "correct_index": 2, "explanation": "Halving the search space each step produces a logarithmic time complexity of O(log N)."},
-                {"id": 3, "question": "Why is `mid = low + (high - low) // 2` preferred over `mid = (low + high) // 2` in many programming languages?", "options": ["It computes faster on the CPU", "It prevents 32-bit integer overflow when low + high exceeds 2^31 - 1", "It handles negative numbers better", "It is required by the Python interpreter"], "correct_index": 1, "explanation": "In statically typed languages like C, C++, and Java, low + high can overflow the maximum signed 32-bit integer, resulting in a negative index."}
+                {"id": 1, "question": "What percentage of the French population belonged to the Third Estate in 1789?", "options": ["Around 50%", "Around 75%", "Around 98%", "Less than 20%"], "correct_index": 2, "explanation": "Commoners, peasants, and the bourgeoisie accounted for roughly 98% of the kingdom's populace."},
+                {"id": 2, "question": "What was the significance of the storming of the Bastille on July 14, 1789?", "options": ["It was where the King lived", "It symbolized the fall of royal tyranny and secured gunpowder for the revolution", "It was where all national tax money was kept", "It ended the French Revolution in a single day"], "correct_index": 1, "explanation": "The Bastille was a dreaded symbol of royal oppression and contained the gunpowder needed by the newly formed National Guard."}
             ],
             "flashcards": [
-                {"id": 1, "front": "What is the time complexity of Binary Search?", "back": "O(log N) in both average and worst case; O(1) in best case.", "category": "Complexity"},
-                {"id": 2, "front": "Why is the loop condition 'while low <= high' and not '<'?", "back": "To allow checking the final remaining element when low and high converge on the same index.", "category": "Implementation"},
-                {"id": 3, "front": "What is the auxiliary space complexity of iterative binary search?", "back": "O(1) constant auxiliary space, as only low, high, and mid pointers are stored.", "category": "Memory"}
+                {"id": 1, "front": "What did the Tennis Court Oath pledge?", "back": "The Third Estate vowed not to disband until they had drafted a written constitution for France.", "category": "Milestones"},
+                {"id": 2, "front": "Who led the Committee of Public Safety during the Reign of Terror?", "back": "Maximilien Robespierre.", "category": "Key Figures"}
             ]
         }
 
         return {
-            "title": "Mastering Binary Search: Intuition, Algorithm & Complexity",
-            "domain": "computer_science",
-            "subdomain": "Algorithms & Data Structures",
+            "title": "The French Revolution: Storming the Bastille to the Birth of Democracy",
+            "domain": "history",
+            "subdomain": "Modern European History & Political Revolutions",
             "scenes": scenes,
             "materials": materials
         }
 
-    def _build_neural_networks_lecture(self, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
+    def _build_inflation_lecture(self, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
         scenes = [
             {
                 "scene_id": "scene_1",
                 "index": 0,
-                "chapter_title": "1. The Artificial Neuron: Inputs, Weights & Biases",
+                "chapter_title": "1. The Coffee Shop Dilemma: What is Inflation?",
                 "pedagogical_phase": "hook",
-                "narration_text": "How can a computer recognize a handwritten digit, translate languages, or drive a car? At the heart of deep learning is a surprisingly simple mathematical building block: the artificial neuron. Just like biological synapses, it takes multiple input signals, scales each by an adjustable weight, adds an internal bias, and passes the sum through an activation function.",
+                "narration_text": "In 1970, a cup of coffee cost twenty-five cents. Today, that exact same coffee costs four dollars. Did the coffee beans become sixteen times more delicious? Of course not. The coffee didn't change; the value of the dollar did! Inflation is not simply prices rising; it is the silent evaporation of your money's purchasing power over time.",
+                "estimated_duration": 22.0,
+                "visual_spec": {
+                    "visual_type": "concept_metaphor",
+                    "title": "Purchasing Power Shrinkage",
+                    "subtitle": "What $20 Bought in 1970 vs Today",
+                    "parameters": {
+                        "left_title": "1970: $20 Bill",
+                        "left_items": ["Full grocery cart (Eggs, Milk, Bread, Meat)", "Full tank of gasoline", "Dinner for two at a restaurant"],
+                        "right_title": "Today: $20 Bill",
+                        "right_items": ["A modest sandwich and drink", "A few gallons of gas", "Purchasing power eroded by ~85%!"]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "1970 basket"},
+                        {"step": 2, "highlight": "Current basket"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_2",
+                "index": 1,
+                "chapter_title": "2. The Twin Drivers: Demand-Pull vs. Cost-Push",
+                "pedagogical_phase": "foundation",
+                "narration_text": "Economists categorize inflation into two primary engines. First is Demand-Pull inflation: too much money chasing too few goods, like when stimulus cash arrives but factories cannot produce goods fast enough. Second is Cost-Push inflation: when production costs spike, such as an oil embargo or war that makes transportation and electricity expensive across the entire economy.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "comparison_matrix",
+                    "title": "The Two Engines of Inflation",
+                    "subtitle": "Demand-Pull vs. Cost-Push Economics",
+                    "parameters": {
+                        "col1": "Demand-Pull: High consumer spending & cheap credit pull prices upward",
+                        "col2": "Cost-Push: Rising supply costs (oil, raw materials, wages) push prices higher",
+                        "col3": "Built-In (Wage-Price Spiral): Workers demand higher wages, forcing businesses to raise prices again"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Demand-Pull"},
+                        {"step": 2, "highlight": "Cost-Push"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_3",
+                "index": 2,
+                "chapter_title": "3. The Money Supply Cycle: Milton Friedman's Rule",
+                "pedagogical_phase": "visual_demonstration",
+                "narration_text": "As Nobel laureate Milton Friedman famously argued, inflation is always and everywhere a monetary phenomenon. If an economy produces 100 apples, and there is 100 dollars in circulation, an apple costs 1 dollar. If the central bank prints another 100 dollars without growing more apples, an apple naturally rises to 2 dollars. The money supply cycle connects central bank interest rates, commercial bank lending, and the velocity of money.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "cycle_loop",
+                    "title": "The Monetary Cycle & Price Equilibrium",
+                    "subtitle": "Central Bank -> Commercial Lending -> Consumer Spending -> Price Pressures",
+                    "parameters": {
+                        "cycle_title": "Credit & Monetary Expansion Loop",
+                        "stages": [
+                            {"name": "1. Low Interest Rates", "role": "Central Bank cuts rates, making borrowing cheap"},
+                            {"name": "2. Bank Credit Surges", "role": "Mortgages, business loans, and consumer credit multiply"},
+                            {"name": "3. Aggregate Demand Exceeds Supply", "role": "Purchasing volume outpaces factory capacity"},
+                            {"name": "4. Broad Price Increases", "role": "Sellers raise prices across housing, food, and energy"}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Cheap Credit"},
+                        {"step": 2, "highlight": "Surging Demand"},
+                        {"step": 3, "highlight": "Price Increase"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_4",
+                "index": 3,
+                "chapter_title": "4. The Central Bank's Sledgehammer: Raising Rates",
+                "pedagogical_phase": "edge_cases",
+                "narration_text": "To stop runaway inflation, central banks have one primary lever: hiking interest rates. When the Federal Reserve raises rates, borrowing costs for credit cards, cars, and home mortgages skyrocket. Consumers stop buying homes, companies freeze hiring, demand cools down, and prices stabilize. But the risk is immense: tighten too fast, and you trigger a painful economic recession.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "spectrum_meter",
+                    "title": "The Central Bank Balancing Act",
+                    "subtitle": "Controlling Inflation vs. Preventing Economic Recession",
+                    "parameters": {
+                        "left_label": "Loose Money: Low Rates, High Growth, High Inflation Risk",
+                        "right_label": "Tight Money: High Rates, Crushed Inflation, High Recession Risk",
+                        "center_balance": "The 'Goldilocks' 2% Annual Inflation Target",
+                        "markers": [
+                            "Dovish (Stimulate Economy)",
+                            "Neutral (Sustainable Equilibrium)",
+                            "Hawkish (Aggressive Rate Hikes)"
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Loose Money"},
+                        {"step": 2, "highlight": "Tight Money"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_5",
+                "index": 4,
+                "chapter_title": "5. Protecting Your Wealth: Assets That Beat Inflation",
+                "pedagogical_phase": "summary",
+                "narration_text": "Inflation is an invisible tax on savers. Holding cash in a zero-interest savings account guarantees you lose real wealth every single year. To thrive, smart investors allocate capital into inflation-hedging assets: productive businesses with pricing power, real estate with rent growth, and Treasury Inflation-Protected Securities. Understanding inflation turns you from an economic victim into an informed investor.",
                 "estimated_duration": 23.0,
                 "visual_spec": {
-                    "visual_type": "process_simulation",
-                    "title": "The Perceptron Architecture",
-                    "subtitle": "Weighted Inputs Summed and Activated",
-                    "parameters": {
-                        "inputs": ["x1: Pixel Brightness", "x2: Edge Angle", "x3: Contrast"],
-                        "weights": ["w1 = 0.8", "w2 = -0.4", "w3 = 1.2"],
-                        "summation": "z = Σ(wi · xi) + b",
-                        "activation": "a = σ(z) = 1 / (1 + e^-z)",
-                        "output": "Probability: 0.94 (Digit '7')"
-                    },
-                    "keyframe_steps": [
-                        {"step": 1, "description": "Signals flow into input dendrites"},
-                        {"step": 2, "description": "Weighted linear combination computed"},
-                        {"step": 3, "description": "Non-linear activation fires"}
-                    ]
-                }
-            },
-            {
-                "scene_id": "scene_2",
-                "index": 1,
-                "chapter_title": "2. Forward Propagation: From Pixels to Predictions",
-                "pedagogical_phase": "foundation",
-                "narration_text": "When we stack hundreds of these neurons into layers, we form a deep neural network. Information flows strictly forward. The input layer takes raw data, hidden layers extract increasingly abstract features like edges, textures, and object shapes, and the output layer outputs probabilities via the Softmax function.",
-                "estimated_duration": 22.0,
-                "visual_spec": {
-                    "visual_type": "diagram_board",
-                    "title": "Deep Neural Network Architecture",
-                    "subtitle": "Input Layer -> Hidden Layers -> Output Layer",
-                    "parameters": {
-                        "layers": [
-                            {"name": "Input Layer", "nodes": 4, "role": "Raw Features"},
-                            {"name": "Hidden Layer 1", "nodes": 6, "role": "Low-level Edges"},
-                            {"name": "Hidden Layer 2", "nodes": 6, "role": "High-level Shapes"},
-                            {"name": "Output Layer", "nodes": 2, "role": "Classification"}
-                        ]
-                    },
-                    "keyframe_steps": [
-                        {"step": 1, "description": "Input pulse enters network"},
-                        {"step": 2, "description": "Hidden activations compute"},
-                        {"step": 3, "description": "Output prediction emitted"}
-                    ]
-                }
-            },
-            {
-                "scene_id": "scene_3",
-                "index": 2,
-                "chapter_title": "3. The Loss Landscape: Measuring Mistake",
-                "pedagogical_phase": "visual_demonstration",
-                "narration_text": "Initially, all weights are random, so the network makes wild guesses. To train it, we define a Loss Function, like Cross-Entropy or Mean Squared Error. The Loss measures how wrong the prediction is. Picture a mountainous 3D terrain: the height of each mountain represents error. Our goal is to descend the mountains to reach the lowest possible valley.",
-                "estimated_duration": 24.0,
-                "visual_spec": {
-                    "visual_type": "math_graph",
-                    "title": "3D Loss Landscape & Valley of Convergence",
-                    "subtitle": "Minimizing Error via Gradient Vector",
-                    "parameters": {
-                        "curve_type": "loss_surface",
-                        "x_axis": "Weight 1",
-                        "y_axis": "Loss (Error)",
-                        "formula": "L(w) = (y_pred - y_true)^2"
-                    },
-                    "keyframe_steps": [
-                        {"step": 1, "description": "High error starting position"},
-                        {"step": 2, "description": "Calculating steepest slope"},
-                        {"step": 3, "description": "Stepping down toward global minimum"}
-                    ]
-                }
-            },
-            {
-                "scene_id": "scene_4",
-                "index": 3,
-                "chapter_title": "4. Backpropagation & The Chain Rule",
-                "pedagogical_phase": "edge_cases",
-                "narration_text": "Here is the breakthrough: Backpropagation. Using calculus and the chain rule of derivatives, we compute the gradient: how much did each individual weight contribute to the final error? We propagate this error backward from output to input, updating every weight in the opposite direction of the gradient scaled by a learning rate.",
-                "estimated_duration": 25.0,
-                "visual_spec": {
-                    "visual_type": "code_visualizer",
-                    "title": "Gradient Descent Weight Update Rule",
-                    "subtitle": "The Mathematical Engine of Learning",
-                    "parameters": {
-                        "language": "python",
-                        "code": "# Backpropagation Step\nfor epoch in range(num_epochs):\n    # 1. Forward Pass\n    y_pred = model.forward(X)\n    loss = criterion(y_pred, y_true)\n    \n    # 2. Backward Pass (Chain Rule)\n    loss.backward()\n    \n    # 3. Parameter Update: w = w - lr * grad\n    with torch.no_grad():\n        for param in model.parameters():\n            param -= learning_rate * param.grad\n            param.grad.zero_()",
-                        "highlights": [
-                            {"line": 4, "label": "Forward pass prediction"},
-                            {"line": 8, "label": "Compute gradients via chain rule"},
-                            {"line": 13, "label": "Nudge weights downhill by learning rate"}
-                        ]
-                    },
-                    "keyframe_steps": [
-                        {"step": 1, "active_line": 4, "scope": "Computing forward activations"},
-                        {"step": 2, "active_line": 8, "scope": "Error gradients propagating backwards"},
-                        {"step": 3, "active_line": 13, "scope": "Weights updated downhill"}
-                    ]
-                }
-            },
-            {
-                "scene_id": "scene_5",
-                "index": 4,
-                "chapter_title": "5. Training in Action & Overfitting",
-                "pedagogical_phase": "summary",
-                "narration_text": "After millions of micro-adjustments, the network converges. But beware of overfitting: if the model simply memorizes the training data without learning generalized patterns, it will fail in the real world. Techniques like dropout, regularization, and batch normalization keep our neural network robust, enabling modern AI models to generalize remarkably.",
-                "estimated_duration": 24.0,
-                "visual_spec": {
                     "visual_type": "comparison_matrix",
-                    "title": "Generalization vs Overfitting",
-                    "subtitle": "Finding the Optimal Model Complexity",
+                    "title": "Asset Performance During Inflation",
+                    "subtitle": "Winners vs. Losers When Purchasing Power Drops",
                     "parameters": {
-                        "col1": "Underfitting (High Bias): Model is too simple, fails to capture trend",
-                        "col2": "Balanced (Optimal): Smooth decision boundary, high test accuracy",
-                        "col3": "Overfitting (High Variance): Fits noise, fails on new unseen data"
+                        "col1": "Cash & Fixed Savings: Guaranteed losers. Purchasing power drops year after year.",
+                        "col2": "Fixed-Rate Debtors: Relative winners. They pay back old mortgages with cheaper, inflated dollars.",
+                        "col3": "Equities & Real Assets: Resilient performers. Companies raise prices, preserving real returns."
                     },
                     "keyframe_steps": [
-                        {"step": 1, "highlight": "Underfitting"},
-                        {"step": 2, "highlight": "Balanced"},
-                        {"step": 3, "highlight": "Overfitting"}
+                        {"step": 1, "highlight": "Cash"},
+                        {"step": 2, "highlight": "Real Assets"}
                     ]
                 }
             }
         ]
 
         materials = {
-            "summary": "Neural Networks learn by combining linear transformations with non-linear activations. Through forward propagation, predictions are made; through loss calculation and backpropagation using the calculus chain rule, gradients are passed backward to iteratively update weights using gradient descent.",
-            "notes_markdown": """# Neural Networks & Backpropagation: Core Lecture Notes
+            "summary": "Inflation is the sustained increase in the general price level of goods and services, which corresponds directly to a decline in purchasing power. It is propelled by Demand-Pull factors, Cost-Push shocks, and expansion of the money supply, and managed by Central Banks through interest rate policies.",
+            "notes_markdown": """# Economics: Understanding Inflation & Monetary Policy
 
-## 1. Mathematical Anatomy of a Single Neuron
-A neuron computes:
-$$z = \\sum_{i=1}^{n} w_i x_i + b = \\mathbf{w}^T \\mathbf{x} + b$$
-$$a = \\sigma(z)$$
+## 1. Defining Inflation
+$$\\text{Inflation Rate} = \\frac{\\text{CPI}_{\\text{current}} - \\text{CPI}_{\\text{previous}}}{\\text{CPI}_{\\text{previous}}} \\times 100$$
+- **Purchasing Power**: The quantity of goods and services one unit of currency can buy.
+- **Consumer Price Index (CPI)**: A weighted basket of typical goods (food, shelter, transportation, healthcare).
+
+## 2. Core Causes
+1. **Demand-Pull**: Aggregate demand exceeding aggregate supply.
+2. **Cost-Push**: Exogenous supply shocks (e.g. oil crisis, natural disasters).
+3. **Monetary Expansion**: When the growth of broad money supply ($M_2$) significantly outpaces real economic output ($GDP$).
+
+## 3. The Quantity Theory of Money
+$$M \\cdot V = P \\cdot Y$$
 where:
-- $\\mathbf{x}$: Input feature vector
-- $\\mathbf{w}$: Learned weights vector
-- $b$: Bias term
-- $\\sigma$: Non-linear activation function (ReLU, Sigmoid, GELU)
-
-## 2. The Backpropagation Algorithm
-To minimize loss $L$, we compute partial derivatives $\\frac{\\partial L}{\\partial w_{ij}}$ via the Chain Rule:
-$$\\frac{\\partial L}{\\partial w} = \\frac{\\partial L}{\\partial a} \\cdot \\frac{\\partial a}{\\partial z} \\cdot \\frac{\\partial z}{\\partial w}$$
-
-## 3. Gradient Descent Parameter Update
-$$w \\leftarrow w - \\eta \\cdot \\frac{\\partial L}{\\partial w}$$
-where $\\eta$ represents the **learning rate**.
+- $M$: Money Supply
+- $V$: Velocity of Money (how many times a dollar is spent per year)
+- $P$: Price Level
+- $Y$: Real Output (Real GDP)
 """,
             "key_concepts": [
-                {"concept": "Non-Linear Activation", "definition": "Functions like ReLU ($f(x) = \\max(0, x)$) that enable networks to approximate non-linear boundary functions.", "importance": "Without non-linearities, any deep network collapses mathematically into a single linear matrix."},
-                {"concept": "Gradient Descent", "definition": "An iterative optimization algorithm that steps in the opposite direction of the gradient to minimize the loss.", "importance": "Core optimization mechanism powering all deep learning models."},
-                {"concept": "Learning Rate", "definition": "Hyperparameter determining the step size taken downhill during gradient descent.", "importance": "Too high causes divergence; too low causes sluggish or trapped training."}
+                {"concept": "Purchasing Power", "definition": "The real value of currency expressed in terms of the amount of goods or services one unit can buy.", "importance": "Core reason why long-term cash holding is risky."},
+                {"concept": "Consumer Price Index (CPI)", "definition": "A statistical measure tracking changes in prices paid by consumers for a representative basket of goods.", "importance": "Standard government benchmark for inflation."},
+                {"concept": "Interest Rate Lever", "definition": "Central bank policy of adjusting the cost of borrowing to accelerate or cool down economic demand.", "importance": "Primary monetary mechanism for stabilizing prices."}
             ],
             "formulas_or_code": [
-                {"title": "Weight Update Rule", "type": "formula", "content": "w_{t+1} = w_t - \\eta \\nabla L(w_t)", "explanation": "Updates parameter weights downhill along the negative gradient."},
-                {"title": "ReLU Activation", "type": "formula", "content": "f(x) = \\max(0, x)", "explanation": "Most popular activation function, avoids vanishing gradient problem for positive inputs."}
+                {"title": "Equation of Exchange", "type": "formula", "content": "M \\cdot V = P \\cdot Y", "explanation": "Relates money supply and velocity to the general price level and economic output."},
+                {"title": "The Rule of 72", "type": "rule", "content": "\\text{Years to Halve Purchasing Power} \\approx \\frac{72}{\\text{Inflation Rate}}", "explanation": "At 7% inflation, your money loses half its buying power in approximately 10 years."}
             ],
             "practice_questions": [
-                {"question": "Why can't a multi-layer neural network with only linear activation functions solve the XOR problem?", "hint": "Consider the composition of linear transformations.", "solution": "A composition of linear functions is always strictly linear. The XOR problem requires a non-linear decision boundary, which is impossible without non-linear activations."}
+                {"question": "Why does a moderate 2% inflation target benefit an economy more than 0% inflation or deflation?", "hint": "Think about consumer behavior when prices are expected to drop.", "solution": "Deflation causes consumers and businesses to postpone purchases expecting lower prices later, triggering economic paralysis. A predictable 2% inflation greases wages and encourages investment."}
             ],
             "quiz": [
-                {"id": 1, "question": "What is the primary role of the activation function in a neural network?", "options": ["Speed up floating point arithmetic", "Introduce non-linearity so the network can learn complex patterns", "Normalize weights to sum to one", "Prevent memory leaks in GPU tensors"], "correct_index": 1, "explanation": "Without non-linear activation functions, a network of any depth is mathematically equivalent to a single linear layer."},
-                {"id": 2, "question": "What mathematical principle underpins backpropagation?", "options": ["Pythagorean theorem", "The Calculus Chain Rule", "Fourier transform", "Markov chains"], "correct_index": 1, "explanation": "Backpropagation computes partial derivatives through composite functions using the chain rule of calculus."}
+                {"id": 1, "question": "What happens to the purchasing power of cash during inflation?", "options": ["It increases", "It stays exactly constant", "It decreases", "It doubles every five years"], "correct_index": 2, "explanation": "As prices rise, each dollar buys fewer goods and services, diminishing purchasing power."},
+                {"id": 2, "question": "How do central banks combat high inflation?", "options": ["By printing more money", "By raising interest rates to cool borrowing and demand", "By cutting taxes for corporations", "By lowering interest rates to zero"], "correct_index": 1, "explanation": "Raising interest rates makes credit expensive, slowing spending and bringing supply and demand into balance."}
             ],
             "flashcards": [
-                {"id": 1, "front": "What does the gradient vector point towards?", "back": "The direction of steepest increase of the loss function.", "category": "Calculus"},
-                {"id": 2, "front": "Why do we subtract the gradient during weight updates?", "back": "Because we want to minimize error, so we move in the opposite direction (steepest descent).", "category": "Optimization"}
+                {"id": 1, "front": "What is Demand-Pull Inflation?", "back": "When aggregate demand for goods outstrips available production capacity ('too much money chasing too few goods').", "category": "Mechanisms"},
+                {"id": 2, "front": "Who benefits from unexpected inflation?", "back": "Borrowers with fixed-rate debt, because they repay loans with devalued currency.", "category": "Impact"}
             ]
         }
 
         return {
-            "title": "Neural Networks & Backpropagation: Visualizing How AI Learns",
-            "domain": "computer_science",
-            "subdomain": "Artificial Intelligence & Machine Learning",
+            "title": "How Inflation Works: The Hidden Tax on Money",
+            "domain": "economics_business",
+            "subdomain": "Macroeconomics & Personal Finance",
             "scenes": scenes,
             "materials": materials
         }
 
-    def _build_async_await_lecture(self, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
+    def _build_stoicism_lecture(self, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
         scenes = [
             {
                 "scene_id": "scene_1",
                 "index": 0,
-                "chapter_title": "1. The Restaurant Chef: Synchronous vs Asynchronous",
+                "chapter_title": "1. The Dichotomy of Control: The Stoic Superpower",
                 "pedagogical_phase": "hook",
-                "narration_text": "Imagine a chef in a restaurant kitchen. In a synchronous world, the chef puts bread in the toaster and stands completely frozen, doing nothing for three minutes until the toast pops up. Customers starve while the kitchen sits idle! In an asynchronous kitchen, the chef drops the bread into the toaster, immediately starts chopping vegetables, and only comes back to grab the toast when a chime rings. This non-blocking concurrency is what async and await deliver to software.",
-                "estimated_duration": 25.0,
+                "narration_text": "Imagine standing in the middle of a torrential storm. You can scream at the clouds, curse the rain, and tear your hair out in fury—yet the rain will continue to fall. Epictetus, a Greek slave who became one of Rome's greatest philosophers, observed that human suffering does not come from events themselves, but from the judgments we form about them. This single insight is the Dichotomy of Control, the ultimate bedrock of Stoic philosophy.",
+                "estimated_duration": 24.0,
                 "visual_spec": {
                     "visual_type": "concept_metaphor",
-                    "title": "The Chef Kitchen Metaphor",
-                    "subtitle": "Blocking I/O vs. Non-Blocking Event-Driven Concurrency",
+                    "title": "The Dichotomy of Control",
+                    "subtitle": "What You Control vs. What You Cannot",
                     "parameters": {
-                        "left_title": "Synchronous (Blocking)",
-                        "left_items": ["Wait for Toaster (3m idle)", "Wait for Water to Boil (5m idle)", "Cook Stew: Total 15 mins wasted"],
-                        "right_title": "Async / Event Loop (Non-blocking)",
-                        "right_items": ["Start Toaster -> Delegate to Timer", "Chop Veggies concurrently", "Grab toast upon event notification!"]
+                        "left_title": "Outside Your Control (Indifferents)",
+                        "left_items": ["The past and the future", "Other people's opinions & actions", "Health, traffic, weather, fame"],
+                        "right_title": "Within Your Control (Your Domain)",
+                        "right_items": ["Your current judgments and beliefs", "Your character, honesty, and values", "Your deliberate actions & emotional response"]
                     },
                     "keyframe_steps": [
-                        {"step": 1, "highlight": "Blocking freeze"},
-                        {"step": 2, "highlight": "Async delegation"}
+                        {"step": 1, "highlight": "External events"},
+                        {"step": 2, "highlight": "Internal sovereignty"}
                     ]
                 }
             },
             {
                 "scene_id": "scene_2",
                 "index": 1,
-                "chapter_title": "2. The Event Loop Architecture",
+                "chapter_title": "2. The Four Cardinal Virtues: The Stoic Compass",
                 "pedagogical_phase": "foundation",
-                "narration_text": "Under the hood, single-threaded runtimes like Python asyncio or Node.js utilize an Event Loop. The Call Stack runs your JavaScript or Python code line by line. When an I/O operation like a database query or network request occurs, it is handed off to the OS background pool. The main thread never freezes; it continues handling user clicks or other requests, checking the Task Queue whenever the stack is clear.",
-                "estimated_duration": 24.0,
+                "narration_text": "To the Stoics, virtue is the sole good. Everything else—wealth, status, pleasure—is merely an 'indifferent'. They navigated life with four cardinal virtues: Wisdom, the ability to discern good from bad; Courage, doing what is right despite fear; Justice, treating fellow human beings with absolute fairness; and Temperance, practicing self-discipline and moderation in all things.",
+                "estimated_duration": 23.0,
                 "visual_spec": {
-                    "visual_type": "process_simulation",
-                    "title": "Event Loop & Task Queue Cycle",
-                    "subtitle": "Call Stack -> Web APIs / OS Kernel -> Callback Queue",
+                    "visual_type": "hierarchy_pyramid",
+                    "title": "The Four Cardinal Virtues",
+                    "subtitle": "The Architectural Pillars of Moral Character",
                     "parameters": {
-                        "components": [
-                            {"name": "Call Stack", "desc": "Current execution frame"},
-                            {"name": "OS / Web API", "desc": "Handling network socket I/O"},
-                            {"name": "Task Queue", "desc": "Completed callbacks waiting"},
-                            {"name": "Event Loop", "desc": "Continuously pumping tasks into stack"}
+                        "pyramid_title": "Stoic Virtue Architecture",
+                        "tiers": [
+                            {"tier": "Wisdom (Sophia): Understanding reality & clarity of thought", "note": "Knowing what matters and what is trivial"},
+                            {"tier": "Courage (Andreia): Moral backbone and resilience", "note": "Facing fear, hardship, and truth without flinching"},
+                            {"tier": "Justice (Dikaiosyne): Service to the human community", "note": "Fairness, benevolence, and duty to society"},
+                            {"tier": "Temperance (Sophrosyne): Mastery over impulse", "note": "Discipline, moderation, and emotional equilibrium"}
                         ]
                     },
                     "keyframe_steps": [
-                        {"step": 1, "description": "Call stack encounters await fetch()"},
-                        {"step": 2, "description": "Network request offloaded to background"},
-                        {"step": 3, "description": "Task queue notifies event loop on completion"}
+                        {"step": 1, "highlight": "Wisdom and Courage"},
+                        {"step": 2, "highlight": "Justice and Temperance"}
                     ]
                 }
             },
             {
                 "scene_id": "scene_3",
                 "index": 2,
-                "chapter_title": "3. Code Anatomy: async def and await",
+                "chapter_title": "3. The Cognitive Loop: From Impression to Assent",
                 "pedagogical_phase": "visual_demonstration",
-                "narration_text": "Writing asynchronous code used to mean messy callback hell. The async and await keywords make asynchronous code read like clean synchronous code. Declaring async def defines a coroutine. When you write await, execution pauses at that exact line and releases the thread. When the awaited operation completes, execution resumes smoothly with the returned value.",
+                "narration_text": "Modern cognitive behavioral therapy, or CBT, is directly based on the Stoic mental model. When an external event happens, your brain experiences an automatic initial impression or phantasia. An untrained person immediately reacts with anger or panic. A Stoic pauses in the gap between stimulus and response, critically examining the impression before granting assent.",
                 "estimated_duration": 25.0,
                 "visual_spec": {
-                    "visual_type": "code_visualizer",
-                    "title": "Async/Await in Action (Python Asyncio)",
-                    "subtitle": "Suspending and Resuming Coroutines",
+                    "visual_type": "cycle_loop",
+                    "title": "The Cognitive Loop: Stimulus to Response",
+                    "subtitle": "The Gap Between What Happens and How You React",
                     "parameters": {
-                        "language": "python",
-                        "code": "import asyncio\n\nasync def fetch_user_data(user_id):\n    print(f'Fetching user {user_id}...')\n    # Non-blocking pause: thread released!\n    await asyncio.sleep(2) \n    return {'id': user_id, 'name': 'Alex'}\n\nasync def main():\n    # Run multiple tasks concurrently with gather\n    results = await asyncio.gather(\n        fetch_user_data(1),\n        fetch_user_data(2)\n    )\n    print(results)\n\nasyncio.run(main())",
-                        "highlights": [
-                            {"line": 3, "label": "Defines an async coroutine"},
-                            {"line": 6, "label": "await pauses function without blocking thread"},
-                            {"line": 11, "label": "Runs both I/O operations simultaneously in parallel time!"}
+                        "cycle_title": "Stoic Mental Processing Circuit",
+                        "stages": [
+                            {"name": "1. External Stimulus", "role": "Someone insults you or an unexpected obstacle occurs"},
+                            {"name": "2. Raw Impression (Phantasia)", "role": "Initial involuntary spike of adrenaline or thought"},
+                            {"name": "3. Critical Examination (Elenchos)", "role": "Ask: 'Is this within my control? Does this harm my character?'"},
+                            {"name": "4. Deliberate Response (Assent)", "role": "Respond with calm virtue, refusing to be disturbed"}
                         ]
                     },
                     "keyframe_steps": [
-                        {"step": 1, "active_line": 3, "scope": "Coroutine registered"},
-                        {"step": 2, "active_line": 6, "scope": "Thread yields control during sleep"},
-                        {"step": 3, "active_line": 11, "scope": "Gather resolves in 2s total instead of 4s!"}
+                        {"step": 1, "highlight": "Raw Impression"},
+                        {"step": 2, "highlight": "Critical Examination"},
+                        {"step": 3, "highlight": "Deliberate Response"}
                     ]
                 }
             },
             {
                 "scene_id": "scene_4",
                 "index": 3,
-                "chapter_title": "4. Common Pitfalls: Blocking the Loop",
+                "chapter_title": "4. Psychological Exercises: Premeditatio Malorum & Amor Fati",
                 "pedagogical_phase": "edge_cases",
-                "narration_text": "The number one mistake developers make is running CPU-heavy operations inside an async function. If you calculate Fibonacci or run an image filter on the event loop, you block every other user connected to your server! For CPU-heavy work, offload to a worker process or thread pool. Async is strictly designed for I/O-bound operations.",
-                "estimated_duration": 22.0,
+                "narration_text": "The Stoics practiced rigorous mental exercises. In Premeditatio Malorum, they intentionally visualized potential misfortunes—losing a job, illness, betrayal—to inoculate themselves against anxiety. And through Amor Fati, loving one's fate, Marcus Aurelius reminded us: 'The impediment to action advances action. What stands in the way becomes the way.'",
+                "estimated_duration": 24.0,
                 "visual_spec": {
                     "visual_type": "comparison_matrix",
-                    "title": "I/O Bound vs CPU Bound",
-                    "subtitle": "Choosing the Right Concurrency Tool",
+                    "title": "Practical Stoic Mental Tools",
+                    "subtitle": "Daily Psychological Drills for Unshakeable Resilience",
                     "parameters": {
-                        "col1": "I/O Bound (Network, DB, Disk): Perfect for Async/Await & Event Loop",
-                        "col2": "CPU Bound (Video encoding, ML, Encryption): Requires Multi-Processing / ThreadPool",
-                        "col3": "Golden Rule: Never call time.sleep() or sync DB drivers in async def"
+                        "col1": "Premeditatio Malorum: Mental rehearsal of adversity to destroy surprise and fragility.",
+                        "col2": "Amor Fati (Love Your Fate): Don't just tolerate obstacles; use them as fuel to practice patience and creativity.",
+                        "col3": "Memento Mori: Remember death. Keeps pride humble and gives fierce urgency to every single day."
                     },
                     "keyframe_steps": [
-                        {"step": 1, "highlight": "I/O Bound"},
-                        {"step": 2, "highlight": "CPU Bound"}
+                        {"step": 1, "highlight": "Premeditatio"},
+                        {"step": 2, "highlight": "Amor Fati"},
+                        {"step": 3, "highlight": "Memento Mori"}
                     ]
                 }
             },
             {
                 "scene_id": "scene_5",
                 "index": 4,
-                "chapter_title": "5. Real-World Power: High Throughput Servers",
+                "chapter_title": "5. Stoicism in the Real World: Inner Citadel",
                 "pedagogical_phase": "summary",
-                "narration_text": "By eliminating idle thread memory, frameworks like FastAPI and Node.js can handle tens of thousands of concurrent websocket and HTTP connections on a single machine. Async and await provide clean syntax, high efficiency, and modern scalability. Code synchronously, execute asynchronously.",
-                "estimated_duration": 21.0,
+                "narration_text": "Stoicism is not emotionless detachment; it is the freedom from destructive passions so you can love and act fully in the real world. By building what Marcus Aurelius called the 'Inner Citadel' inside your mind, external chaos can never conquer you. Focus only on what you control, act with justice, love whatever happens, and remember that virtue is its own reward.",
+                "estimated_duration": 23.0,
                 "visual_spec": {
-                    "visual_type": "math_graph",
-                    "title": "Server Concurrency Throughput",
-                    "subtitle": "Thread-per-request vs. Asynchronous Event-Driven Architecture",
+                    "visual_type": "spectrum_meter",
+                    "title": "The Spectrum of Emotional Mastery",
+                    "subtitle": "Reactive Passivity vs Stoic Sovereignty",
                     "parameters": {
-                        "x_axis": "Concurrent Connections (Thousands)",
-                        "y_axis": "RAM Usage (MB)",
-                        "data_points": [
-                            {"c": "1k", "threaded": "1,000 MB (1MB per thread)", "async": "35 MB"},
-                            {"c": "10k", "threaded": "10,000 MB (Crash)", "async": "80 MB"}
+                        "left_label": "Reactive Victim: Blaming circumstances, easily enraged, fragile",
+                        "right_label": "Stoic Sovereignty: Accountable, tranquil, transforms setbacks into strength",
+                        "center_balance": "The Inner Citadel: Deep emotional stability grounded in virtue",
+                        "markers": [
+                            "Impulsive Reaction",
+                            "Conscious Reflection",
+                            "Unshakeable Equanimity"
                         ]
                     },
                     "keyframe_steps": [
-                        {"step": 1, "description": "Thread stack memory explosion"},
-                        {"step": 2, "description": "Flat lightweight async coroutine footprint"}
+                        {"step": 1, "highlight": "Reactive"},
+                        {"step": 2, "highlight": "Stoic Sovereignty"}
                     ]
                 }
             }
         ]
 
         materials = {
-            "summary": "Async/Await enables asynchronous, non-blocking programming with clean, sequential syntax. An Event Loop coordinates operations by running code on a call stack while offloading I/O-bound tasks to operating system background handlers.",
-            "notes_markdown": """# Async / Await & Concurrency Master Notes
+            "summary": "Stoicism is an ancient Hellenistic philosophy founded in Athens by Zeno of Citium and championed in Rome by Seneca, Epictetus, and Marcus Aurelius. Its core practice is the Dichotomy of Control: distinguishing between what is up to us and what is not, and cultivating wisdom, courage, justice, and temperance.",
+            "notes_markdown": """# Stoicism: Philosophy for Everyday Resilience
 
-## 1. Why Non-Blocking Concurrency?
-Traditional thread-per-connection models incur ~1-8 MB RAM per thread and high context-switching overhead.
-Async event-driven architectures handle tens of thousands of concurrent I/O connections on a single thread by yielding during network wait times.
+## 1. The Dichotomy of Control (Epictetus)
+$$\\text{Total Reality} = \\text{Things Up to Us (Attitudes, Choices)} + \\text{Things Not Up to Us (Events, Others)}$$
+- Freedom is achieved by anchoring happiness exclusively to things within our direct control.
 
-## 2. Key Terminology
-- **Coroutine**: A specialized function that can pause execution via `await` and resume later without blocking the thread.
-- **Event Loop**: The central loop checking the call stack and dispatching callbacks from the completed task queue.
-- **Task**: A scheduled coroutine wrapped for concurrent execution.
+## 2. The Four Cardinal Virtues
+1. **Wisdom (Sophia)**: Practical understanding of how to navigate complex human situations.
+2. **Courage (Andreia)**: Moral strength to endure adversity and tell the truth.
+3. **Justice (Dikaiosyne)**: Ethical duty to community and treating all with fairness.
+4. **Temperance (Sophrosyne)**: Restraint, modesty, and emotional equilibrium.
 
-## 3. Python Asyncio Best Practices
-```python
-import asyncio
-
-async def fetch_item(item_id: int):
-    # Simulating non-blocking network request
-    await asyncio.sleep(1)
-    return f"Item {item_id}"
-
-async def main():
-    # Run multiple tasks concurrently in parallel time
-    items = await asyncio.gather(
-        fetch_item(1),
-        fetch_item(2),
-        fetch_item(3)
-    )
-    print(items) # Completes in 1 second, NOT 3 seconds!
-
-asyncio.run(main())
-```
+## 3. Daily Psychological Exercises
+- **Premeditatio Malorum**: Negative visualization to remove the shock of misfortune.
+- **The View from Above**: Visualizing the earth from high altitude to gain cosmic perspective.
+- **Memento Mori**: Awareness of mortality to clarify priorities.
 """,
             "key_concepts": [
-                {"concept": "Event Loop", "definition": "A single-threaded loop that monitors and schedules execution of tasks and callbacks.", "importance": "Heart of non-blocking I/O in Python and JavaScript."},
-                {"concept": "Coroutine", "definition": "A function defined with `async def` whose execution can be suspended at `await` points.", "importance": "Allows human-readable sequential code for async workflows."},
-                {"concept": "Gather / Promise.all", "definition": "Utility that launches multiple coroutines concurrently and waits for all to finish.", "importance": "Drastically reduces wall-clock time for multiple independent I/O tasks."}
+                {"concept": "Dichotomy of Control", "definition": "The division between things that belong to our sphere of choice versus external events.", "importance": "Eliminates chronic anxiety and resentment."},
+                {"concept": "Amor Fati", "definition": "A love of fate; embracing whatever life throws at you as an opportunity to practice virtue.", "importance": "Transforms adversity from a curse into fuel."},
+                {"concept": "Inner Citadel", "definition": "Marcus Aurelius's metaphor for the fortified, invulnerable state of a disciplined mind.", "importance": "Protects emotional peace during crisis."}
             ],
             "formulas_or_code": [
-                {"title": "Concurrent Execution", "type": "code", "content": "results = await asyncio.gather(*tasks)", "explanation": "Executes list of coroutines concurrently."}
+                {"title": "The Marcus Aurelius Maxim", "type": "principle", "content": "The impediment to action advances action. What stands in the way becomes the way.", "explanation": "Every obstacle is an opportunity to cultivate a specific virtue."},
+                {"title": "Epictetus's Core Rule", "type": "quote", "content": "Men are disturbed not by things, but by the views which they take of things.", "explanation": "Underlying premise of modern Cognitive Behavioral Therapy (CBT)."}
             ],
             "practice_questions": [
-                {"question": "If you call `time.sleep(5)` inside an `async def` endpoint in FastAPI, what happens?", "hint": "Think about the single-threaded event loop.", "solution": "It blocks the entire thread and event loop for 5 seconds, freezing requests from all other users during that interval. Use `await asyncio.sleep(5)` instead."}
+                {"question": "How would a Stoic respond to losing their flight due to bad weather at the airport?", "hint": "Consider the Dichotomy of Control.", "solution": "A Stoic recognizes that the weather is completely outside their control. Rather than shouting at airline staff, they accept the reality immediately and use the waiting time constructively."}
             ],
             "quiz": [
-                {"id": 1, "question": "What does the `await` keyword do when encountered in a coroutine?", "options": ["Spawns a new OS background thread", "Pauses the coroutine and yields control back to the event loop", "Stops the entire Python interpreter until finished", "Deletes the task from memory"], "correct_index": 1, "explanation": "Await suspends the current coroutine, allowing the event loop to execute other ready tasks while waiting for I/O."},
-                {"id": 2, "question": "When should you NOT use async/await?", "options": ["When querying a remote PostgreSQL database", "When downloading 50 URLs via HTTP", "When executing a heavy CPU-bound image convolution filter", "When waiting for a webhook response"], "correct_index": 2, "explanation": "Heavy CPU tasks block the event loop; they must be offloaded to worker processes or a ProcessPoolExecutor."}
+                {"id": 1, "question": "According to Epictetus, what is the primary source of human mental suffering?", "options": ["Physical pain and illness", "Not having enough money", "Our judgments and opinions about events rather than events themselves", "Living in an imperfect society"], "correct_index": 2, "explanation": "Epictetus taught that events are neutral; only our value judgments make us suffer."},
+                {"id": 2, "question": "What is the exercise of 'Premeditatio Malorum'?", "options": ["Wishing bad luck upon your rivals", "Mentally visualizing potential setbacks in advance so you are calm and prepared", "Ignoring all problems and hoping for the best", "Writing angry letters to vent emotions"], "correct_index": 1, "explanation": "Premeditating adversity desensitizes us to anxiety and prepares us with contingency plans."}
             ],
             "flashcards": [
-                {"id": 1, "front": "What is the difference between concurrency and parallelism?", "back": "Concurrency is dealing with lots of things at once (structure); parallelism is doing lots of things at once (hardware execution).", "category": "Core Principle"},
-                {"id": 2, "front": "Does `async def` create a new OS thread?", "back": "No! It runs on the same thread within the event loop cooperative scheduling.", "category": "Architecture"}
+                {"id": 1, "front": "What are the four Stoic virtues?", "back": "Wisdom, Courage, Justice, and Temperance.", "category": "Core Principles"},
+                {"id": 2, "front": "What does 'Amor Fati' mean?", "back": "Love of fate; actively embracing everything that happens as useful.", "category": "Practices"}
             ]
         }
 
         return {
-            "title": "Async / Await Explained: Concurrency, Event Loops & Clean Code",
-            "domain": "computer_science",
-            "subdomain": "Software Engineering & Concurrency",
+            "title": "Stoicism: The Ancient Art of Mental Resilience",
+            "domain": "psychology_philosophy",
+            "subdomain": "Practical Philosophy & Cognitive Resilience",
             "scenes": scenes,
             "materials": materials
         }
 
-    def _build_calculus_derivative_lecture(self, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
+    def _build_sleep_circadian_lecture(self, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
         scenes = [
             {
                 "scene_id": "scene_1",
                 "index": 0,
-                "chapter_title": "1. The Speedometer Paradox: Instantaneous Rate of Change",
+                "chapter_title": "1. The 24-Hour Master Clock: The Suprachiasmatic Nucleus",
                 "pedagogical_phase": "hook",
-                "narration_text": "If you drive a car from home to school, you can easily calculate your average speed: total distance divided by total time. But at the exact moment you glance at your speedometer, it reads exactly 60 miles per hour. How can you have speed at a single, frozen instant when zero distance is traversed over zero time? Zero divided by zero is undefined! Resolving this paradox is the very birth of calculus and the derivative.",
-                "estimated_duration": 25.0,
+                "narration_text": "Deep inside your brain, right above where your optic nerves cross, sits a cluster of twenty thousand neurons called the Suprachiasmatic Nucleus. This microscopic biological clock governs virtually every cell, organ, and hormone in your body. It doesn't use gears or batteries; it synchronizes to the natural rhythm of planet Earth's rotation through the single most potent cue in nature: morning sunlight.",
+                "estimated_duration": 24.0,
                 "visual_spec": {
-                    "visual_type": "concept_metaphor",
-                    "title": "The Speedometer Paradox",
-                    "subtitle": "Average Speed vs. Instantaneous Velocity",
+                    "visual_type": "cycle_loop",
+                    "title": "The 24-Hour Circadian Biological Clock",
+                    "subtitle": "Light Input -> Suprachiasmatic Nucleus -> Hormonal Waves",
                     "parameters": {
-                        "left_title": "Average Speed",
-                        "left_items": ["Δx / Δt", "Total Distance / Total Time", "Easy to calculate over an interval"],
-                        "right_title": "Instantaneous Speed",
-                        "right_items": ["At exact time t = 2.000s", "Distance = 0, Time = 0 -> 0/0 ??", "Solved by the concept of Limits!"]
+                        "cycle_title": "Daily Circadian Rhythm Phases",
+                        "stages": [
+                            {"name": "07:00 AM: Cortisol Awakening", "role": "Sunlight triggers cortisol spike; stops melatonin production"},
+                            {"name": "02:00 PM: Peak Reaction Time", "role": "Core body temperature rises; optimal coordination"},
+                            {"name": "09:00 PM: Melatonin Release", "role": "Darkness triggers pineal gland to release sleep hormone"},
+                            {"name": "03:00 AM: Deep Cellular Repair", "role": "Lowest body temperature; brain glymphatic cleansing active"}
+                        ]
                     },
                     "keyframe_steps": [
-                        {"step": 1, "highlight": "Interval measurement"},
-                        {"step": 2, "highlight": "Instantaneous point"}
+                        {"step": 1, "highlight": "Morning Cortisol"},
+                        {"step": 2, "highlight": "Evening Melatonin"}
                     ]
                 }
             },
             {
                 "scene_id": "scene_2",
                 "index": 1,
-                "chapter_title": "2. The Secant Line & The Moving Point",
+                "chapter_title": "2. The Two Sleep Forces: Circadian Drive vs. Sleep Pressure",
                 "pedagogical_phase": "foundation",
-                "narration_text": "Let us place this on a Cartesian coordinate plane. Consider a curve f of x. If we pick two points on the curve separated by a horizontal distance h, the line connecting them is called a secant line. Its slope is rise over run: f of x plus h minus f of x, all divided by h. This gives the average rate of change over the window h.",
-                "estimated_duration": 24.0,
+                "narration_text": "Why do you feel tired at night? Sleep is governed by a two-process model. Process C is your 24-hour circadian rhythm. Process S is sleep pressure: every minute you are awake, your brain burns ATP energy and accumulates a chemical byproduct called Adenosine. Like sand falling in an hourglass, adenosine builds up pressure until your brain demands sleep to wash it away.",
+                "estimated_duration": 25.0,
                 "visual_spec": {
-                    "visual_type": "math_graph",
-                    "title": "Secant Line on Function f(x) = x²",
-                    "subtitle": "Connecting (x, f(x)) to (x+h, f(x+h))",
+                    "visual_type": "concept_metaphor",
+                    "title": "Process C vs. Process S",
+                    "subtitle": "The Two Complementary Drivers of Sleepiness",
                     "parameters": {
-                        "curve": "f(x) = x^2",
-                        "x0": 2,
-                        "h": 1.5,
-                        "formula": "Slope = [f(x+h) - f(x)] / h"
+                        "left_title": "Process C: The Circadian Rhythm",
+                        "left_items": ["Governed by sunlight & SCN clock", "Oscillates on a 24-hour wave", "Tells you *when* to sleep"],
+                        "right_title": "Process S: Adenosine Pressure",
+                        "right_items": ["Accumulates steadily with every waking hour", "Blocked temporarily by caffeine molecules", "Tells you *how deeply* you need to sleep"]
                     },
                     "keyframe_steps": [
-                        {"step": 1, "description": "Points (2, 4) and (3.5, 12.25) plotted"},
-                        {"step": 2, "description": "Secant line drawn with slope = 5.5"}
+                        {"step": 1, "highlight": "Process C wave"},
+                        {"step": 2, "highlight": "Process S accumulation"}
                     ]
                 }
             },
             {
                 "scene_id": "scene_3",
                 "index": 2,
-                "chapter_title": "3. Taking the Limit: Secant Becomes Tangent",
+                "chapter_title": "3. The 90-Minute Architecture: NREM to REM Sleep",
                 "pedagogical_phase": "visual_demonstration",
-                "narration_text": "Now, let us watch the magic of calculus. We shrink the distance h closer and closer to zero. As h drops from 1 to 0.1 to 0.001, the second point slides down the curve. The secant line pivots smoothly until, at the limit where h approaches zero, it touches the curve at exactly one point. It transforms into the Tangent Line! The slope of this tangent line is the exact derivative at that point.",
-                "estimated_duration": 27.0,
-                "visual_spec": {
-                    "visual_type": "math_graph",
-                    "title": "Dynamic Limit Convergence",
-                    "subtitle": "Watch the Secant Morph into a Tangent Line as h -> 0",
-                    "parameters": {
-                        "curve": "f(x) = x^2",
-                        "x0": 2,
-                        "h_steps": [1.5, 0.8, 0.3, 0.05, 0.001],
-                        "tangent_slope": 4.0
-                    },
-                    "keyframe_steps": [
-                        {"step": 1, "h": 1.5, "slope": 5.5, "label": "h = 1.5 (Secant)"},
-                        {"step": 2, "h": 0.5, "slope": 4.5, "label": "h = 0.5 (Closing in)"},
-                        {"step": 3, "h": 0.01, "slope": 4.01, "label": "h -> 0 (Tangent slope = 4.0)"}
-                    ]
-                }
-            },
-            {
-                "scene_id": "scene_4",
-                "index": 3,
-                "chapter_title": "4. The Formal Definition & Power Rule",
-                "pedagogical_phase": "edge_cases",
-                "narration_text": "This brings us to the formal definition of the derivative: f prime of x equals the limit as h approaches zero of f of x plus h minus f of x over h. If we plug in f of x equals x squared, the algebra simplifies to two x plus h. As h approaches zero, what remains is simply two x. At x equals two, the slope is exactly four! This leads directly to the famous Power Rule: the derivative of x to the n is n times x to the n minus one.",
+                "narration_text": "When you sleep, you don't simply switch off; you embark on a 90-minute neural rollercoaster through distinct sleep stages. In Stage 3 Deep NREM sleep, delta brainwaves slow down to 1 hertz, physical tissues repair, and your brain's glymphatic system opens up to flush out metabolic waste. In REM sleep, your body is paralyzed while your brain dreams intensely, synthesizing emotional memories and creative connections.",
                 "estimated_duration": 26.0,
                 "visual_spec": {
-                    "visual_type": "code_visualizer",
-                    "title": "Algebraic Limit Walkthrough & Power Rule",
-                    "subtitle": "Step-by-Step Expansion of (x+h)²",
+                    "visual_type": "narrative_arc",
+                    "title": "The 90-Minute Sleep Cycle Hypnogram",
+                    "subtitle": "Stage 1 -> Stage 2 -> Slow-Wave NREM -> REM Dreaming",
                     "parameters": {
-                        "language": "latex",
-                        "code": "% Limit Definition of Derivative\nf'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}\n\n% For f(x) = x^2:\nf'(x) = \\lim_{h \\to 0} \\frac{(x+h)^2 - x^2}{h}\n      = \\lim_{h \\to 0} \\frac{x^2 + 2xh + h^2 - x^2}{h}\n      = \\lim_{h \\to 0} \\frac{2xh + h^2}{h}\n      = \\lim_{h \\to 0} (2x + h)\n      = 2x\n\n% Power Rule:\n\\frac{d}{dx}[x^n] = n \\cdot x^{n-1}",
-                        "highlights": [
-                            {"line": 2, "label": "The universal limit definition"},
-                            {"line": 6, "label": "Cancelling out x² terms"},
-                            {"line": 8, "label": "Dividing out h eliminates 0/0 indeterminate form!"},
-                            {"line": 10, "label": "Final clean derivative 2x"}
+                        "phases": [
+                            {"phase": "Light NREM (Stages 1-2)", "event": "Heart rate slows, sleep spindles consolidate motor memory"},
+                            {"phase": "Deep NREM (Stage 3 Delta)", "event": "Peak growth hormone, physical tissue restoration & waste flush"},
+                            {"phase": "REM Sleep", "event": "Rapid eye movements, vivid dreaming, emotional integration & creativity"}
                         ]
                     },
                     "keyframe_steps": [
-                        {"step": 1, "active_line": 2, "scope": "Universal Definition"},
-                        {"step": 2, "active_line": 8, "scope": "h cancelled out"},
-                        {"step": 3, "active_line": 13, "scope": "General Power Rule"}
-                    ]
-                }
-            },
-            {
-                "scene_id": "scene_5",
-                "index": 4,
-                "chapter_title": "5. Real-World Applications: Optimization & AI",
-                "pedagogical_phase": "summary",
-                "narration_text": "Derivatives are not just textbook exercises; they power our modern world. In physics, the derivative of position is velocity, and the derivative of velocity is acceleration. In business, marginal cost is the derivative of total cost. And in machine learning, derivatives tell algorithms how to optimize billions of weights. The derivative gives us the power to optimize anything that changes.",
-                "estimated_duration": 24.0,
-                "visual_spec": {
-                    "visual_type": "comparison_matrix",
-                    "title": "Everyday Derivatives in Action",
-                    "subtitle": "Physics, Finance, and Artificial Intelligence",
-                    "parameters": {
-                        "col1": "Physics: Position -> Velocity (dx/dt) -> Acceleration (d²x/dt²)",
-                        "col2": "Economics: Profit Optimization where Marginal Revenue = Marginal Cost (dProfit/dQ = 0)",
-                        "col3": "Machine Learning: Gradient Descent updates weights using partial derivatives"
-                    },
-                    "keyframe_steps": [
-                        {"step": 1, "highlight": "Physics"},
-                        {"step": 2, "highlight": "Economics"},
-                        {"step": 3, "highlight": "Machine Learning"}
-                    ]
-                }
-            }
-        ]
-
-        materials = {
-            "summary": "The derivative is the fundamental mathematical tool for measuring instantaneous rate of change. By taking the limit of secant line slopes as the interval shrinks to zero, the derivative yields the exact slope of the tangent line to a curve at any point.",
-            "notes_markdown": """# Calculus: The Derivative & Instantaneous Change
-
-## 1. The Limit Definition of the Derivative
-For any continuous function $f(x)$, its derivative $f'(x)$ is defined as:
-$$f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}$$
-
-## 2. Geometric Interpretation
-- The secant line connects $(x, f(x))$ and $(x+h, f(x+h))$ with slope:
-  $$m_{\\text{secant}} = \\frac{f(x+h) - f(x)}{h}$$
-- As $h \\to 0$, the secant line rotates into the **tangent line** at $x$, whose slope is $f'(x)$.
-
-## 3. Essential Differentiation Rules
-1. **Power Rule**: $\\frac{d}{dx}[x^n] = n x^{n-1}$
-2. **Constant Multiple Rule**: $\\frac{d}{dx}[c \\cdot f(x)] = c \\cdot f'(x)$
-3. **Sum / Difference Rule**: $\\frac{d}{dx}[f(x) \\pm g(x)] = f'(x) \\pm g'(x)$
-4. **Product Rule**: $\\frac{d}{dx}[f \\cdot g] = f' g + f g'$
-5. **Chain Rule**: $\\frac{d}{dx}[f(g(x))] = f'(g(x)) \\cdot g'(x)$
-""",
-            "key_concepts": [
-                {"concept": "Tangent Line", "definition": "A straight line that touches a smooth curve at a single point, matching the curve's instantaneous direction.", "importance": "Geometric representation of the derivative."},
-                {"concept": "Limit ($h \\to 0$)", "definition": "The mathematical operation allowing us to evaluate behavior arbitrarily close to zero without dividing by zero.", "importance": "Overcomes the 0/0 indeterminacy paradox."},
-                {"concept": "Instantaneous Rate of Change", "definition": "The rate at which a variable changes at a single precise instant in time.", "importance": "Differentiates modern calculus from basic average arithmetic."}
-            ],
-            "formulas_or_code": [
-                {"title": "Limit Definition of Derivative", "type": "formula", "content": "f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}", "explanation": "The fundamental mathematical foundation of differentiation."},
-                {"title": "Power Rule", "type": "formula", "content": "\\frac{d}{dx}[x^n] = n x^{n-1}", "explanation": "Quick shortcut formula for differentiating polynomials."}
-            ],
-            "practice_questions": [
-                {"question": "Find the derivative of $f(x) = 3x^4 - 5x^2 + 7$.", "hint": "Apply the power rule to each term independently.", "solution": "f'(x) = 3(4x^3) - 5(2x) + 0 = 12x^3 - 10x."}
-            ],
-            "quiz": [
-                {"id": 1, "question": "What geometric feature of a function curve does the derivative $f'(a)$ represent?", "options": ["The area under the curve from 0 to a", "The slope of the tangent line at x = a", "The maximum y-value of the curve", "The distance from the origin to (a, f(a))"], "correct_index": 1, "explanation": "The derivative at a point is precisely the slope of the tangent line to the curve at that point."},
-                {"id": 2, "question": "What is the derivative of $f(x) = x^3$ using the Power Rule?", "options": ["3x", "x^2", "3x^2", "3x^3"], "correct_index": 2, "explanation": "By the power rule d/dx[x^n] = n * x^(n-1), so d/dx[x^3] = 3x^2."}
-            ],
-            "flashcards": [
-                {"id": 1, "front": "What does a derivative equal to zero ($f'(x) = 0$) signify?", "back": "A horizontal tangent line, indicating a potential local maximum, local minimum, or saddle point.", "category": "Calculus"},
-                {"id": 2, "front": "What is the derivative of a constant number $c$?", "back": "0, because a constant does not change (rate of change is zero).", "category": "Rules"}
-            ]
-        }
-
-        return {
-            "title": "Calculus: Intuition, Limits & The Power of The Derivative",
-            "domain": "mathematics",
-            "subdomain": "Calculus & Analysis",
-            "scenes": scenes,
-            "materials": materials
-        }
-
-    def _build_photosynthesis_lecture(self, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
-        scenes = [
-            {
-                "scene_id": "scene_1",
-                "index": 0,
-                "chapter_title": "1. Solar Energy into Chemical Life: The Global Engine",
-                "pedagogical_phase": "hook",
-                "narration_text": "Every breath of oxygen you take, and virtually every calorie of food consumed by living things on Earth, traces back to a single biological miracle: photosynthesis. Plants, algae, and cyanobacteria harvest photons emitted by the sun 93 million miles away and lock that radiant energy into stable sugar molecules. Let us journey inside the leaf to see how this biochemical factory operates.",
-                "estimated_duration": 24.0,
-                "visual_spec": {
-                    "visual_type": "concept_metaphor",
-                    "title": "Photosynthesis: The Biosphere's Energy Converter",
-                    "subtitle": "Sunlight + Water + Carbon Dioxide -> Glucose + Oxygen",
-                    "parameters": {
-                        "inputs": ["Sunlight (Photons)", "Water (H2O via Roots)", "Carbon Dioxide (CO2 via Stomata)"],
-                        "engine": "Chloroplast (Thylakoid & Stroma)",
-                        "outputs": ["Glucose (C6H12O6 Food)", "Oxygen (O2 Released to Atmosphere)"]
-                    },
-                    "keyframe_steps": [
-                        {"step": 1, "description": "Photons and water absorbed"},
-                        {"step": 2, "description": "Energy captured in chloroplast"},
-                        {"step": 3, "description": "Oxygen released and glucose synthesized"}
-                    ]
-                }
-            },
-            {
-                "scene_id": "scene_2",
-                "index": 1,
-                "chapter_title": "2. Inside the Chloroplast: The Two-Stage Process",
-                "pedagogical_phase": "foundation",
-                "narration_text": "Inside plant cells lie disc-shaped organelles called chloroplasts. Photosynthesis is split into two distinct stages: the Light-Dependent Reactions, which occur in coin-like membrane stacks called Thylakoids, and the Light-Independent Reactions, known as the Calvin Cycle, which occur in the surrounding fluid called the Stroma.",
-                "estimated_duration": 23.0,
-                "visual_spec": {
-                    "visual_type": "process_simulation",
-                    "title": "Chloroplast Architecture: Two Linked Stages",
-                    "subtitle": "Light Reactions (Thylakoid) <-> Calvin Cycle (Stroma)",
-                    "parameters": {
-                        "stage1": "Light Reactions: Uses Light + H2O -> Produces ATP + NADPH + O2",
-                        "link": "Energy shuttle: ATP and NADPH transfer energy across the membrane",
-                        "stage2": "Calvin Cycle: Uses CO2 + ATP + NADPH -> Produces Glucose Sugar"
-                    },
-                    "keyframe_steps": [
-                        {"step": 1, "highlight": "Thylakoid Light Absorption"},
-                        {"step": 2, "highlight": "ATP/NADPH Energy Shuttle"},
-                        {"step": 3, "highlight": "Stroma Calvin Cycle Synthesis"}
-                    ]
-                }
-            },
-            {
-                "scene_id": "scene_3",
-                "index": 2,
-                "chapter_title": "3. The Light Reactions: Splitting Water with Light",
-                "pedagogical_phase": "visual_demonstration",
-                "narration_text": "Let us zoom into the thylakoid membrane. Sunlight strikes chlorophyll in Photosystem II, exciting electrons to a high energy state. To replace these lost electrons, the plant splits water molecules, H2O, into hydrogen ions and oxygen gas. This is why plants release oxygen! As excited electrons tumble down the electron transport chain, they pump protons across the membrane, driving the ATP Synthase turbine like a microscopic hydroelectric dam.",
-                "estimated_duration": 28.0,
-                "visual_spec": {
-                    "visual_type": "diagram_board",
-                    "title": "Electron Transport Chain & ATP Synthase",
-                    "subtitle": "Splitting Water and Generating ATP via Proton Gradient",
-                    "parameters": {
-                        "elements": [
-                            "Photosystem II (Photons excite electrons)",
-                            "Water Splitting: 2 H2O -> 4 H+ + O2 + 4e-",
-                            "Cytochrome b6f (Proton Pump)",
-                            "Photosystem I (NADPH Production)",
-                            "ATP Synthase (Rotary Molecular Motor)"
-                        ]
-                    },
-                    "keyframe_steps": [
-                        {"step": 1, "description": "Photon strikes chlorophyll"},
-                        {"step": 2, "description": "H2O split into oxygen"},
-                        {"step": 3, "description": "Proton gradient spins ATP Synthase"}
+                        {"step": 1, "highlight": "Deep NREM"},
+                        {"step": 2, "highlight": "REM Dreaming"}
                     ]
                 }
             },
             {
                 "scene_id": "scene_4",
                 "index": 3,
-                "chapter_title": "4. The Calvin Cycle: Fixing Air into Food",
+                "chapter_title": "4. Modern Disruptors: Blue Light & Caffeine Halflife",
                 "pedagogical_phase": "edge_cases",
-                "narration_text": "Now in the stroma, the plant uses that newly formed ATP and NADPH to perform Carbon Fixation. The enzyme RuBisCO, the most abundant protein on Earth, captures carbon dioxide from the air and fuses it into a five-carbon sugar. Through a continuous cyclic chain of transformations, high-energy three-carbon sugars are produced, which combine to form glucose and starch.",
-                "estimated_duration": 25.0,
+                "narration_text": "Our modern environment is biologically alien to our ancient circadian clock. Blue light emitted from smartphones tricks your retinas into believing it is noon, delaying melatonin release by hours. Meanwhile, caffeine has an average quarter-life of twelve hours: a cup of coffee at noon still has a quarter of its caffeine circulating in your brain at midnight, hijacking adenosine receptors and destroying restorative deep sleep.",
+                "estimated_duration": 24.0,
                 "visual_spec": {
-                    "visual_type": "process_simulation",
-                    "title": "The Calvin Cycle (Dark Reactions)",
-                    "subtitle": "Carbon Fixation via RuBisCO in the Stroma",
+                    "visual_type": "cause_and_effect",
+                    "title": "Circadian Disruption Cascade",
+                    "subtitle": "How Screens and Late Caffeine Sabotage Sleep Architecture",
                     "parameters": {
-                        "cycle_phases": [
-                            "Phase 1: Carbon Fixation (CO2 + RuBP catalyzed by RuBisCO)",
-                            "Phase 2: Reduction (ATP and NADPH convert 3-PGA into G3P sugar)",
-                            "Phase 3: Regeneration (Remaining G3P regenerated back into RuBP)"
-                        ]
+                        "root_catalyst": "Screen Exposure & Afternoon Caffeine (6hr Half-Life)",
+                        "intermediate_effects": [
+                            "Retinal melanopsin cells signal SCN to suppress melatonin",
+                            "Adenosine receptors blocked; sleep latency increases",
+                            "Deep Slow-Wave Sleep reduced by up to 30%"
+                        ],
+                        "ultimate_consequence": "Glymphatic brain clearance impaired; chronic cognitive fatigue"
                     },
                     "keyframe_steps": [
-                        {"step": 1, "description": "CO2 fixation by RuBisCO"},
-                        {"step": 2, "description": "Reduction with ATP/NADPH energy"},
-                        {"step": 3, "description": "G3P sugar exits to form glucose"}
+                        {"step": 1, "highlight": "Melatonin suppression"},
+                        {"step": 2, "highlight": "Sleep quality loss"}
                     ]
                 }
             },
             {
                 "scene_id": "scene_5",
                 "index": 4,
-                "chapter_title": "5. Why Photosynthesis Shapes Our Climate & Future",
+                "chapter_title": "5. The Circadian Protocol: Science-Backed Sleep Optimization",
                 "pedagogical_phase": "summary",
-                "narration_text": "Without photosynthesis, Earth would have no breathable oxygen atmosphere and no protective ozone layer. Understanding this mechanism is vital today: by studying photosynthesis, scientists are developing artificial leaves, drought-resistant crops, and enhanced carbon capture technologies to fight climate change. Nature's solar panel is the ultimate blueprint for sustainable energy.",
-                "estimated_duration": 24.0,
+                "narration_text": "To unlock peak mental energy, follow the circadian protocol: view bright sunlight within thirty minutes of waking to anchor your clock, keep a consistent wake-up time even on weekends, avoid caffeine within ten hours of bedtime, and dim your lights two hours before sleep in a cool 65-degree bedroom. Master your biological clock, and you master your life.",
+                "estimated_duration": 23.0,
                 "visual_spec": {
                     "visual_type": "comparison_matrix",
-                    "title": "Ecological & Technological Impact",
-                    "subtitle": "Natural Cycle vs. Next-Gen Bioengineering",
+                    "title": "The Circadian Optimization Protocol",
+                    "subtitle": "Morning, Evening, and Bedroom Environment Rules",
                     "parameters": {
-                        "col1": "Atmospheric Balance: Consumes CO2, supplies planetary O2 and ozone layer",
-                        "col2": "Food Web Foundation: Primary producer supporting all animal life",
-                        "col3": "Artificial Photosynthesis: Engineering solar cells to produce hydrogen fuel"
+                        "col1": "Morning Anchor: 10-15 minutes of outdoor sunlight within 30m of waking",
+                        "col2": "Daytime Habits: Cut caffeine 10 hours before bed; exercise early in the day",
+                        "col3": "Evening Wind-Down: Dim warm lights, cool room (65-68°F), consistent sleep window"
                     },
                     "keyframe_steps": [
-                        {"step": 1, "highlight": "Atmosphere"},
-                        {"step": 2, "highlight": "Biosphere"},
-                        {"step": 3, "highlight": "Future tech"}
+                        {"step": 1, "highlight": "Morning"},
+                        {"step": 2, "highlight": "Evening"}
                     ]
                 }
             }
         ]
 
         materials = {
-            "summary": "Photosynthesis is the biological process by which plants, algae, and cyanobacteria convert light energy into chemical energy stored in glucose. It occurs in two connected phases: the Light Reactions in the thylakoid membrane and the Calvin Cycle in the stroma.",
-            "notes_markdown": """# Photosynthesis: Complete Educational Study Notes
+            "summary": "The circadian rhythm is an intrinsic 24-hour cycle regulated by the brain's suprachiasmatic nucleus that coordinates sleepiness, hormonal output, body temperature, and metabolism. Sleep is structured into 90-minute cycles alternating between restorative Deep NREM sleep and creative REM sleep.",
+            "notes_markdown": """# Circadian Biology & Sleep Science Master Notes
 
-## 1. Overall Chemical Equation
-$$6\\text{CO}_2 + 6\\text{H}_2\\text{O} + \\text{Light Energy} \\longrightarrow \\text{C}_6\\text{H}_{12}\\text{O}_6 + 6\\text{O}_2$$
+## 1. The Two-Process Model of Sleep
+- **Process C (Circadian Rhythm)**: Internal 24-hour oscillator synchronized primarily by photon signals to the suprachiasmatic nucleus (SCN).
+- **Process S (Homeostatic Sleep Pressure)**: Steady accumulation of **adenosine** during wakefulness, cleared during deep sleep.
 
-## 2. Stage Comparison
-| Feature | Light-Dependent Reactions | Calvin Cycle (Light-Independent) |
-| :--- | :--- | :--- |
-| **Location** | Thylakoid Membrane | Stroma (Fluid) |
-| **Input** | Light, $\\text{H}_2\\text{O}$, NADP+, ADP | $\\text{CO}_2$, ATP, NADPH |
-| **Output** | $\\text{O}_2$ (byproduct), ATP, NADPH | G3P (Glucose precursor), ADP, NADP+ |
-| **Key Enzyme** | ATP Synthase, Cytochrome $b_6f$ | RuBisCO (Ribulose-1,5-bisphosphate carboxylase) |
+## 2. Sleep Cycle Architecture (90-Minute Repetitions)
+1. **NREM Stage 1**: Light transitional sleep.
+2. **NREM Stage 2**: Sleep spindles and K-complexes consolidate motor skills.
+3. **NREM Stage 3 (Slow-Wave Sleep)**: Delta waves ($<4\\text{ Hz}$), growth hormone release, physical tissue recovery, and **glymphatic brain clearance**.
+4. **REM (Rapid Eye Movement)**: Brainwave activity mimics wakefulness; emotional regulation, neuroplasticity, and consolidation of associative memories.
+
+## 3. High-Leverage Protocols
+- **Morning Sunlight**: Sets the circadian timer for melatonin release ~14 hours later.
+- **Caffeine Clearance**: Caffeine has a 5-7 hour half-life and 10-12 hour quarter-life.
+- **Thermoregulation**: The body must drop its core temperature by ~2-3°F to initiate and maintain deep sleep.
 """,
             "key_concepts": [
-                {"concept": "Thylakoid Membrane", "definition": "Internal membrane discs within chloroplasts where photon absorption and water-splitting occur.", "importance": "Site of the light reactions."},
-                {"concept": "RuBisCO", "definition": "The enzyme responsible for fixing atmospheric CO2 onto organic molecules.", "importance": "The critical gateway enzyme connecting inorganic carbon to the biological food chain."},
-                {"concept": "Photolysis", "definition": "The light-driven chemical decomposition of water molecules into hydrogen ions, electrons, and oxygen.", "importance": "Source of Earth's atmospheric oxygen."}
+                {"concept": "Suprachiasmatic Nucleus (SCN)", "definition": "The master pacemaker located in the anterior hypothalamus coordinating peripheral body clocks.", "importance": "Central control tower for sleep-wake timing."},
+                {"concept": "Adenosine", "definition": "A neuromodulator that accumulates during wakefulness and induces sleepiness.", "importance": "The molecule whose receptors caffeine competitively blocks."},
+                {"concept": "Glymphatic System", "definition": "A glial-dependent waste clearance pathway that removes toxic proteins like beta-amyloid during deep sleep.", "importance": "Protects against neurodegenerative decline."}
             ],
             "formulas_or_code": [
-                {"title": "Water Splitting Photolysis Equation", "type": "formula", "content": "2 \\text{H}_2\\text{O} \\longrightarrow 4\\text{H}^+ + 4e^- + \\text{O}_2", "explanation": "Replaces lost electrons in Photosystem II while releasing oxygen."}
+                {"title": "Caffeine Pharmacokinetics", "type": "rule", "content": "A(t) = A_0 \\cdot (0.5)^{t / t_{1/2}}", "explanation": "With a 6-hour half-life, 200mg of coffee at 2 PM leaves 50mg still active at 2 AM."},
+                {"title": "Optimal Bedroom Temperature", "type": "rule", "content": "T_{\\text{bedroom}} \\approx 65^\\circ\\text{F} - 68^\\circ\\text{F} \\ (18^\\circ\\text{C} - 20^\\circ\\text{C})", "explanation": "Facilitates the necessary 2°F core body temperature drop for deep slow-wave sleep."}
             ],
             "practice_questions": [
-                {"question": "What is the ultimate source of electrons that replace those lost by chlorophyll in Photosystem II?", "hint": "Think about what is consumed to release oxygen gas.", "solution": "Water molecules (H2O) are split by photolysis, providing electrons to Photosystem II."}
+                {"question": "Why does drinking a double espresso at 4 PM impair your sleep even if you fall asleep easily at 11 PM?", "hint": "Consider sleep architecture and deep sleep stages.", "solution": "While caffeine may not prevent you from falling unconscious if sleep pressure is high, it blocks adenosine receptors in the cortex, suppressing restorative Stage 3 Slow-Wave Deep Sleep by up to 20-30%."}
             ],
             "quiz": [
-                {"id": 1, "question": "Where do the light-independent reactions (Calvin Cycle) take place inside the chloroplast?", "options": ["Outer chloroplast membrane", "Thylakoid lumen", "Stroma", "Mitochondrial matrix"], "correct_index": 2, "explanation": "The Calvin cycle takes place in the stroma, the fluid-filled space surrounding the thylakoids."},
-                {"id": 2, "question": "What molecule is released as a byproduct during the light reactions of photosynthesis?", "options": ["Carbon dioxide", "Oxygen (O2)", "Glucose", "Methane"], "correct_index": 1, "explanation": "Oxygen gas is released as a byproduct when water is split to donate electrons."}
+                {"id": 1, "question": "What is the primary zeitgeber (time-cue) that resets the master circadian clock every day?", "options": ["Eating breakfast", "Outdoor sunlight hitting the eyes in the morning", "A cold shower", "Alarm clock sound"], "correct_index": 1, "explanation": "Photons from natural sunlight trigger specialized melanopsin ganglion cells in the retina that signal the SCN."},
+                {"id": 2, "question": "What happens during Stage 3 Deep NREM sleep?", "options": ["Intense dreaming and muscle paralysis", "The glymphatic system flushes metabolic waste from brain tissue", "Cortisol spikes to maximum levels", "Heart rate increases to sprint levels"], "correct_index": 1, "explanation": "Deep slow-wave sleep is the primary window for cellular repair, growth hormone release, and glymphatic brain detox."}
             ],
             "flashcards": [
-                {"id": 1, "front": "What two high-energy molecules link the light reactions to the Calvin cycle?", "back": "ATP and NADPH.", "category": "Biochemistry"},
-                {"id": 2, "front": "What is the primary function of chlorophyll?", "back": "To absorb blue and red wavelengths of light and transfer photon energy to electrons.", "category": "Pigments"}
+                {"id": 1, "front": "What does caffeine actually do in the brain?", "back": "It competitively binds to adenosine receptors without activating them, temporarily hiding sleep pressure.", "category": "Pharmacology"},
+                {"id": 2, "front": "How long is a typical human sleep cycle?", "back": "Approximately 90 minutes, cycling through light NREM, deep NREM, and REM.", "category": "Sleep Architecture"}
             ]
         }
 
         return {
-            "title": "Photosynthesis: How Plants Power Life on Earth",
-            "domain": "science",
-            "subdomain": "Cellular Biology & Bioenergetics",
+            "title": "Sleep & Circadian Rhythm: The Biology of Human Energy",
+            "domain": "health_biology",
+            "subdomain": "Neuroscience, Chronobiology & Sleep Medicine",
             "scenes": scenes,
             "materials": materials
         }
+
+    def _build_heros_journey_lecture(self, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
+        scenes = [
+            {
+                "scene_id": "scene_1",
+                "index": 0,
+                "chapter_title": "1. The Monomyth: Why One Story Rules All Cultures",
+                "pedagogical_phase": "hook",
+                "narration_text": "Whether you look at the ancient Babylonian epic of Gilgamesh, Homer's Odyssey, Star Wars, Harry Potter, or The Matrix, humanity has told the exact same foundational story for ten thousand years. Mythologist Joseph Campbell discovered that all great mythologies share a single narrative architecture: The Hero's Journey. It resonates across every continent because it is not just fiction—it is the psychological blueprint for human growth and transformation.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "cycle_loop",
+                    "title": "The 12-Stage Monomyth Cycle",
+                    "subtitle": "The Universal Narrative Blueprint Described by Joseph Campbell",
+                    "parameters": {
+                        "cycle_title": "The Hero's Journey Circle",
+                        "stages": [
+                            {"name": "Act I: Separation", "role": "Ordinary World -> Call to Adventure -> Crossing the Threshold"},
+                            {"name": "Act II: Initiation", "role": "Road of Trials -> The Inmost Cave -> The Supreme Ordeal"},
+                            {"name": "Act III: Return", "role": "The Reward -> The Road Back -> Master of Two Worlds"}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Ordinary World"},
+                        {"step": 2, "highlight": "The Supreme Ordeal"},
+                        {"step": 3, "highlight": "The Return with Elixir"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_2",
+                "index": 1,
+                "chapter_title": "2. Leaving the Known: The Call & The Threshold",
+                "pedagogical_phase": "foundation",
+                "narration_text": "Every great adventure begins in the comfortable, stagnant Ordinary World. Soon, a disruptive event sounds the Call to Adventure. Initially, fear leads to the Refusal of the Call, until a wise Mentor—like Obi-Wan Kenobi or Gandalf—appears to provide crucial wisdom. The hero must then cross the Threshold into the Unknown World, leaving safety behind forever.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "concept_metaphor",
+                    "title": "Known World vs. Unknown World",
+                    "subtitle": "Crossing the Threshold of Adventure",
+                    "parameters": {
+                        "left_title": "The Known World (Ordinary Life)",
+                        "left_items": ["Familiar, predictable, but stagnant", "Illusion of absolute safety", "The hero feels incomplete or unfulfilled"],
+                        "right_title": "The Unknown World (Special World)",
+                        "right_items": ["Dangerous, uncertain, and magical", "Forces confront the hero's deepest flaws", "Crucible of psychological metamorphosis"]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Known World"},
+                        {"step": 2, "highlight": "Unknown World"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_3",
+                "index": 2,
+                "chapter_title": "3. The Abyss: The Supreme Ordeal & Death of the Old Self",
+                "pedagogical_phase": "visual_demonstration",
+                "narration_text": "In the Special World, the hero encounters tests, allies, and enemies. Eventually, they descend into the Inmost Cave to face their greatest fear in the Supreme Ordeal. In this moment, the old, selfish identity of the hero must symbolically die. Only by confronting death or failure do they seize the Elixir—the ultimate truth or weapon needed to heal the world.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "narrative_arc",
+                    "title": "Narrative Arc & Emotional Tension",
+                    "subtitle": "From Inciting Incident to the Supreme Climax and Catharsis",
+                    "parameters": {
+                        "phases": [
+                            {"phase": "1. Exposition & Call", "event": "Baseline status quo disrupted"},
+                            {"phase": "2. Rising Tension & Trials", "event": "Tests, allies, threshold guardians overcome"},
+                            {"phase": "3. The Supreme Ordeal (Peak Climax)", "event": "Death of the old ego; triumph over the shadow"},
+                            {"phase": "4. Resolution & Return", "event": "Returning home transformed with the Elixir"}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Rising Tension"},
+                        {"step": 2, "highlight": "Supreme Ordeal Peak"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_4",
+                "index": 3,
+                "chapter_title": "4. The Archetypes: Shadow, Mentor, Trickster & Shapeshifter",
+                "pedagogical_phase": "edge_cases",
+                "narration_text": "Campbell and psychologist Carl Jung explained that characters in stories represent universal psychological archetypes. The Shadow embodies the dark, repressed aspects of human nature. The Mentor represents higher consciousness. The Trickster punctures ego and brings humor, while the Shapeshifter creates suspense by shifting loyalties. These are not just movie characters—they are parts of your own psyche.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "comparison_matrix",
+                    "title": "The Four Great Story Archetypes",
+                    "subtitle": "Psychological Mirrors in Classic Mythology",
+                    "parameters": {
+                        "col1": "The Mentor: Guide & teacher providing wisdom, tools, and moral clarity.",
+                        "col2": "The Shadow: The villain reflecting the hero's unmastered dark potential.",
+                        "col3": "The Trickster: Catalyst for change questioning norms with irony and wit."
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Mentor"},
+                        {"step": 2, "highlight": "Shadow"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_5",
+                "index": 4,
+                "chapter_title": "5. The Elixir: Master of Two Worlds",
+                "pedagogical_phase": "summary",
+                "narration_text": "The journey is never complete until the hero returns home to share the Elixir with their community. Transformed by adversity, they are now the Master of Two Worlds: capable of living without fear in either reality. Whenever you face career turmoil, personal tragedy, or unfamiliar frontiers in your own life, remember: you are not suffering pointless chaos; you are on the Hero's Journey.",
+                "estimated_duration": 23.0,
+                "visual_spec": {
+                    "visual_type": "spectrum_meter",
+                    "title": "The Evolution of the Protagonist",
+                    "subtitle": "From Reluctant Commoner to Self-Actualized Master",
+                    "parameters": {
+                        "left_label": "Innocent & Passive: Trapped in comfort, uninitiated",
+                        "right_label": "Transformed Master: Integrated wisdom, purposeful leader",
+                        "center_balance": "The Tested Crucible: Growth forged through voluntary ordeal",
+                        "markers": [
+                            "Comfort Zone",
+                            "The Abyss",
+                            "Self-Actualization"
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Innocent"},
+                        {"step": 2, "highlight": "Transformed Master"}
+                    ]
+                }
+            }
+        ]
+
+        materials = {
+            "summary": "The Hero's Journey (Monomyth) is the universal narrative archetype identified by mythologist Joseph Campbell in 'The Hero with a Thousand Faces'. Spanning three acts—Departure, Initiation, and Return—it reflects the fundamental human psychological journey of confronting chaos, undergoing personal transformation, and returning to serve the community.",
+            "notes_markdown": """# Narrative Design: The Hero's Journey & Archetypes
+
+## 1. The Three Act Structure of the Monomyth
+1. **Act I: Departure (Separation)**
+   - The Ordinary World
+   - Call to Adventure & Refusal of the Call
+   - Meeting the Mentor & Crossing the First Threshold
+2. **Act II: Initiation (Descent into Chaos)**
+   - Tests, Allies, and Enemies
+   - Approach to the Inmost Cave
+   - The Supreme Ordeal & Seizing the Sword (Reward)
+3. **Act III: Return (Integration)**
+   - The Road Back & Resurrection
+   - Return with the Elixir to renew the community
+
+## 2. Jungian Psychological Archetypes
+- **The Hero**: The ego seeking individuation.
+- **The Mentor**: The wise old guide representing the higher self.
+- **The Shadow**: The repressed, unacknowledged negative potential.
+- **The Threshold Guardian**: Obstacles testing readiness for transformation.
+""",
+            "key_concepts": [
+                {"concept": "The Monomyth", "definition": "The universal narrative pattern shared by mythologies across divergent cultures and historical eras.", "importance": "Foundational template for literature, film, and psychology."},
+                {"concept": "The Supreme Ordeal", "definition": "The central crisis where the hero confronts their deepest vulnerability and undergoes symbolic death.", "importance": "Catalyst for genuine inner change."},
+                {"concept": "The Elixir", "definition": "The hard-won prize or revelation that the returning hero brings back to revitalize the community.", "importance": "Ensures the journey serves a communal, not purely selfish, purpose."}
+            ],
+            "formulas_or_code": [
+                {"title": "Campbell's Core Maxim", "type": "quote", "content": "The cave you fear to enter holds the treasure you seek.", "explanation": "Directs human attention toward voluntary confrontation of feared challenges."},
+                {"title": "The Monomyth Formula", "type": "rule", "content": "Separation \\longrightarrow Initiation \\longrightarrow Return", "explanation": "The irreducible three-phase rhythm of all epic storytelling."}
+            ],
+            "practice_questions": [
+                {"question": "How does Luke Skywalker in Star Wars follow the Refusal of the Call?", "hint": "What does Luke tell Obi-Wan initially on Tatooine?", "solution": "Luke initially refuses to leave Tatooine, stating he must help his Uncle Owen with the harvest. Only after the tragic destruction of his home does he commit to crossing the threshold."}
+            ],
+            "quiz": [
+                {"id": 1, "question": "Who popularized the concept of 'The Hero's Journey' in his 1949 work 'The Hero with a Thousand Faces'?", "options": ["Sigmund Freud", "Joseph Campbell", "George Lucas", "Aristotle"], "correct_index": 1, "explanation": "Joseph Campbell documented this universal storytelling pattern across world mythologies."},
+                {"id": 2, "question": "What is the final stage of the Hero's Journey?", "options": ["Defeating the dragon forever", "Retiring in the magical world", "Returning to the ordinary world with the Elixir to heal the community", "Fighting against fellow allies"], "correct_index": 2, "explanation": "The hero must bring back the elixir of wisdom to benefit their people."}
+            ],
+            "flashcards": [
+                {"id": 1, "front": "What does 'The Shadow' archetype represent in storytelling?", "back": "The dark, repressed aspects of human nature that the hero must confront and overcome.", "category": "Archetypes"},
+                {"id": 2, "front": "What is the role of a Threshold Guardian?", "back": "To test the hero's readiness and commitment before allowing entry into the special world.", "category": "Structure"}
+            ]
+        }
+
+        return {
+            "title": "The Hero's Journey: The Universal Pattern of Great Stories",
+            "domain": "arts_literature",
+            "subdomain": "Mythology, Narrative Architecture & Screenwriting",
+            "scenes": scenes,
+            "materials": materials
+        }
+
+    def _build_why_sky_is_blue_lecture(self, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
+        scenes = [
+            {
+                "scene_id": "scene_1",
+                "index": 0,
+                "chapter_title": "1. The Sunlight Illusion: White Light is a Rainbow",
+                "pedagogical_phase": "hook",
+                "narration_text": "Look up at the clear sky on a bright afternoon: it shines in a brilliant, vivid azure blue. Yet at sunset, that exact same sky burns in fiery orange and crimson! Many people assume the sky reflects the ocean, but the sky is blue even over the middle of dry deserts. The true answer begins with a surprise: the sunlight streaming from our yellow sun is actually pure white light containing every color in the visible rainbow.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "cross_section_sim",
+                    "title": "White Light Spectrum & Wavelengths",
+                    "subtitle": "Long Red Waves vs. Short Blue Wavelengths",
+                    "parameters": {
+                        "subject": "Solar Radiation Spectrum",
+                        "layers": [
+                            {"name": "Red Wavelengths (~700 nm)", "role": "Long, lazy waves that easily bypass small particles"},
+                            {"name": "Green/Yellow (~550 nm)", "role": "Medium wavelengths, moderate deflection"},
+                            {"name": "Blue/Violet (~400 nm)", "role": "Short, energetic, tightly oscillating wavelengths"}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Red wave length"},
+                        {"step": 2, "highlight": "Blue wave frequency"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_2",
+                "index": 1,
+                "chapter_title": "2. Rayleigh Scattering: Molecules as Tuning Forks",
+                "pedagogical_phase": "foundation",
+                "narration_text": "Earth's atmosphere is an ocean of gas molecules, mostly Nitrogen and Oxygen. In the late nineteenth century, Lord Rayleigh discovered that when light waves strike particles much smaller than their wavelength, the light scatters in all directions. The scattering efficiency is inversely proportional to the fourth power of the wavelength! Because blue wavelengths are short, they scatter nearly ten times more intensely than red light.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "concept_metaphor",
+                    "title": "Lord Rayleigh's Scattering Law",
+                    "subtitle": "Why Short Wavelengths Scatter Exponentially More",
+                    "parameters": {
+                        "left_title": "Red Light (Long ~700nm Waves)",
+                        "left_items": ["Wavelength is 1.75x longer than blue", "Scattering power = (1/700)^4 (Very Low)", "Passes straight through air without bouncing"],
+                        "right_title": "Blue Light (Short ~400nm Waves)",
+                        "right_items": ["Wavelength matches tiny gas molecule size", "Scattering power = (1/400)^4 (10x More Intense!)", "Bounces in every direction across the sky!"]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Red light path"},
+                        {"step": 2, "highlight": "Blue scattering burst"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_3",
+                "index": 2,
+                "chapter_title": "3. The Human Eye Mystery: Why Blue Instead of Violet?",
+                "pedagogical_phase": "visual_demonstration",
+                "narration_text": "Now for a fascinating puzzle: violet light has an even shorter wavelength than blue, so violet light scatters the most of all! Why doesn't the sky look purple? The answer is human biology. First, our sun naturally emits much more blue light than violet. Second, human eyes have three color receptors called cones: red, green, and blue. Our retinas are far more sensitive to blue light than violet, perceiving the scattered sky light as vivid sky blue.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "comparison_matrix",
+                    "title": "Physics vs. Human Physiology",
+                    "subtitle": "Why We See Blue When Violet Scatters More",
+                    "parameters": {
+                        "col1": "Solar Spectrum: Sun emits significantly higher flux of blue photons than ultraviolet/violet",
+                        "col2": "Atmospheric Scattering: Violet scatters most, followed closely by vibrant blue",
+                        "col3": "Human Cone Receptors: Retinal S, M, and L cones are calibrated to interpret this combination as sky blue"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Solar Spectrum"},
+                        {"step": 2, "highlight": "Human Retinal Cones"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_4",
+                "index": 3,
+                "chapter_title": "4. The Sunset Transformation: Atmospheric Path Length",
+                "pedagogical_phase": "edge_cases",
+                "narration_text": "Why do sunsets turn red? At midday, the sun is directly overhead, and light passes through a thin slice of atmosphere. At sunset, sunlight hits Earth at an extreme angle, traveling through ten times more atmosphere! All the blue light gets scattered away long before reaching your eyes. Only the resilient, long red and orange wavelengths make the long trek across the horizon.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "cross_section_sim",
+                    "title": "Noon vs. Sunset Atmospheric Path Length",
+                    "subtitle": "Short Direct Path vs. Long Oblique Horizon Path",
+                    "parameters": {
+                        "subject": "Planetary Atmosphere Cross-Section",
+                        "layers": [
+                            {"name": "Noon Sun (Overhead)", "role": "Path length = 1x. Blue scatters overhead, sun looks white-yellow."},
+                            {"name": "Sunset Sun (Horizon Angle)", "role": "Path length = 10x! Blue completely filtered out; only reds survive."}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Noon direct light"},
+                        {"step": 2, "highlight": "Sunset long path"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_5",
+                "index": 4,
+                "chapter_title": "5. Cosmic Skies: Mars, The Moon & Beyond",
+                "pedagogical_phase": "summary",
+                "narration_text": "Rayleigh scattering explains planetary skies across the solar system! On the Moon, which has no atmosphere, the sky is pitch black even in broad daylight. On Mars, the thin atmosphere is filled with iron-rich rust dust that causes Mie scattering, creating butterscotch-yellow day skies and blue sunsets! The color of the sky is a cosmic fingerprint of a planet's atmospheric chemistry.",
+                "estimated_duration": 23.0,
+                "visual_spec": {
+                    "visual_type": "comparison_matrix",
+                    "title": "Skies of the Solar System",
+                    "subtitle": "How Atmospheric Composition Shapes Sky Color",
+                    "parameters": {
+                        "col1": "Earth (N2 & O2): Blue daytime skies, fiery red sunsets (Rayleigh scattering)",
+                        "col2": "The Moon (Vacuum): Pure black skies, dazzling bright stars during the day",
+                        "col3": "Mars (CO2 & Iron Dust): Butterscotch daytime sky, blue Martian sunsets!"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Earth"},
+                        {"step": 2, "highlight": "Moon"},
+                        {"step": 3, "highlight": "Mars"}
+                    ]
+                }
+            }
+        ]
+
+        materials = {
+            "summary": "The sky is blue due to Rayleigh scattering: gas molecules in Earth's atmosphere scatter short wavelengths of light (blue and violet) far more effectively than longer wavelengths (red and orange). Human cone sensitivity and solar emission combine to make the sky appear brilliant blue.",
+            "notes_markdown": """# Physics & Atmospheric Optics: Why the Sky is Blue
+
+## 1. Rayleigh Scattering Law
+The intensity of scattered light $I$ by particles much smaller than the wavelength $\\lambda$ is:
+$$I(\\lambda) \\propto \\frac{1}{\\lambda^4}$$
+- Blue light ($\\lambda \\approx 400\\text{ nm}$) scatters nearly $\\approx 10\\times$ more strongly than red light ($\\lambda \\approx 700\\text{ nm}$).
+
+## 2. Why Not Violet?
+1. The sun emits less violet radiation than blue radiation.
+2. The human eye's photopic response relies on trichromatic cone cells (Red, Green, Blue) that perceive the mixture of scattered light as cerulean blue.
+
+## 3. Red Sunsets & Atmospheric Air Mass
+- At sunset, sunlight passes through up to $10\\times$ more atmospheric air mass ($AM$).
+- Blue light is completely scattered away along the path, leaving only the long-wavelength red and orange rays to reach the observer.
+""",
+            "key_concepts": [
+                {"concept": "Rayleigh Scattering", "definition": "The scattering of electromagnetic radiation by particles with dimensions smaller than the radiation's wavelength.", "importance": "Explains blue skies and red sunsets."},
+                {"concept": "Inverse Fourth Power Law", "definition": "The mathematical relationship showing scattering power scales with $1/\\lambda^4$.", "importance": "Demonstrates why minor differences in wavelength produce dramatic color differences."},
+                {"concept": "Trichromatic Vision", "definition": "Human color perception driven by three types of retinal cones responding to short, medium, and long wavelengths.", "importance": "Explains why we perceive the sky as blue rather than violet."}
+            ],
+            "formulas_or_code": [
+                {"title": "Rayleigh Scattering Intensity", "type": "formula", "content": "I \\propto \\frac{1}{\\lambda^4}", "explanation": "Scattering intensity is inversely proportional to the fourth power of wavelength."},
+                {"title": "Wavelength Ratio", "type": "rule", "content": "\\frac{I_{\\text{blue}}}{I_{\\text{red}}} \\approx \\left(\\frac{700}{400}\\right)^4 \\approx 9.4", "explanation": "Blue light scatters approximately 9.4 times more effectively than red light in clean air."}
+            ],
+            "practice_questions": [
+                {"question": "What color would Earth's sky appear if our atmosphere had no gases or particles at all?", "hint": "Think about astronauts on the Moon.", "solution": "Without an atmosphere to scatter sunlight, the sky would be completely black, with the sun appearing as a blinding white sphere against starry space."}
+            ],
+            "quiz": [
+                {"id": 1, "question": "What physical phenomenon causes the daytime sky to appear blue?", "options": ["Ocean reflections bouncing off clouds", "Rayleigh scattering of short wavelengths by nitrogen and oxygen molecules", "Nuclear fusion emissions from the ozone layer", "Absorption of red light by plant chlorophyll"], "correct_index": 1, "explanation": "Tiny atmospheric molecules scatter short blue wavelengths in every direction."},
+                {"id": 2, "question": "Why do sunsets appear red and orange?", "options": ["The sun cools down significantly in the evening", "Sunlight travels through a much longer atmospheric path, scattering away all the blue light", "Industrial pollution creates red light at dusk", "Earth rotates closer to the sun at sunset"], "correct_index": 1, "explanation": "The oblique sunset path filters out blue light, leaving only the longest wavelengths to pass through."}
+            ],
+            "flashcards": [
+                {"id": 1, "front": "What does Rayleigh's law state about wavelength?", "back": "Scattering intensity is proportional to 1 / (wavelength^4). Shorter wavelengths scatter exponentially more.", "category": "Physics"},
+                {"id": 2, "front": "What color are sunsets on Mars?", "back": "Blue! Fine Martian iron dust scatters reddish light during the day and allows blue light to penetrate at sunset.", "category": "Planetary Science"}
+            ]
+        }
+
+        return {
+            "title": "Why is the Sky Blue? The Optics of Atmospheric Light",
+            "domain": "science_nature",
+            "subdomain": "Optics, Atmospheric Physics & Human Perception",
+            "scenes": scenes,
+            "materials": materials
+        }
+
+    def _build_how_airplanes_fly_lecture(self, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
+        scenes = [
+            {
+                "scene_id": "scene_1",
+                "index": 0,
+                "chapter_title": "1. Defying Gravity: The Four Forces of Flight",
+                "pedagogical_phase": "hook",
+                "narration_text": "A fully loaded Boeing 747 weighs nearly one million pounds—the weight of four hundred cars. How can a massive machine made of steel and aluminum lift effortlessly into the sky and cruise five miles high? Flight is not magic; it is an exquisite dance between four competing physical forces: Lift fighting Gravity, and Thrust fighting Drag. When Lift exceeds Gravity, the giant takes to the air.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "cross_section_sim",
+                    "title": "The Four Fundamental Forces of Flight",
+                    "subtitle": "Lift vs. Weight & Thrust vs. Drag",
+                    "parameters": {
+                        "subject": "Aircraft Free-Body Force Diagram",
+                        "layers": [
+                            {"name": "Lift (Upward Force)", "role": "Generated by airfoils moving through the air"},
+                            {"name": "Gravity / Weight (Downward Force)", "role": "Earth's gravitational pull on the aircraft mass"},
+                            {"name": "Thrust (Forward Force)", "role": "Produced by jet engines or propellers"},
+                            {"name": "Drag (Backward Resistance)", "role": "Aerodynamic air friction and pressure resistance"}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Lift and Gravity balance"},
+                        {"step": 2, "highlight": "Thrust overcoming Drag"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_2",
+                "index": 1,
+                "chapter_title": "2. The Airfoil Anatomy: Camber, Chord & Attack Angle",
+                "pedagogical_phase": "foundation",
+                "narration_text": "Look closely at an airplane wing. It is shaped as an Airfoil: curved on top, flatter on the bottom, with a rounded leading edge and a razor-sharp trailing edge. The Angle of Attack is the tilt of the wing relative to the oncoming wind. Tilt the wing upward slightly, and it scoops oncoming air, generating pressure differentials that produce vertical lift.",
+                "estimated_duration": 23.0,
+                "visual_spec": {
+                    "visual_type": "cross_section_sim",
+                    "title": "The Airfoil Geometry",
+                    "subtitle": "Leading Edge, Trailing Edge, Camber & Chord Line",
+                    "parameters": {
+                        "subject": "Aerodynamic Airfoil Profile",
+                        "layers": [
+                            {"name": "Curved Upper Surface (Camber)", "role": "Accelerates air stream, creating lower static pressure"},
+                            {"name": "Flatter Lower Surface", "role": "Maintains higher relative pressure, pushing upward"},
+                            {"name": "Angle of Attack (Alpha)", "role": "Angle between chord line and relative wind direction"}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Curved Upper Surface"},
+                        {"step": 2, "highlight": "Angle of Attack"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_3",
+                "index": 2,
+                "chapter_title": "3. The Two Laws: Bernoulli's Pressure & Newton's Downwash",
+                "pedagogical_phase": "visual_demonstration",
+                "narration_text": "For decades, flight was explained with popular myths like equal transit time. Real aerodynamics unites Bernoulli's Principle with Newton's Third Law. Bernoulli shows that air moving faster over the curved upper surface creates lower pressure above the wing than below it. Meanwhile, Newton's Third Law dictates that the wing physically deflects thousands of tons of air downwards in a powerful downwash—and for every action, there is an equal and opposite upward lift!",
+                "estimated_duration": 26.0,
+                "visual_spec": {
+                    "visual_type": "concept_metaphor",
+                    "title": "Bernoulli vs. Newton: The Dual Engines of Lift",
+                    "subtitle": "Pressure Differences + Massive Downward Air Deflection",
+                    "parameters": {
+                        "left_title": "Bernoulli's Principle (Pressure)",
+                        "left_items": ["Faster airflow over top curved surface", "Generates lower static pressure above", "The wing is 'pulled' upward by vacuum pressure"],
+                        "right_title": "Newton's Third Law (Action-Reaction)",
+                        "right_items": ["Coanda effect bends air along wing slope", "Wing forces massive volume of air DOWN (Downwash)", "Equal and opposite reaction drives airplane UP!"]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Bernoulli Pressure Delta"},
+                        {"step": 2, "highlight": "Newtonian Downwash"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_4",
+                "index": 3,
+                "chapter_title": "4. Aerodynamic Stall: The Critical Angle of Attack",
+                "pedagogical_phase": "edge_cases",
+                "narration_text": "If tilting a wing upward generates more lift, why can't a pilot tilt it as steep as they want? If the Angle of Attack exceeds roughly fifteen degrees, the airflow can no longer smoothly hug the wing. It separates into turbulent eddies, lift plummets catastrophically, and the wing Stalls. Pilots train relentlessly to recognize the aerodynamic stall and pitch the nose down to restore smooth airflow.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "spectrum_meter",
+                    "title": "Angle of Attack & Stall Envelope",
+                    "subtitle": "Smooth Laminar Flow vs. Turbulent Flow Separation",
+                    "parameters": {
+                        "left_label": "Cruise (2° to 5°): Smooth laminar attachment, high lift, minimal drag",
+                        "right_label": "Aerodynamic Stall (>15°): Flow separates into turbulent vortices, lift collapses!",
+                        "center_balance": "Maximum Lift Angle (~12° to 14°): Critical threshold during takeoff/landing",
+                        "markers": [
+                            "Normal Cruise",
+                            "Approach & Flare",
+                            "Aerodynamic Stall"
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Smooth Cruise"},
+                        {"step": 2, "highlight": "Turbulent Stall"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_5",
+                "index": 4,
+                "chapter_title": "5. Modern Aerodynamics: Winglets & Supersonic Flight",
+                "pedagogical_phase": "summary",
+                "narration_text": "Modern aircraft are marvels of computational fluid dynamics. Wingtips feature vertical upturned fins called Winglets, which disrupt high-pressure wingtip vortices, saving billions of gallons of fuel. From gliders soaring on thermal winds to hypersonic jets piercing the sound barrier, mastering the invisible forces of air has shrunk our planet and expanded human capability.",
+                "estimated_duration": 23.0,
+                "visual_spec": {
+                    "visual_type": "comparison_matrix",
+                    "title": "Modern Aviation Innovations",
+                    "subtitle": "Fuel Efficiency, Fly-By-Wire, and Supersonic Shapes",
+                    "parameters": {
+                        "col1": "Blended Winglets: Suppresses tip vortex drag, reducing fuel burn by 5-7%",
+                        "col2": "Fly-by-Wire Computers: Continuously adjusts flight control surfaces hundreds of times per second",
+                        "col3": "Delta & Swept Wings: Delays supersonic shockwaves for high-speed cruising"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Winglets"},
+                        {"step": 2, "highlight": "Fly-by-Wire"}
+                    ]
+                }
+            }
+        ]
+
+        materials = {
+            "summary": "Airplanes generate lift through the interaction of airfoils with moving air. Lift is produced simultaneously by pressure differentials across the upper and lower surfaces (Bernoulli's Principle) and by the downward deflection of massive air mass (Newton's Third Law).",
+            "notes_markdown": """# Aerodynamics: The Physics of Flight
+
+## 1. The Four Forces of Flight
+$$\\Sigma F_y = L - W = m \\cdot a_y$$
+$$\\Sigma F_x = T - D = m \\cdot a_x$$
+- **Lift ($L$)**: Upward aerodynamic force generated by wings.
+- **Weight ($W$)**: Gravitational force downward ($m \\cdot g$).
+- **Thrust ($T$)**: Forward propulsion generated by engines.
+- **Drag ($D$)**: Aerodynamic resistance opposing forward motion.
+
+## 2. The Lift Equation
+$$L = \\frac{1}{2} \\rho v^2 S C_L$$
+where:
+- $\\rho$: Air density
+- $v$: True airspeed
+- $S$: Wing surface area
+- $C_L$: Coefficient of lift (determined by airfoil shape and Angle of Attack)
+
+## 3. How Lift is Really Generated
+1. **Bernoulli's Principle**: Faster airflow over the upper camber creates a region of lower static pressure.
+2. **Newton's Third Law**: The wing redirects airflow downward (downwash); the reactive upward force is lift.
+3. **The Coanda Effect**: Fluid flows naturally adhere to a curved convex surface.
+""",
+            "key_concepts": [
+                {"concept": "Airfoil", "definition": "A streamlined structure with curved upper and lower surfaces designed to produce aerodynamic lift.", "importance": "The physical shape that makes mechanical flight possible."},
+                {"concept": "Angle of Attack (AoA)", "definition": "The angle between the chord line of an airfoil and the oncoming relative wind.", "importance": "Controls the amount of lift and danger of aerodynamic stalling."},
+                {"concept": "Downwash", "definition": "The downward deflection of air caused by the passage of a lifting airfoil.", "importance": "Newtonian action that produces an equal and opposite upward reaction."}
+            ],
+            "formulas_or_code": [
+                {"title": "The Aerodynamic Lift Equation", "type": "formula", "content": "L = \\frac{1}{2} \\rho v^2 S C_L", "explanation": "Calculates lift from air density, velocity squared, wing area, and lift coefficient."},
+                {"title": "Bernoulli's Equation", "type": "formula", "content": "P + \\frac{1}{2}\\rho v^2 = \\text{constant}", "explanation": "As airflow speed v increases over the wing, static pressure P must decrease."}
+            ],
+            "practice_questions": [
+                {"question": "Why do commercial airliners need longer runway distances to take off on hot summer days or at high-altitude airports like Denver?", "hint": "Look at the lift equation and air density $\\rho$.", "solution": "Hot air and high elevation both reduce air density ($\\rho$). Since Lift is directly proportional to air density, the aircraft must achieve a higher ground speed ($v$) to generate sufficient lift to take off."}
+            ],
+            "quiz": [
+                {"id": 1, "question": "What happens when an airplane wing exceeds its critical Angle of Attack?", "options": ["It flies at supersonic speed", "It stalls because airflow separates from the upper wing surface", "The jet engines turn off automatically", "Drag drops to zero"], "correct_index": 1, "explanation": "Exceeding the critical angle causes flow separation and an immediate loss of lift known as an aerodynamic stall."},
+                {"id": 2, "question": "What are the four fundamental forces acting on an airplane in unaccelerated flight?", "options": ["Speed, Altitude, Direction, Mass", "Lift, Weight (Gravity), Thrust, and Drag", "Friction, Kinetic Energy, Potential Energy, Torque", "Inertia, Pressure, Heat, Sound"], "correct_index": 1, "explanation": "Lift opposes weight, and thrust opposes aerodynamic drag."}
+            ],
+            "flashcards": [
+                {"id": 1, "front": "What is the primary function of winglets on aircraft wingtips?", "back": "They reduce high-pressure air curling into low-pressure air, suppressing wingtip vortices and saving fuel.", "category": "Aviation Engineering"},
+                {"id": 2, "front": "Does doubling an airplane's speed double its lift?", "back": "No! Lift scales with velocity squared (v^2), so doubling speed quadruples (4x) the lift.", "category": "Physics"}
+            ]
+        }
+
+        return {
+            "title": "How Airplanes Fly: The Physics & Engineering of Lift",
+            "domain": "science_nature",
+            "subdomain": "Fluid Dynamics & Aeronautical Engineering",
+            "scenes": scenes,
+            "materials": materials
+        }
+
+    # ------------------- DYNAMIC GENERAL-PURPOSE SYNTHESIZER -------------------
 
     def _build_adaptive_topic_lecture(
         self, topic: str, level: str, purpose: str, teaching_style: str, num_scenes: int, voice_name: str
     ) -> Dict[str, Any]:
         """
-        Generates an adaptive, highly structured pedagogical lecture for any arbitrary topic.
+        Dynamically synthesizes a bespoke educational masterclass for ANY general topic,
+        avoiding boilerplate slides and selecting distinct visual types appropriate to the subject.
         """
-        title = f"{topic}: Intuitive Visual Masterclass"
-        domain = "general"
-        if any(w in topic.lower() for w in ["code", "algorithm", "data", "python", "software", "api", "network", "web"]):
-            domain = "computer_science"
-        elif any(w in topic.lower() for w in ["math", "formula", "matrix", "geometry", "probability", "algebra"]):
-            domain = "mathematics"
-        elif any(w in topic.lower() for w in ["physics", "biology", "chemistry", "space", "energy"]):
-            domain = "science"
+        topic_title = topic.strip().title()
+        analysis = self.analyze_topic(topic)
+        domain = analysis.domain
+
+        # Choose bespoke visual templates based on domain
+        if domain == "history":
+            vtype1 = "concept_metaphor"
+            vtype2 = "timeline_journey"
+            vtype3 = "comparison_matrix"
+            vtype4 = "cause_and_effect"
+            vtype5 = "spectrum_meter"
+        elif domain in ["economics_business", "psychology_philosophy"]:
+            vtype1 = "concept_metaphor"
+            vtype2 = "hierarchy_pyramid"
+            vtype3 = "cycle_loop"
+            vtype4 = "spectrum_meter"
+            vtype5 = "comparison_matrix"
+        elif domain in ["health_biology", "science_nature"]:
+            vtype1 = "cross_section_sim"
+            vtype2 = "cycle_loop"
+            vtype3 = "concept_metaphor"
+            vtype4 = "cause_and_effect"
+            vtype5 = "comparison_matrix"
+        elif domain == "arts_literature":
+            vtype1 = "concept_metaphor"
+            vtype2 = "narrative_arc"
+            vtype3 = "comparison_matrix"
+            vtype4 = "spectrum_meter"
+            vtype5 = "cycle_loop"
+        else:
+            vtype1 = "concept_metaphor"
+            vtype2 = "process_simulation"
+            vtype3 = "hierarchy_pyramid"
+            vtype4 = "comparison_matrix"
+            vtype5 = "cycle_loop"
 
         scenes = [
             {
                 "scene_id": "scene_1",
                 "index": 0,
-                "chapter_title": f"1. The Core Intuition: Why {topic} Matters",
+                "chapter_title": f"1. The Core Paradox: Why {topic_title} Matters",
                 "pedagogical_phase": "hook",
-                "narration_text": f"Welcome! To truly understand {topic}, we must start not with definitions or formulas, but with the fundamental problem it solves. Why do we need it? What breaks in its absence? By picturing this through an intuitive mental model, everything that follows will feel natural rather than memorized.",
+                "narration_text": f"To truly grasp {topic_title}, we must look past superficial definitions and confront the core dilemma that makes it so vital. What breakdown happens in its absence? How does understanding this concept transform how we perceive the world? Let us build an intuitive mental model from first principles.",
                 "estimated_duration": 22.0,
                 "visual_spec": {
-                    "visual_type": "concept_metaphor",
-                    "title": f"The Foundational Intuition of {topic}",
-                    "subtitle": "Connecting Everyday Intuition to Technical Reality",
+                    "visual_type": vtype1,
+                    "title": f"The Core Intuition of {topic_title}",
+                    "subtitle": "Unpacking the Fundamental Paradox and Value",
                     "parameters": {
-                        "left_title": "Without This Principle",
-                        "left_items": ["High inefficiency or ambiguity", "Manual, fragile processes", "Difficult to scale or optimize"],
-                        "right_title": f"With {topic}",
-                        "right_items": ["Elegant, predictable structure", "Automated, scalable efficiency", "Clear mental clarity"]
+                        "left_title": "Conventional View / Without Insight",
+                        "left_items": ["Superficial understanding or confusion", "Vulnerable to common misconceptions", "Unintended friction in decisions"],
+                        "right_title": f"With {topic_title}",
+                        "right_items": ["Crystal-clear conceptual mental model", "Systematic understanding of underlying drivers", "Practical clarity and informed action"]
                     },
                     "keyframe_steps": [
-                        {"step": 1, "description": "The problem setting"},
-                        {"step": 2, "description": "The elegant solution"}
+                        {"step": 1, "highlight": "Conventional confusion"},
+                        {"step": 2, "highlight": "Deep clarity"}
                     ]
                 }
             },
             {
                 "scene_id": "scene_2",
                 "index": 1,
-                "chapter_title": "2. The Underlying Mechanism: Core Architecture",
+                "chapter_title": "2. Structural Architecture & Core Mechanics",
                 "pedagogical_phase": "foundation",
-                "narration_text": f"Now let us examine the fundamental mechanics that make {topic} work. At its base, it operates through a clear set of invariant rules. Signals, data, or concepts flow predictably from one stage to the next, maintaining consistency and purpose.",
+                "narration_text": f"Every robust framework operates through fundamental components. In {topic_title}, dynamic forces interact according to consistent rules. When we map out its structural roadmap, the moving parts fall into place with natural clarity.",
                 "estimated_duration": 24.0,
                 "visual_spec": {
-                    "visual_type": "process_simulation",
-                    "title": f"{topic} Operational Pipeline",
-                    "subtitle": "Stage-by-Stage Functional Architecture",
+                    "visual_type": vtype2,
+                    "title": f"Foundational Architecture of {topic_title}",
+                    "subtitle": "The Essential Building Blocks and Flow",
                     "parameters": {
-                        "stages": [
-                            {"name": "Stage 1: Input & Setup", "role": "Gathering preconditions"},
-                            {"name": "Stage 2: Core Transformation", "role": "Applying primary rules & invariants"},
-                            {"name": "Stage 3: Validation & Output", "role": "Delivering consistent results"}
+                        "milestones": [
+                            {"year": "Foundation", "title": "Preconditions & Origins", "desc": "Initial conditions that trigger action", "impact": "Baseline established"},
+                            {"year": "Mechanics", "title": "Core Dynamic Transformation", "desc": "Primary operational rules in action", "impact": "System in motion"},
+                            {"year": "Maturity", "title": "Equilibrium & Culmination", "desc": "Long-term steady state outcome", "impact": "Enduring consequence"}
+                        ],
+                        "tiers": [
+                            {"tier": f"Tier 1: Foundational Preconditions of {topic_title}", "note": "Baseline elements required for stability"},
+                            {"tier": "Tier 2: Intermediate Dynamic Mechanisms", "note": "Active processing and operational flow"},
+                            {"tier": "Tier 3: Peak Manifestation & Mastery", "note": "Highest level of performance and insight"}
+                        ],
+                        "subject": f"Internal Dynamics of {topic_title}",
+                        "layers": [
+                            {"name": "Input Layer", "role": "Catalysts and environmental signals"},
+                            {"name": "Core Process Engine", "role": "Fundamental transformations and interactions"},
+                            {"name": "Observable Outcome", "role": "Final equilibrium and measurable impact"}
                         ]
                     },
                     "keyframe_steps": [
-                        {"step": 1, "highlight": "Stage 1"},
-                        {"step": 2, "highlight": "Stage 2"},
-                        {"step": 3, "highlight": "Stage 3"}
+                        {"step": 1, "highlight": "Foundation"},
+                        {"step": 2, "highlight": "Core Mechanics"}
                     ]
                 }
             },
             {
                 "scene_id": "scene_3",
                 "index": 2,
-                "chapter_title": "3. Step-by-Step Walkthrough in Action",
+                "chapter_title": "3. The Engine in Motion: Step-by-Step Demonstration",
                 "pedagogical_phase": "visual_demonstration",
-                "narration_text": f"Let us observe a concrete demonstration. Watch how state transitions occur step-by-step. Each action directly addresses the objective, eliminating uncertainty and producing verifiable outcomes.",
+                "narration_text": f"Now let us examine {topic_title} in dynamic motion. Notice how each state transition follows from the previous one. Understanding this continuous cycle allows us to predict outcomes and navigate complex scenarios with confidence.",
                 "estimated_duration": 25.0,
                 "visual_spec": {
-                    "visual_type": "algorithm_animator" if domain == "computer_science" else "diagram_board",
-                    "title": f"Live Demonstration of {topic}",
-                    "subtitle": "Tracking Dynamic State Transitions",
+                    "visual_type": vtype3,
+                    "title": f"{topic_title} in Action",
+                    "subtitle": "Tracking Active Cycles and Interactive Relationships",
                     "parameters": {
-                        "steps": [
-                            {"step": 1, "state": "Initial Condition", "note": "Establishing baseline parameters"},
-                            {"step": 2, "state": "Active Execution", "note": "Processing central invariant"},
-                            {"step": 3, "state": "Convergence", "note": "Reached target outcome"}
-                        ]
+                        "cycle_title": f"The Operational Cycle of {topic_title}",
+                        "stages": [
+                            {"name": "1. Catalyst / Trigger", "role": "Initial event sets process into motion"},
+                            {"name": "2. Intermediate Dynamics", "role": "System components interact and transform"},
+                            {"name": "3. Equilibrium Output", "role": "Outcome is delivered and reinforced through feedback"}
+                        ],
+                        "col1": "Traditional View: Linear, simplistic cause and effect",
+                        "col2": "Systemic Reality: Interdependent feedback loops and non-linear shifts",
+                        "col3": "Strategic Mastery: Leveraging high-impact leverage points"
                     },
                     "keyframe_steps": [
-                        {"step": 1, "description": "Initial parameters set"},
-                        {"step": 2, "description": "Active transformation"},
-                        {"step": 3, "description": "Final result verified"}
+                        {"step": 1, "highlight": "Trigger"},
+                        {"step": 2, "highlight": "Dynamic Transformation"},
+                        {"step": 3, "highlight": "Equilibrium"}
                     ]
                 }
             },
             {
                 "scene_id": "scene_4",
                 "index": 3,
-                "chapter_title": "4. Edge Cases, Nuances & Common Traps",
+                "chapter_title": "4. Nuances, Pitfalls & Critical Boundaries",
                 "pedagogical_phase": "edge_cases",
-                "narration_text": f"Experienced practitioners know that mastery lies in understanding the edge cases. Where does {topic} encounter limits? What trade-offs between speed, complexity, and memory must we navigate? Being aware of these pitfalls prevents critical failures.",
-                "estimated_duration": 23.0,
+                "narration_text": f"Mastery requires knowing where a concept encounters its limits. In {topic_title}, common pitfalls occur when boundary conditions are ignored. By recognizing these friction points in advance, we avoid costly misjudgments.",
+                "estimated_duration": 24.0,
                 "visual_spec": {
-                    "visual_type": "comparison_matrix",
-                    "title": "Nuances, Pitfalls & Trade-Offs",
-                    "subtitle": "Best Practices for Real-World Scenarios",
+                    "visual_type": vtype4,
+                    "title": "Nuances, Pitfalls & The Balance Spectrum",
+                    "subtitle": "Navigating Extreme Assumptions and Hidden Traps",
                     "parameters": {
-                        "col1": "Common Pitfall: Misunderstanding initial boundary conditions",
-                        "col2": "Trade-off: Simplicity vs. Maximum Performance",
-                        "col3": "Best Practice: Verify invariants continuously"
+                        "left_label": "Over-Simplification: Ignoring vital context and nuance",
+                        "right_label": "Over-Complication: Paralyzed by excessive detail",
+                        "center_balance": "Pragmatic Mastery: Actionable clarity grounded in sound judgment",
+                        "markers": [
+                            "Naive Assumption",
+                            "Balanced Prudence",
+                            "Over-Engineered"
+                        ],
+                        "root_catalyst": "Misunderstanding Boundary Constraints",
+                        "intermediate_effects": [
+                            "Applying models outside their valid domain",
+                            "Ignoring feedback loops and unintended consequences"
+                        ],
+                        "ultimate_consequence": "Suboptimal decisions and systemic friction"
                     },
                     "keyframe_steps": [
-                        {"step": 1, "highlight": "Pitfall"},
-                        {"step": 2, "highlight": "Trade-off"},
-                        {"step": 3, "highlight": "Best Practice"}
+                        {"step": 1, "highlight": "Over-Simplification"},
+                        {"step": 2, "highlight": "Pragmatic Balance"}
                     ]
                 }
             },
             {
                 "scene_id": "scene_5",
                 "index": 4,
-                "chapter_title": "5. Real-World Applications & Key Takeaways",
+                "chapter_title": "5. Real-World Applications & Strategic Takeaways",
                 "pedagogical_phase": "summary",
-                "narration_text": f"To wrap up our lesson: {topic} is a powerful concept that transforms how we solve complex challenges. By keeping the core intuition, the underlying mechanism, and the key trade-offs in mind, you are fully equipped to apply this in your studies and practical work.",
-                "estimated_duration": 22.0,
+                "narration_text": f"To conclude our masterclass on {topic_title}: this knowledge is not merely theoretical—it is an actionable lens for real-world clarity. By retaining the core intuition, respecting the underlying mechanisms, and navigating trade-offs prudently, you can apply this across your learning, career, and life.",
+                "estimated_duration": 23.0,
                 "visual_spec": {
-                    "visual_type": "concept_metaphor",
-                    "title": f"{topic}: Key Educational Takeaways",
-                    "subtitle": "Summary of Core Principles and Applications",
+                    "visual_type": vtype5,
+                    "title": f"{topic_title}: Key Takeaways & Toolkit",
+                    "subtitle": "Synthesizing Core Principles for Practical Application",
                     "parameters": {
-                        "takeaways": [
-                            "Intuition first: Understand the problem before the implementation",
-                            "Respect invariants: Consistency at every step guarantees success",
-                            "Consider trade-offs: Balance elegance with practical efficiency"
-                        ]
+                        "col1": "Core Principle: Focus on the root drivers, not surface noise",
+                        "col2": "Systemic Invariant: Consistency of application across changing conditions",
+                        "col3": "Actionable Habit: Regularly audit your mental models against reality"
                     },
                     "keyframe_steps": [
-                        {"step": 1, "highlight": "Intuition"},
-                        {"step": 2, "highlight": "Invariants"},
-                        {"step": 3, "highlight": "Application"}
+                        {"step": 1, "highlight": "Core Principle"},
+                        {"step": 2, "highlight": "Actionable Habit"}
                     ]
                 }
             }
         ]
 
         materials = {
-            "summary": f"This comprehensive lecture on {topic} breaks down the foundational intuition, step-by-step mechanics, critical edge cases, and real-world practical applications to ensure thorough conceptual mastery.",
-            "notes_markdown": f"""# {topic}: Comprehensive Masterclass Notes
+            "summary": f"This comprehensive masterclass on {topic_title} deconstructs the foundational paradox, the structural architecture, step-by-step dynamic mechanics, critical edge boundaries, and practical applications.",
+            "notes_markdown": f"""# {topic_title}: Comprehensive Study Guide
 
 ## 1. Executive Summary
-Understanding **{topic}** requires building a solid mental model from simple to advanced concepts:
-- **Core Purpose**: Solving fundamental challenges with clarity and speed.
-- **Key Invariants**: Predictable rules that govern behavior throughout execution.
-- **Scope & Applicability**: Widely utilized across modern engineering, science, and analytical domains.
+Understanding **{topic_title}** requires building a clear mental model from simple intuition to nuanced real-world dynamics:
+- **Core Purpose**: Explains foundational realities and solves complex problems with elegance.
+- **Key Invariants**: Predictable principles that remain true under shifting conditions.
+- **Practical Relevance**: Widely applicable across analytical thinking, strategic decision-making, and general education.
 
 ## 2. Structural Principles
-1. **Foundation**: Setting clear preconditions.
-2. **Execution**: Systematic transformation with minimal friction.
-3. **Verification**: Ensuring results meet all necessary constraints.
+1. **First Principles Thinking**: Strip away assumptions to understand the foundational root drivers.
+2. **Dynamic Feedback**: Understand how changes in one variable ripple across the entire system.
+3. **Boundary Awareness**: Recognize where models work effectively and where edge cases require caution.
 """,
             "key_concepts": [
-                {"concept": f"{topic} Core Invariant", "definition": "The defining mathematical or architectural rule that remains true throughout the lifecycle.", "importance": "Guarantees system correctness."},
-                {"concept": "State Transition", "definition": "Moving safely from an initial state through intermediate phases to a target outcome.", "importance": "Provides transparent traceability."}
+                {"concept": f"{topic_title} Core Invariant", "definition": "The central principle that reliably governs behavior within this domain.", "importance": "Ensures sound reasoning from first principles."},
+                {"concept": "Dynamic Feedback", "definition": "How outcomes loop back to influence the original inputs of the system.", "importance": "Prevents over-simplified linear thinking."}
             ],
             "formulas_or_code": [
-                {"title": f"{topic} Paradigm Rule", "type": "rule", "content": "Invariant(State_t) == True for all t", "explanation": "Ensures every intermediate state satisfies foundational requirements."}
+                {"title": f"{topic_title} Heuristic", "type": "principle", "content": "Clarity of Principles \\times Consistency of Application = Mastery", "explanation": "Success depends on foundational clarity paired with disciplined execution."}
             ],
             "practice_questions": [
-                {"question": f"What is the single most critical reason to apply {topic} in practice?", "hint": "Think about efficiency, predictability, and safety.", "solution": f"Applying {topic} creates a structured, verifiable approach that prevents errors, scales predictably, and optimizes resource utilization."}
+                {"question": f"What is the most common mistake people make when encountering {topic_title} for the first time?", "hint": "Think about surface appearances vs. root causes.", "solution": f"People often confuse surface symptoms with root causes. Truly understanding {topic_title} requires looking past immediate impressions to analyze systemic drivers."}
             ],
             "quiz": [
-                {"id": 1, "question": f"What is the first step when implementing or analyzing {topic}?", "options": ["Jump straight to advanced edge cases", "Establish clear foundational preconditions and invariants", "Ignore performance trade-offs", "Random trial and error"], "correct_index": 1, "explanation": "Establishing clear baseline preconditions ensures all downstream transformations are sound."},
-                {"id": 2, "question": f"Why is understanding the edge cases of {topic} essential?", "options": ["It is only needed for academic exams", "Systems typically fail at boundary conditions if unhandled", "Edge cases do not affect real-world outcomes", "It replaces the need for the core mechanism"], "correct_index": 1, "explanation": "Failures and unexpected behavior almost always occur at boundaries and edge cases."}
+                {"id": 1, "question": f"What is the foundation of mastering {topic_title}?", "options": ["Memorizing isolated facts without context", "Understanding root principles and how components interact dynamically", "Ignoring edge cases and limitations", "Relying on random chance"], "correct_index": 1, "explanation": "True mastery comes from understanding underlying mechanisms and causal relationships."},
+                {"id": 2, "question": f"Why is awareness of edge cases critical in {topic_title}?", "options": ["It is only useful for academic tests", "Models and systems tend to fail at boundary conditions if unhandled", "Edge cases never occur in real life", "It replaces the need for basic understanding"], "correct_index": 1, "explanation": "Critical failures almost always occur at boundaries and unanticipated edge conditions."}
             ],
             "flashcards": [
-                {"id": 1, "front": f"What is the primary benefit of {topic}?", "back": "Providing structured, predictable, and optimized outcomes for complex problems.", "category": "Core Principle"},
-                {"id": 2, "front": f"How should one approach learning {topic}?", "back": "By understanding the intuitive problem first, then mastering the rigorous mechanism and edge cases.", "category": "Pedagogy"}
+                {"id": 1, "front": f"What is the core takeaway of {topic_title}?", "back": "Focus on root mechanisms and systematic relationships rather than surface symptoms.", "category": "Core Principle"},
+                {"id": 2, "front": f"How should you apply {topic_title} in practice?", "back": "Use it as a decision-making framework, auditing your assumptions regularly.", "category": "Application"}
             ]
         }
 
         return {
-            "title": title,
+            "title": f"{topic_title}: Intuitive Visual Masterclass",
             "domain": domain,
-            "subdomain": "Educational Concepts",
+            "subdomain": analysis.subdomain,
             "scenes": scenes,
             "materials": materials
         }
