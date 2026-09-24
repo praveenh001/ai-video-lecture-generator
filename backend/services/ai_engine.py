@@ -23,93 +23,209 @@ class EducationalAIEngine:
                 return genai.GenerativeModel("gemini-1.5-flash")
         return None
 
+    def classify_topic_archetype(self, topic: str) -> Dict[str, str]:
+        t = topic.lower().strip()
+
+        def has_any(keywords):
+            return any(re.search(r'\b' + re.escape(k) + r'\b', t) for k in keywords)
+
+        # 1. Countries, Civilizations, Nations, Cultures
+        country_words = [
+            "india", "bharat", "japan", "egypt", "china", "rome", "greece", "russia", "america", "usa",
+            "united states", "britain", "england", "france", "germany", "persia", "italy", "spain",
+            "brazil", "mexico", "canada", "australia", "turkey", "israel", "korea", "africa", "civilization",
+            "country", "nation"
+        ]
+        if has_any(country_words):
+            return {
+                "archetype": "country_civilization",
+                "domain": "history",
+                "subdomain": "Civilizations, Culture & Geopolitics",
+                "recommended_style": "Chronological Epochs & Cultural Heritage Journey"
+            }
+
+        # 2. Historical Epochs & Turning Points (Evaluated before science to avoid 'revolution' matching 'evolution')
+        history_words = [
+            "revolution", "war", "battle", "treaty", "cold war", "renaissance", "medieval", "crusade",
+            "colonial", "independence", "revolt", "empire", "dynasty", "monarchy", "bastille", "robespierre",
+            "ancient egypt", "mesopotamia", "feudal"
+        ]
+        if has_any(history_words):
+            return {
+                "archetype": "historical_epoch",
+                "domain": "history",
+                "subdomain": "World History & Turning Points",
+                "recommended_style": "Chronological Timeline Journeys & Causal Cascades"
+            }
+
+        # 3. Programming & Code (Word boundaries prevent 'oop' matching 'loops' or 'rest' matching 'interest')
+        code_words = [
+            "python", "javascript", "java", "c++", "golang", "rust", "typescript", "swift", "kotlin",
+            "exception", "try except", "stack trace", "pointer", "syntax", "decorator", "generator",
+            "async", "await", "promise", "concurrency", "multithreading", "recursion", "oop",
+            "object oriented", "react", "fastapi", "flask", "django", "node.js", "docker", "kubernetes",
+            "git", "memory leak", "garbage collection", "compiler", "interpreter", "debugging",
+            "api", "rest api", "sql query", "database index"
+        ]
+        if has_any(code_words) or ("code" in t and "dress code" not in t) or ("error" in t and "trial and error" not in t):
+            return {
+                "archetype": "programming_code",
+                "domain": "computer_science",
+                "subdomain": "Software Engineering & Programming Languages",
+                "recommended_style": "Code Execution Walkthrough & Call Stack Inspection"
+            }
+
+        # 4. Economics & Finance
+        econ_words = [
+            "inflation", "stock market", "stocks", "economy", "economics", "purchasing power", "cpi",
+            "interest rate", "central bank", "monetary policy", "supply and demand", "money supply",
+            "crypto", "bitcoin", "blockchain", "venture capital", "trade deficit", "banking", "gdp",
+            "recession", "liquidity", "fiscal policy", "monopoly"
+        ]
+        if has_any(econ_words):
+            return {
+                "archetype": "economics_finance",
+                "domain": "economics_business",
+                "subdomain": "Economics, Markets & Finance",
+                "recommended_style": "Market Equilibrium Curves & Money Flow Cycles"
+            }
+
+        # 5. Psychology, Philosophy & Mental Models
+        psy_words = [
+            "stoic", "stoicism", "philosophy", "psychology", "cognitive bias", "bias", "maslow",
+            "habit", "habits", "habit loop", "dopamine", "mindset", "plato", "aristotle", "socrates",
+            "nietzsche", "marcus aurelius", "seneca", "epictetus", "behavior", "freud", "ego", "emotion",
+            "happiness", "existentialism", "ethics", "mental model", "decision making"
+        ]
+        if has_any(psy_words):
+            return {
+                "archetype": "psychology_philosophy",
+                "domain": "psychology_philosophy",
+                "subdomain": "Cognitive Psychology & Philosophy",
+                "recommended_style": "Cognitive Feedback Loops & Hierarchy Pyramids"
+            }
+
+        # 6. Health, Biology & Physiology
+        bio_words = [
+            "sleep", "circadian", "circadian rhythm", "melatonin", "rem sleep", "photosynthesis",
+            "immune system", "immunity", "virus", "bacteria", "heart", "cardiovascular", "brain",
+            "neuron", "neurotransmitter", "fasting", "intermittent fasting", "diet", "nutrition",
+            "cancer", "blood", "organ", "exercise", "hormone", "insulin", "dna", "rna", "genetics",
+            "cell", "cellular", "mitochondria", "biology"
+        ]
+        if has_any(bio_words):
+            return {
+                "archetype": "health_biology",
+                "domain": "health_biology",
+                "subdomain": "Health Sciences & Human Biology",
+                "recommended_style": "Biological Pathway Simulations & Rhythm Cycles"
+            }
+
+        # 7. Algorithms & Mathematics
+        math_words = [
+            "binary search", "search algorithm", "sorting", "sort", "quicksort", "mergesort",
+            "data structure", "tree", "binary tree", "graph", "dynamic programming", "hash table",
+            "calculus", "derivative", "integral", "matrix", "linear algebra", "neural network",
+            "deep learning", "gradient descent", "backpropagation", "probability", "statistics",
+            "algorithm", "vectors"
+        ]
+        if has_any(math_words):
+            return {
+                "archetype": "algorithm_math",
+                "domain": "computer_science" if any(w in t for w in ["search", "sort", "graph", "tree", "neural", "programming"]) else "mathematics",
+                "subdomain": "Algorithms, Systems & Applied Mathematics",
+                "recommended_style": "Interactive Step-by-Step Simulator & Mathematical Curves"
+            }
+
+        # 8. Everyday Science & Physics
+        science_words = [
+            "sky is blue", "rayleigh scattering", "airplane", "airplanes", "fly", "aerodynamics",
+            "lift", "bernoulli", "earthquake", "weather", "ocean", "climate", "space", "gravity",
+            "energy", "physics", "solar", "black hole", "evolution", "atom", "quantum", "quantum computing",
+            "light", "relativity", "thermodynamics"
+        ]
+        if has_any(science_words):
+            return {
+                "archetype": "everyday_science",
+                "domain": "science_nature",
+                "subdomain": "Natural Sciences & Phenomenon Exploration",
+                "recommended_style": "Physical Cross-Sections & Force Dynamic Simulations"
+            }
+
+        # 9. Arts, Literature & Storytelling
+        arts_words = [
+            "hero's journey", "heros journey", "monomyth", "storytelling", "literature", "writing",
+            "narrative", "poetry", "novel", "music", "harmony", "musical", "cinema", "film",
+            "theatre", "painting", "aesthetic", "creative writing"
+        ]
+        if has_any(arts_words):
+            return {
+                "archetype": "arts_literature",
+                "domain": "arts_literature",
+                "subdomain": "Arts, Humanities & Narrative Architecture",
+                "recommended_style": "Narrative Arc Curves & Aesthetic Harmony Boards"
+            }
+
+        # Default general
+        return {
+            "archetype": "general",
+            "domain": "general",
+            "subdomain": "General Knowledge & Analytical Thinking",
+            "recommended_style": "Visual Metaphor & Conceptual Blueprint"
+        }
+
     def analyze_topic(self, topic: str, api_key: Optional[str] = None) -> TopicAnalysisResponse:
-        """
-        Analyzes ANY topic (History, Economics, Psychology, Medicine, Science, Literature, Tech)
-        to identify its pedagogical domain and select tailored visual teaching styles.
-        """
-        topic_lower = topic.lower().strip()
+        classified = self.classify_topic_archetype(topic)
+        domain = classified["domain"]
+        subdomain = classified["subdomain"]
+        arch = classified["archetype"]
+        recommended_style = classified["recommended_style"]
+
         model = self._get_configured_gemini(api_key)
+        t_clean = topic.strip().title()
 
-        domain = "general"
-        subdomain = "General Knowledge & Life Skills"
-        recommended_style = "Visual Metaphor & Conceptual Blueprint"
+        if arch == "country_civilization":
+            overview_text = f"An immersive educational masterclass on {t_clean}: exploring its civilizational antiquity and spiritual/divine heritage, golden epochs of science and arts, historic struggle for independence, constitutional democracy, and modern rising influence on the global stage."
+        elif arch == "programming_code":
+            overview_text = f"A hands-on, practical software engineering masterclass on {t_clean}: deconstructing the core language syntax, tracing execution and call stacks step-by-step, avoiding critical runtime pitfalls, and mastering production-grade patterns."
+        elif arch == "historical_epoch":
+            overview_text = f"A dramatic historical journey through {t_clean}: tracing the underlying catalysts, pivotal turning points, clashing factions, and the enduring global consequences that shape the world today."
+        elif arch == "economics_finance":
+            overview_text = f"A practical economic exploration of {t_clean}: demystifying market forces, supply and demand equilibrium, monetary policy cycles, and actionable strategies for navigating financial realities."
+        elif arch == "psychology_philosophy":
+            overview_text = f"A transformative psychological and philosophical study of {t_clean}: examining foundational mental models, cognitive feedback loops, common human blind spots, and daily practices for resilience."
+        elif arch == "health_biology":
+            overview_text = f"A science-backed biological exploration of {t_clean}: unraveling physiological mechanisms, cellular pathways, circadian and hormonal rhythms, and evidence-based protocols for human health."
+        elif arch == "arts_literature":
+            overview_text = f"A creative exploration of {t_clean}: analyzing narrative structures, harmonic principles, iconic masterworks, and universal archetypes that touch the human spirit."
+        elif arch == "everyday_science":
+            overview_text = f"An illuminating scientific investigation into {t_clean}: explaining everyday natural phenomena through fundamental physical laws, cross-sections, and dynamic force simulations."
+        elif arch == "algorithm_math":
+            overview_text = f"A rigorous computational and mathematical masterclass on {t_clean}: building intuitive mental models, animated state transitions, coordinate geometry curves, and asymptotic complexity boundaries."
+        else:
+            overview_text = f"A structured educational masterclass on {t_clean}: building a clear mental model from intuitive first principles to dynamic demonstrations, critical edge cases, and real-world applications."
 
-        # 1. History & Geopolitics
-        if any(w in topic_lower for w in ["history", "war", "revolution", "empire", "roman", "french revolution", "silk road", "civil war", "ancient", "dynasty", "treaty", "medieval", "cold war", "renaissance"]):
-            domain = "history"
-            subdomain = "World History & Civilization"
-            recommended_style = "Chronological Timeline Journey & Faction Map"
-
-        # 2. Economics, Finance & Business
-        elif any(w in topic_lower for w in ["inflation", "stock", "market", "economy", "money", "interest rate", "finance", "supply and demand", "crypto", "bitcoin", "business", "monopoly", "venture capital", "trade", "banking"]):
-            domain = "economics_business"
-            subdomain = "Economics, Markets & Finance"
-            recommended_style = "Market Equilibrium Curve & Money Flow Cycle"
-
-        # 3. Psychology, Philosophy & Cognitive Science
-        elif any(w in topic_lower for w in ["stoic", "philosophy", "psychology", "bias", "cognitive", "maslow", "habit", "mindset", "plato", "behavior", "freud", "ego", "emotion", "happiness", "existential", "decision"]):
-            domain = "psychology_philosophy"
-            subdomain = "Cognitive Psychology & Philosophy"
-            recommended_style = "Cognitive Feedback Loop & Hierarchy Pyramid"
-
-        # 4. Health, Medicine & Human Biology
-        elif any(w in topic_lower for w in ["sleep", "circadian", "immune", "virus", "heart", "brain", "fasting", "diet", "nutrition", "cancer", "blood", "organ", "exercise", "hormone", "dopamine", "medicine"]):
-            domain = "health_biology"
-            subdomain = "Health Sciences & Human Biology"
-            recommended_style = "Biological Pathway Simulation & Rhythm Cycle"
-
-        # 5. Arts, Literature & Storytelling
-        elif any(w in topic_lower for w in ["story", "hero's journey", "literature", "writing", "music", "harmony", "art", "film", "cinema", "poetry", "novel", "narrative", "painting", "aesthetic"]):
-            domain = "arts_literature"
-            subdomain = "Arts, Humanities & Narrative Design"
-            recommended_style = "Narrative Arc Curve & Aesthetic Harmony Board"
-
-        # 6. Everyday Science & Nature
-        elif any(w in topic_lower for w in ["sky", "airplane", "fly", "earthquake", "weather", "ocean", "climate", "space", "gravity", "energy", "physics", "solar", "biology", "photosynthesis", "black hole", "evolution"]):
-            domain = "science_nature"
-            subdomain = "Natural Sciences & Phenomenon Exploration"
-            recommended_style = "Physical Cross-Section & Force Dynamics Simulation"
-
-        # 7. Computer Science & Software
-        elif any(w in topic_lower for w in ["algorithm", "search", "sort", "python", "code", "programming", "database", "async", "await", "tree", "graph", "ai", "neural", "software", "api", "web"]):
-            domain = "computer_science"
-            subdomain = "Computer Science & Software Systems"
-            recommended_style = "Step-by-step Algorithm Simulator & Code Execution"
-
-        # 8. Mathematics
-        elif any(w in topic_lower for w in ["calculus", "derivative", "integral", "matrix", "algebra", "geometry", "probability", "statistics", "equation"]):
-            domain = "mathematics"
-            subdomain = "Mathematics & Mathematical Thinking"
-            recommended_style = "Mathematical Curves & Dynamic Limit Visualizer"
-
-        # Tailor clarification questions specifically to domain
-        style_options = self._get_style_options_for_domain(domain)
-
+        style_options = self._get_style_options_for_archetype(arch, domain)
         questions = [
             ClarificationQuestion(
                 id="knowledge_level",
-                question="What is your current familiarity with this topic?",
+                question=f"What is your current familiarity with {t_clean}?",
                 options=[
-                    ClarificationOption(id="beginner", label="Beginner (Focus on visual intuition, relatable analogies, zero technical jargon)"),
-                    ClarificationOption(id="intermediate", label="Intermediate (Core mechanisms, cause-and-effect, practical implications)"),
-                    ClarificationOption(id="advanced", label="Advanced (Deep nuances, historical/theoretical controversies, edge conditions)")
+                    ClarificationOption(id="beginner", label="Beginner (Focus on clear visual intuition, engaging stories, zero jargon)"),
+                    ClarificationOption(id="intermediate", label="Intermediate (Core mechanisms, cause-and-effect, practical depth)"),
+                    ClarificationOption(id="advanced", label="Advanced (Nuanced trade-offs, theoretical rigor, edge conditions)")
                 ],
                 default_value="intermediate"
             ),
             ClarificationQuestion(
                 id="purpose",
-                question="What is your primary goal for this lecture?",
-                options=[
-                    ClarificationOption(id="conceptual", label="Deep Conceptual Intuition (Build a rock-solid, intuitive mental model)"),
-                    ClarificationOption(id="practical", label="Practical Real-World Application (Apply directly in life, career, or decisions)"),
-                    ClarificationOption(id="academic", label="Academic / Exam Mastery (Structured arguments, key definitions & evidence)")
-                ],
+                question="What is your primary learning goal?",
+                options=self._get_purpose_options_for_archetype(arch),
                 default_value="conceptual"
             ),
             ClarificationQuestion(
                 id="teaching_style",
-                question="Which visual teaching style will help you absorb this best?",
+                question="Which visual teaching style helps you learn best?",
                 options=style_options,
                 default_value=style_options[0].id
             ),
@@ -125,9 +241,6 @@ class EducationalAIEngine:
             )
         ]
 
-        overview_text = f"We will design an educational lecture on '{topic}', structured from intuitive foundational principles to dynamic visual demonstrations and real-world implications."
-
-        # If LLM model is available, refine analysis with live model
         if model:
             try:
                 prompt = f"""
@@ -135,7 +248,7 @@ class EducationalAIEngine:
                 Respond in valid JSON only with keys:
                 - "domain": string (history, economics_business, psychology_philosophy, health_biology, arts_literature, science_nature, computer_science, mathematics, or general)
                 - "subdomain": string
-                - "overview": concise 2-sentence instructional summary
+                - "overview": concise 2-sentence instructional summary specifically tailored to "{topic}"
                 - "recommended_level": "Beginner", "Intermediate", or "Advanced"
                 - "recommended_style": string describing the ideal visual explanation technique
                 """
@@ -168,53 +281,102 @@ class EducationalAIEngine:
             clarification_questions=questions
         )
 
-    def _get_style_options_for_domain(self, domain: str) -> List[ClarificationOption]:
-        if domain == "history":
+    def _get_purpose_options_for_archetype(self, arch: str) -> List[ClarificationOption]:
+        if arch == "country_civilization":
+            return [
+                ClarificationOption(id="cultural_history", label="Civilizational & Spiritual Heritage (Antiquity, philosophy, traditions)"),
+                ClarificationOption(id="modern_geopolitics", label="Modern Nation & Global Power (Democracy, economy, technology, society)"),
+                ClarificationOption(id="general_overview", label="Complete Masterclass (From ancient roots to modern global leader)")
+            ]
+        elif arch == "programming_code":
+            return [
+                ClarificationOption(id="coding_interview", label="Coding Interviews & LeetCode (Core patterns, edge cases, error recovery)"),
+                ClarificationOption(id="production_engineering", label="Production Engineering (Writing clean, resilient, debuggable code)"),
+                ClarificationOption(id="syntax_mastery", label="Syntax & Mental Model (Understanding the language engine completely)")
+            ]
+        elif arch == "economics_finance":
+            return [
+                ClarificationOption(id="financial_literacy", label="Personal Wealth & Financial Protection (Inflation, assets, investing)"),
+                ClarificationOption(id="academic_macro", label="Macroeconomics & Policy (Central banking, money supply, market cycles)")
+            ]
+        elif arch == "historical_epoch":
+            return [
+                ClarificationOption(id="historical_causes", label="Causes, Turning Points & Global Consequence (From sparks to treaties)"),
+                ClarificationOption(id="societal_impact", label="Human Experience & Societal Transformation (People, rights, and legacy)")
+            ]
+        elif arch == "psychology_philosophy":
+            return [
+                ClarificationOption(id="self_mastery", label="Personal Growth & Daily Resilience (Mindset, emotional balance, habits)"),
+                ClarificationOption(id="theoretical_depth", label="Philosophical & Psychological Frameworks (Deep mental models & theory)")
+            ]
+        elif arch == "health_biology":
+            return [
+                ClarificationOption(id="health_protocols", label="Actionable Longevity & Vitality Protocols (Sleep, nutrition, habits)"),
+                ClarificationOption(id="cellular_science", label="Cellular & Physiological Science (Mechanisms, pathways, pathways)")
+            ]
+        elif arch == "algorithm_math":
+            return [
+                ClarificationOption(id="interview_prep", label="Technical Problem Solving & Interviews (Complexity, invariants, patterns)"),
+                ClarificationOption(id="math_intuition", label="Visual Mathematical Intuition (Geometrical and coordinate insights)")
+            ]
+        else:
+            return [
+                ClarificationOption(id="conceptual", label="Deep Conceptual Intuition (Build a rock-solid mental model)"),
+                ClarificationOption(id="practical", label="Practical Real-World Application (Apply directly in life, decisions, or career)"),
+                ClarificationOption(id="academic", label="Academic Mastery & Exams (Key definitions, proofs, structured analysis)")
+            ]
+
+    def _get_style_options_for_archetype(self, arch: str, domain: str) -> List[ClarificationOption]:
+        if arch == "country_civilization":
+            return [
+                ClarificationOption(id="epochs_timeline", label="Chronological Epochs & Timeline (Antiquity to modern renaissance)"),
+                ClarificationOption(id="cultural_mosaic", label="Cultural, Spiritual & Constitutional Mosaic (Philosophies, unity in diversity)"),
+                ClarificationOption(id="geopolitical_rise", label="Civilizational Rise & Global Impact (Science, trade, diaspora, future)")
+            ]
+        elif arch == "programming_code":
+            return [
+                ClarificationOption(id="code_flow", label="Live Syntax Execution & Call Stack Trace (Line-by-line pointer & variables watch)"),
+                ClarificationOption(id="hierarchy_tree", label="Exception / Class Hierarchy Tree (Understanding inheritance & categories)"),
+                ClarificationOption(id="crash_recovery", label="Crash vs. Graceful Recovery Comparison (Clean code vs antipatterns)")
+            ]
+        elif arch == "historical_epoch":
             return [
                 ClarificationOption(id="timeline", label="Chronological Timeline & Turning Points (Visual chronological roadmap)"),
                 ClarificationOption(id="cause_effect", label="Cause-and-Effect Cascade (Tracking catalysts to lasting global ripple effects)"),
-                ClarificationOption(id="opposing_forces", label="Clashing Factions Matrix (Comparing motivations, alliances, and strategies)")
+                ClarificationOption(id="opposing_forces", label="Clashing Factions Matrix (Comparing motivations and strategies)")
             ]
-        elif domain == "economics_business":
+        elif arch == "economics_finance":
             return [
                 ClarificationOption(id="market_equilibrium", label="Market Dynamics & Equilibrium Shift (Dynamic supply/demand curves)"),
                 ClarificationOption(id="money_cycle", label="Economic Money Flow Cycle (Tracking capital between households, banks & markets)"),
                 ClarificationOption(id="spectrum_tradeoff", label="Trade-off & Policy Spectrum (Inflation vs. Unemployment, Risk vs. Reward)")
             ]
-        elif domain == "psychology_philosophy":
+        elif arch == "psychology_philosophy":
             return [
                 ClarificationOption(id="pyramid_hierarchy", label="Structural Hierarchy (Multi-tier pyramid like Maslow's or value systems)"),
                 ClarificationOption(id="cognitive_loop", label="Cognitive Feedback Loop (Trigger -> Thought -> Emotion -> Habit Action)"),
                 ClarificationOption(id="metaphor_allegory", label="Philosophical Allegory Board (Concrete spatial analogies for abstract truths)")
             ]
-        elif domain == "health_biology":
+        elif arch == "health_biology":
             return [
                 ClarificationOption(id="biological_cycle", label="Circadian / Bio-Rhythm Cycle (Tracking hormones, energy & bodily phases)"),
                 ClarificationOption(id="cellular_pathway", label="Microscopic Defense / Cellular Pathway (Step-by-step immune/biological action)"),
                 ClarificationOption(id="cross_section", label="Organ & Physiological Cross-Section (Anatomy, input-output mechanics)")
             ]
-        elif domain == "arts_literature":
+        elif arch == "arts_literature":
             return [
                 ClarificationOption(id="narrative_arc", label="Narrative Arc / Story Mountain (Exposition, rising tension, climax & resolution)"),
-                ClarificationOption(id="harmony_waves", label="Harmonic Structure & Contrast Board (Motifs, tension, and resolution)"),
                 ClarificationOption(id="creative_breakdown", label="Comparative Masterwork Dissection (Key scene/masterpiece analysis)")
             ]
-        elif domain == "science_nature":
+        elif arch == "everyday_science":
             return [
                 ClarificationOption(id="cross_section_sim", label="Cross-Section & Force Interactions (Aerodynamic wing, earth crust, light rays)"),
-                ClarificationOption(id="process_flow", label="Physical Energy Flow Simulation (Energy transfer from source to outcome)"),
-                ClarificationOption(id="natural_cycle", label="Natural Planetary Cycle (Water cycle, plate subduction, solar fusion)")
+                ClarificationOption(id="process_flow", label="Physical Energy Flow Simulation (Energy transfer from source to outcome)")
             ]
-        elif domain == "computer_science":
+        elif arch == "algorithm_math":
             return [
                 ClarificationOption(id="algorithm_animator", label="Step-by-Step Algorithm & Memory Simulator (Animated pointers & state updates)"),
-                ClarificationOption(id="code_visualizer", label="Live Code Execution & Call Stack (Syntax line highlight, variables watch)"),
-                ClarificationOption(id="architecture_flow", label="System Architecture & Concurrency Pipeline (Non-blocking I/O event flow)")
-            ]
-        elif domain == "mathematics":
-            return [
-                ClarificationOption(id="math_graph", label="Mathematical Curves & Moving Tangent Lines (Visual coordinates and limits)"),
-                ClarificationOption(id="geometric_proof", label="Geometric & Algebraic Proof Breakdown (Visual spatial transformations)")
+                ClarificationOption(id="math_graph", label="Mathematical Curves & Moving Tangent Lines (Visual coordinates and limits)")
             ]
         else:
             return [
@@ -234,9 +396,6 @@ class EducationalAIEngine:
         voice_name: str = "en-US-ChristopherNeural",
         api_key: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Dynamically constructs a tailored pedagogical video lecture for ANY subject matter.
-        """
         model = self._get_configured_gemini(api_key)
         
         num_scenes = 5
@@ -245,7 +404,6 @@ class EducationalAIEngine:
         elif "deep" in lecture_duration.lower() or "7" in lecture_duration.lower() or "8" in lecture_duration.lower():
             num_scenes = 6
 
-        # Live Gemini generation if API key is provided
         if model:
             try:
                 gemini_data = self._generate_with_gemini(
@@ -257,7 +415,6 @@ class EducationalAIEngine:
             except Exception as ex:
                 print(f"Gemini live generation fallback: {ex}")
 
-        # Built-in multi-domain generator
         return self._generate_with_pedagogical_engine(
             topic, knowledge_level, purpose, preferred_language,
             teaching_style, num_scenes, voice_name
@@ -268,7 +425,7 @@ class EducationalAIEngine:
         preferred_language: str, teaching_style: str, num_scenes: int
     ) -> Optional[Dict[str, Any]]:
         prompt = f"""
-        You are an elite educator, master instructional designer, animator, and video producer.
+        You are a world-class educator, master instructional designer, animator, and video producer.
         Topic: "{topic}"
         Knowledge Level: {knowledge_level}
         Purpose: {purpose}
@@ -276,68 +433,14 @@ class EducationalAIEngine:
         Teaching Style: {teaching_style}
         Number of Scenes: {num_scenes}
 
-        You are creating a comprehensive, educational video lecture that is deeply tailored to this specific subject matter.
-        Do NOT use a generic tech template for non-technical topics!
-        
-        Visual types available to you:
-        - "timeline_journey": For historical / chronological milestones (parameters: {{"milestones": [{{"year": "1789", "title": "Storming of Bastille", "desc": "...", "impact": "..."}}]}})
-        - "cycle_loop": For circular processes (parameters: {{"cycle_title": "...", "stages": [{{"name": "Stage 1", "role": "..."}}]}})
-        - "hierarchy_pyramid": For multi-tier value/need systems (parameters: {{"tiers": ["Base tier", "Middle tier", "Apex tier"]}})
-        - "spectrum_meter": For trade-offs or cognitive polarities (parameters: {{"left_label": "...", "right_label": "...", "center_balance": "...", "markers": [...]}})
-        - "narrative_arc": For storytelling / artistic arcs (parameters: {{"phases": [{{"phase": "Exposition", "event": "..."}}, {{"phase": "Climax", "event": "..."}}]}})
-        - "cause_and_effect": For causal chains (parameters: {{"root_catalyst": "...", "intermediate_effects": [...], "ultimate_consequence": "..."}})
-        - "cross_section_sim": For physical / anatomical cutaways (parameters: {{"subject": "...", "layers": [...]}})
-        - "algorithm_animator": For arrays / pointers / step search
-        - "code_visualizer": For syntax & variables
-        - "math_graph": For function curves & tangents
-        - "concept_metaphor": For contrasting analogies
-        - "comparison_matrix": For 3-column comparisons
-        - "diagram_board": For modular architecture diagrams
+        You are creating an exceptional educational video lecture specifically tailored to "{topic}".
+        CRITICAL RULES:
+        - If the topic is a Country/Civilization (e.g. "India"), dive into authentic history, spiritual/philosophical heritage, cultural epochs, independence struggles, democracy, and modern achievements!
+        - If the topic is a Programming concept (e.g. "Exception in Python"), show REAL code examples (e.g. try/except/else/finally), trace execution line by line, explain stack unwinding, show common built-in exceptions, and production best practices!
+        - Do NOT use generic placeholder words like "The Core Invariant" or "Dynamic Transformation" on non-technical topics!
+        - Every scene must be substantive, factual, engaging, and pedagogically rich.
 
-        Return a single valid JSON object with NO extra text or markdown formatting. The schema must match:
-        {{
-            "title": "Inspiring educational lecture title",
-            "domain": "history" | "economics_business" | "psychology_philosophy" | "health_biology" | "arts_literature" | "science_nature" | "computer_science" | "mathematics" | "general",
-            "subdomain": "Specific Field Name",
-            "scenes": [
-                {{
-                    "scene_id": "scene_1",
-                    "index": 0,
-                    "chapter_title": "Chapter title",
-                    "pedagogical_phase": "hook" | "foundation" | "visual_demonstration" | "edge_cases" | "summary",
-                    "narration_text": "Spoken script (3-5 sentences), warm, engaging, teacher-like.",
-                    "estimated_duration": 25.0,
-                    "visual_spec": {{
-                        "visual_type": "timeline_journey" | "cycle_loop" | "hierarchy_pyramid" | "spectrum_meter" | "narrative_arc" | "cause_and_effect" | "cross_section_sim" | "concept_metaphor" | "comparison_matrix" | "math_graph" | "algorithm_animator" | "code_visualizer",
-                        "title": "Visual Title",
-                        "subtitle": "Visual Subtitle",
-                        "parameters": {{}},
-                        "keyframe_steps": [
-                            {{"step": 1, "description": "...", "highlight": "..."}}
-                        ]
-                    }}
-                }}
-            ],
-            "materials": {{
-                "summary": "Comprehensive 2-3 paragraph summary",
-                "notes_markdown": "# Topic Notes\\n\\nDetailed structured notes with headings and bullet points.",
-                "key_concepts": [
-                    {{"concept": "Name", "definition": "Clear definition", "importance": "Why it matters"}}
-                ],
-                "formulas_or_code": [
-                    {{"title": "Title", "type": "rule"|"principle"|"quote"|"formula"|"code", "content": "...", "explanation": "..."}}
-                ],
-                "practice_questions": [
-                    {{"question": "Thought-provoking problem or real-life scenario", "hint": "...", "solution": "..."}}
-                ],
-                "quiz": [
-                    {{"id": 1, "question": "...", "options": ["A", "B", "C", "D"], "correct_index": 0, "explanation": "..."}}
-                ],
-                "flashcards": [
-                    {{"id": 1, "front": "...", "back": "...", "category": "..."}}
-                ]
-            }}
-        }}
+        Return valid JSON only matching the standard lecture schema with title, domain, subdomain, scenes, and materials.
         """
         response = model.generate_content(prompt)
         text = response.text.strip()
@@ -357,67 +460,821 @@ class EducationalAIEngine:
         num_scenes: int,
         voice_name: str
     ) -> Dict[str, Any]:
-        """
-        Built-in multi-domain generator featuring rich curated masterclasses across:
-        - History & Civilization (e.g. French Revolution, Fall of Roman Empire)
-        - Economics & Finance (e.g. How Inflation Works)
-        - Psychology & Philosophy (e.g. Stoicism, Cognitive Biases, Maslow)
-        - Health & Medicine (e.g. Circadian Rhythm & Sleep)
-        - Arts & Storytelling (e.g. The Hero's Journey)
-        - Everyday Science (e.g. Why the Sky is Blue, How Airplanes Fly)
-        - Plus CS & Math (Binary Search, Neural Networks, Async/Await, Calculus)
-        - Plus an adaptive general-purpose synthesizer for ANY topic!
-        """
-        t_low = topic.lower().strip()
+        t = topic.lower().strip()
+        classified = self.classify_topic_archetype(topic)
+        arch = classified["archetype"]
 
-        # 1. History
-        if any(w in t_low for w in ["french revolution", "bastille", "robespierre", "monarchy"]):
+        # 1. SPECIFIC TOPIC: INDIA (Country, Civilization, Divine Heritage, History)
+        if re.search(r'\bindia\b', t) or re.search(r'\bbharat\b', t):
+            return self._build_india_civilization_lecture(knowledge_level, purpose, num_scenes, voice_name)
+
+        # 2. SPECIFIC TOPIC: EXCEPTION IN PYTHON (Code, Syntax, Stack Unwinding, Best Practices)
+        if any(w in t for w in ["exception in python", "python exception", "python error", "try except python", "exceptions in python"]):
+            return self._build_python_exceptions_lecture(knowledge_level, purpose, num_scenes, voice_name)
+
+        # 3. Other Core Curated Masterclasses
+        if "binary search" in t:
+            return self._build_binary_search_lecture(knowledge_level, purpose, num_scenes, voice_name)
+        elif any(w in t for w in ["french revolution", "bastille", "robespierre"]):
             return self._build_french_revolution_lecture(knowledge_level, purpose, num_scenes, voice_name)
-        elif any(w in t_low for w in ["roman empire", "rome", "fall of rome", "caesar"]):
-            return self._build_roman_empire_lecture(knowledge_level, purpose, num_scenes, voice_name)
-
-        # 2. Economics
-        elif any(w in t_low for w in ["inflation", "purchasing power", "cpi", "central bank", "money supply"]):
+        elif any(w in t for w in ["inflation", "purchasing power", "cpi", "money supply"]):
             return self._build_inflation_lecture(knowledge_level, purpose, num_scenes, voice_name)
-
-        # 3. Psychology & Philosophy
-        elif any(w in t_low for w in ["stoic", "stoicism", "marcus aurelius", "seneca", "epictetus"]):
+        elif any(w in t for w in ["stoic", "stoicism", "marcus aurelius", "seneca", "epictetus"]):
             return self._build_stoicism_lecture(knowledge_level, purpose, num_scenes, voice_name)
-        elif any(w in t_low for w in ["cognitive bias", "confirmation bias", "anchoring", "heuristic"]):
-            return self._build_cognitive_biases_lecture(knowledge_level, purpose, num_scenes, voice_name)
-        elif any(w in t_low for w in ["maslow", "hierarchy of needs"]):
-            return self._build_maslow_hierarchy_lecture(knowledge_level, purpose, num_scenes, voice_name)
-
-        # 4. Health & Biology
-        elif any(w in t_low for w in ["sleep", "circadian", "melatonin", "rem sleep", "sleep cycle"]):
+        elif any(w in t for w in ["sleep", "circadian", "melatonin", "rem sleep"]):
             return self._build_sleep_circadian_lecture(knowledge_level, purpose, num_scenes, voice_name)
-        elif any(w in t_low for w in ["photosynthesis", "light reaction", "chloroplast"]):
+        elif any(w in t for w in ["hero's journey", "heros journey", "monomyth", "storytelling"]):
+            return self._build_heros_journey_lecture(knowledge_level, purpose, num_scenes, voice_name)
+        elif any(w in t for w in ["sky is blue", "rayleigh scattering", "blue sky"]):
+            return self._build_why_sky_is_blue_lecture(knowledge_level, purpose, num_scenes, voice_name)
+        elif any(w in t for w in ["airplane", "fly", "aerodynamic", "lift", "bernoulli"]):
+            return self._build_how_airplanes_fly_lecture(knowledge_level, purpose, num_scenes, voice_name)
+        elif any(k in t for k in ["neural network", "backpropagation", "gradient descent", "deep learning"]):
+            return self._build_neural_networks_lecture(knowledge_level, purpose, num_scenes, voice_name)
+        elif any(k in t for k in ["async", "await", "asynchronous", "promise", "event loop"]):
+            return self._build_async_await_lecture(knowledge_level, purpose, num_scenes, voice_name)
+        elif any(k in t for k in ["derivative", "calculus", "rate of change", "tangent"]):
+            return self._build_calculus_derivative_lecture(knowledge_level, purpose, num_scenes, voice_name)
+        elif "photosynthesis" in t:
             return self._build_photosynthesis_lecture(knowledge_level, purpose, num_scenes, voice_name)
 
-        # 5. Arts & Literature
-        elif any(w in t_low for w in ["hero's journey", "monomyth", "joseph campbell", "storytelling"]):
-            return self._build_heros_journey_lecture(knowledge_level, purpose, num_scenes, voice_name)
+        # 4. Archetype-Aware Specialized Generators for Any of the N Situations:
+        if arch == "country_civilization":
+            return self._build_generic_country_lecture(topic, knowledge_level, purpose, num_scenes, voice_name)
+        elif arch == "programming_code":
+            return self._build_generic_programming_lecture(topic, knowledge_level, purpose, num_scenes, voice_name)
+        elif arch == "historical_epoch":
+            return self._build_generic_history_lecture(topic, knowledge_level, purpose, num_scenes, voice_name)
+        elif arch == "economics_finance":
+            return self._build_generic_economics_lecture(topic, knowledge_level, purpose, num_scenes, voice_name)
+        elif arch == "psychology_philosophy":
+            return self._build_generic_psychology_lecture(topic, knowledge_level, purpose, num_scenes, voice_name)
+        elif arch == "health_biology":
+            return self._build_generic_biology_lecture(topic, knowledge_level, purpose, num_scenes, voice_name)
+        elif arch == "everyday_science":
+            return self._build_generic_science_lecture(topic, knowledge_level, purpose, num_scenes, voice_name)
+        elif arch == "algorithm_math":
+            return self._build_generic_algorithm_math_lecture(topic, knowledge_level, purpose, num_scenes, voice_name)
+        elif arch == "arts_literature":
+            return self._build_generic_arts_lecture(topic, knowledge_level, purpose, num_scenes, voice_name)
+        else:
+            return self._build_adaptive_topic_lecture(topic, knowledge_level, purpose, teaching_style, num_scenes, voice_name)
 
-        # 6. Everyday Science
-        elif any(w in t_low for w in ["sky is blue", "rayleigh scattering", "blue sky", "atmosphere"]):
-            return self._build_why_sky_is_blue_lecture(knowledge_level, purpose, num_scenes, voice_name)
-        elif any(w in t_low for w in ["airplane", "fly", "aerodynamic", "lift", "bernoulli"]):
-            return self._build_how_airplanes_fly_lecture(knowledge_level, purpose, num_scenes, voice_name)
+    def _build_india_civilization_lecture(self, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
+        scenes = [
+            {
+                "scene_id": "scene_1",
+                "index": 0,
+                "chapter_title": "1. The Sacred Cradle: Antiquity & Spiritual Roots",
+                "pedagogical_phase": "hook",
+                "narration_text": "India is not merely a nation; it is one of humanity's oldest continuous living civilizations, spanning over five thousand years. Along the fertile banks of the Indus and the sacred Saraswati rivers, advanced planned cities like Harappa and Mohenjo-daro thrived with sophisticated metallurgy and civic drainage. From these ancient soils arose profound spiritual traditions: Sanatana Dharma, the poetic philosophy of the Vedas, the introspective depth of the Upanishads, and the timeless moral paths of Buddhism and Jainism. Here, truth was recognized as one, expressed in myriad forms.",
+                "estimated_duration": 26.0,
+                "visual_spec": {
+                    "visual_type": "hierarchy_pyramid",
+                    "title": "Ancient Spiritual & Philosophical Foundations",
+                    "subtitle": "The Intellectual & Metaphysical Heritage of Ancient India",
+                    "parameters": {
+                        "pyramid_title": "Vedic & Philosophical Heritage",
+                        "tiers": [
+                            {"tier": "Moksha & Self-Realization (The Upanishads)", "note": "Ultimate liberation through spiritual realization (Aham Brahmasmi)"},
+                            {"tier": "Dharma & Ethical Living (The Epics & Gita)", "note": "Righteous duty, moral action without attachment to fruits (Nishkama Karma)"},
+                            {"tier": "Spiritual Diversity: Buddhism, Jainism, Darshanas", "note": "Ahimsa (non-violence), Yoga, Vedanta, Nyaya, and Samkhya systems"},
+                            {"tier": "Indus Valley Civilization (~3300 - 1300 BCE)", "note": "Urban grid cities, standardized weights, maritime commerce, bronze mastery"}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Indus Valley Foundation"},
+                        {"step": 2, "highlight": "Vedic & Philosophical Heritage"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_2",
+                "index": 1,
+                "chapter_title": "2. Epochs of Enlightenment: Maurya, Gupta & Cultural Synthesis",
+                "pedagogical_phase": "foundation",
+                "narration_text": "Across centuries, great dynasties united the subcontinent in scholarship and architectural grandeur. Emperor Ashoka of the Maurya Empire renounced war after Kalinga, carving edicts of peace, religious tolerance, and animal welfare upon stone pillars across Asia. Under the Gupta Golden Age, Indian mathematicians invented the decimal system and the concept of zero, while astronomers like Aryabhata calculated the solar year. Universities like Nalanda welcomed thousands of scholars from China to Greece, making India the intellectual beacon of the ancient world.",
+                "estimated_duration": 27.0,
+                "visual_spec": {
+                    "visual_type": "timeline_journey",
+                    "title": "The Golden Epochs of Classical India",
+                    "subtitle": "From Ancient Empires to Global Intellectual Influence",
+                    "parameters": {
+                        "milestones": [
+                            {"year": "321 - 185 BCE", "title": "Mauryan Empire & Ashoka", "desc": "Pan-Indian unification; Ashokan Edicts spread Buddhist ethics of Ahimsa", "impact": "Universal moral governance"},
+                            {"year": "320 - 550 CE", "title": "Gupta Empire (Golden Age)", "desc": "Aryabhata invents zero & decimal place-value; Kalidasa's classical Sanskrit poetry", "impact": "Foundations of modern mathematics"},
+                            {"year": "427 - 1197 CE", "title": "Nalanda University", "desc": "World's premier residential university with 10,000 students and massive library", "impact": "Global hub of Buddhist & secular study"},
+                            {"year": "9th - 13th Cent", "title": "Chola Maritime Empire", "desc": "Magnificent Brihadeeswarar bronze & stone temples; naval trade to Southeast Asia", "impact": "Cultural diaspora across Indochina"}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Mauryan Empire"},
+                        {"step": 2, "highlight": "Gupta Golden Age"},
+                        {"step": 3, "highlight": "Nalanda & Cholas"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_3",
+                "index": 2,
+                "chapter_title": "3. The Crucible of Freedom: Colonial Struggle to 1947",
+                "pedagogical_phase": "visual_demonstration",
+                "narration_text": "By the eighteenth century, European colonial expansion culminated in the British East India Company and the British Raj, which systematically exploited India's textiles and wealth. But the spirit of India rose in resistance. From the brave rebellion of 1857 to the revolutionary bravery of Bhagat Singh, Netaji Subhas Chandra Bose's Indian National Army, and Mahatma Gandhi's mass non-violent Satyagraha, millions mobilized. On the midnight of August 15, 1947, as Jawaharlal Nehru declared, India awoke to life and freedom.",
+                "estimated_duration": 26.0,
+                "visual_spec": {
+                    "visual_type": "cause_and_effect",
+                    "title": "The Freedom Movement & The Dawn of Independence",
+                    "subtitle": "How Colonial Resistance Forged a Sovereign Republic",
+                    "parameters": {
+                        "root_catalyst": "British Colonial Exploitation & The Revolt of 1857",
+                        "intermediate_effects": [
+                            "Birth of Indian National Congress (1885) and Swadeshi economic boycott",
+                            "Mahatma Gandhi's Non-Violent Satyagraha, Salt March & Quit India Movement",
+                            "Netaji Subhas Chandra Bose & The Indian National Army challenge British military power"
+                        ],
+                        "ultimate_consequence": "Midnight of August 15, 1947: Sovereign Independence; Constitution ratified in 1950"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Revolt of 1857"},
+                        {"step": 2, "highlight": "Satyagraha & INA"},
+                        {"step": 3, "highlight": "Independence 1947"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_4",
+                "index": 3,
+                "chapter_title": "4. Unity in Diversity: The Constitutional Tapestry",
+                "pedagogical_phase": "edge_cases",
+                "narration_text": "What makes modern India truly miraculous is its constitutional achievement. Architected by Dr. B. R. Ambedkar, the Indian Constitution established the world's largest sovereign democracy. Within one single nation live twenty-eight states, twenty-two officially recognized languages, and every major world religion—Hinduism, Islam, Christianity, Sikhism, Buddhism, and Jainism. Despite immense complexity, India thrives not by enforcing conformity, but by celebrating Unity in Diversity as its sacred national creed.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "comparison_matrix",
+                    "title": "The Pluralistic Mosaic of the Republic",
+                    "subtitle": "Democracy, Linguistic Richness & Spiritual Coexistence",
+                    "parameters": {
+                        "col1": "World's Largest Democracy: 1.4 billion people, 900+ million voters, peaceful constitutional transitions of power",
+                        "col2": "Linguistic & Cultural Tapestry: 22 Eighth Schedule languages, classical literatures (Tamil, Sanskrit, Kannada, Telugu)",
+                        "col3": "Spiritual Synthesis: Birthplace of Hinduism, Buddhism, Jainism, Sikhism; thriving home of Islam, Christianity, Zoroastrianism"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Democracy"},
+                        {"step": 2, "highlight": "Linguistic Tapestry"},
+                        {"step": 3, "highlight": "Spiritual Synthesis"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_5",
+                "index": 4,
+                "chapter_title": "5. Modern India: Space, Digital Revolution & Global Horizon",
+                "pedagogical_phase": "summary",
+                "narration_text": "Today, India stands as a vibrant global powerhouse where ancient heritage meets twenty-first-century innovation. With ISRO's Chandrayaan landing on the lunar South Pole, a revolutionary digital public infrastructure powering billions of instant UPI transactions, and a young demographic driving global technology and entrepreneurship, India continues its civilizational mission. Guided by the timeless motto 'Vasudhaiva Kutumbakam'—the world is one family—India shines as a beacon of democracy, culture, and progress.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "spectrum_meter",
+                    "title": "The Civilizational Synthesis of Modern India",
+                    "subtitle": "Ancient Timeless Wisdom Harmonizing with Cutting-Edge Innovation",
+                    "parameters": {
+                        "left_label": "Timeless Spiritual Wisdom: Yoga, Ayurveda, Vedanta, Ahimsa",
+                        "right_label": "High-Tech Frontier: ISRO Space Exploration, Digital Public Infrastructure, AI Leadership",
+                        "center_balance": "Vasudhaiva Kutumbakam: 'The World is One Family' Guided by Democratic Values",
+                        "markers": [
+                            "Vedic Heritage",
+                            "World's Largest Democracy",
+                            "Global Innovation Leader"
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Spiritual Heritage"},
+                        {"step": 2, "highlight": "High-Tech Frontier"},
+                        {"step": 3, "highlight": "Vasudhaiva Kutumbakam"}
+                    ]
+                }
+            }
+        ]
 
-        # 7. Computer Science & Math
-        elif "binary search" in t_low:
-            return self._build_binary_search_lecture(knowledge_level, purpose, num_scenes, voice_name)
-        elif any(k in t_low for k in ["neural network", "backpropagation", "gradient descent", "deep learning"]):
-            return self._build_neural_networks_lecture(knowledge_level, purpose, num_scenes, voice_name)
-        elif any(k in t_low for k in ["async", "await", "asynchronous", "promise", "event loop"]):
-            return self._build_async_await_lecture(knowledge_level, purpose, num_scenes, voice_name)
-        elif any(k in t_low for k in ["derivative", "calculus", "rate of change", "tangent"]):
-            return self._build_calculus_derivative_lecture(knowledge_level, purpose, num_scenes, voice_name)
+        materials = {
+            "summary": "India (Bharat) is one of the world's oldest and most profound continuous civilizations. Spanning the ancient Indus Valley, the philosophical depths of the Vedas and Upanishads, golden classical empires, a heroic non-violent freedom struggle, and the world's largest constitutional democracy, India harmoniously bridges ancient spiritual wisdom with modern technological leadership in space, digital infrastructure, and global affairs.",
+            "notes_markdown": """# India: Comprehensive Civilizational & National Study Notes
 
-        # 8. Adaptive Domain Synthesizer for ANY General Purpose Topic
-        return self._build_adaptive_topic_lecture(topic, knowledge_level, purpose, teaching_style, num_scenes, voice_name)
+## 1. Antiquity & The Vedic Heritage
+- **Indus Valley Civilization (~3300 - 1300 BCE)**: Advanced planned urban centers at Harappa, Mohenjo-daro, and Dholavira with standardized brick architecture, water management, and extensive international trade.
+- **The Vedic Tradition & Philosophy**: The composition of the Rigveda, Samaveda, Yajurveda, and Atharvaveda, progressing to the **Upanishads**, which explored the fundamental nature of reality (*Brahman*) and the self (*Atman*).
+- **Core Spiritual Concepts**:
+  - *Dharma*: Cosmic order, moral duty, and ethical action.
+  - *Karma*: The law of cause and effect governing actions.
+  - *Ahimsa*: Non-violence and reverence for all living beings, championed by Mahavira and Gautama Buddha.
 
-    # ------------------- GENERAL PURPOSE DOMAIN BLUEPRINTS -------------------
+## 2. Classical Golden Empires
+1. **The Maurya Empire (321 - 185 BCE)**: Unified under Chandragupta Maurya and Chanakya (author of the *Arthashastra*). Emperor Ashoka embraced Buddhism after the Kalinga war, carving edicts of tolerance and ethics across Asia.
+2. **The Gupta Golden Age (320 - 550 CE)**: Remarkable mathematical breakthroughs including the formalization of zero as a number, decimal place-value, and trigonometry by mathematicians like **Aryabhata** and **Varahamihira**.
+3. **Nalanda University**: Premier residential center of global learning hosting scholars from across the Silk Road.
+4. **Southern Dynasties (Cholas, Pandyas, Pallavas)**: Renowned for exquisite Dravidian temple architecture, bronze sculpture, and trans-oceanic trade networks.
+
+## 3. The Freedom Struggle & Independence
+- **Colonial Era**: British East India Company hegemony followed by direct British Crown rule (British Raj) after the historic **Revolt of 1857**.
+- **The National Movement**:
+  - *Mahatma Gandhi*: Championed mass non-violent resistance (*Satyagraha*), leading the Non-Cooperation Movement, Salt March (1930), and Quit India Movement (1942).
+  - *Netaji Subhas Chandra Bose*: Established the Indian National Army (Azad Hind Fauj) to militarily challenge British rule.
+  - *Revolutionary Heroes*: Bhagat Singh, Chandrashekhar Azad, Rani Lakshmibai.
+- **Midnight of August 15, 1947**: India attained sovereign independence, celebrated in Jawaharlal Nehru's historic 'Tryst with Destiny' address.
+
+## 4. The Republic of India
+- **The Constitution (Adopted Nov 26, 1949; in effect Jan 26, 1950)**: Drafted under the chairmanship of **Dr. B. R. Ambedkar**, creating a Sovereign, Socialist, Secular, Democratic Republic.
+- **Unity in Diversity**: 28 States, 8 Union Territories, 22 Eighth Schedule languages, and a multi-religious secular constitutional fabric.
+- **Modern Milestones**:
+  - **Space Leadership (ISRO)**: Successful Chandrayaan-3 lunar south-pole landing and Aditya-L1 solar mission.
+  - **Digital Public Infrastructure (India Stack)**: Unified Payments Interface (UPI) facilitating billions of real-time transactions monthly.
+""",
+            "key_concepts": [
+                {"concept": "Unity in Diversity", "definition": "The philosophical and constitutional principle that diverse ethnic, linguistic, and religious communities coexist in harmonious shared citizenship.", "importance": "Foundational bedrock of the Indian Republic."},
+                {"concept": "Ahimsa", "definition": "The ancient ethical doctrine of non-violence in thought, word, and deed, central to Hinduism, Buddhism, and Jainism.", "importance": "Inspired Mahatma Gandhi's freedom movement and modern global civil rights struggles."},
+                {"concept": "Vasudhaiva Kutumbakam", "definition": "A Sanskrit phrase from the Maha Upanishad meaning 'The World is One Family'.", "importance": "Guides India's cultural diplomacy and global humanitarian outlook."}
+            ],
+            "formulas_or_code": [
+                {"title": "The National Motto", "type": "quote", "content": "Satyameva Jayate (Truth Alone Triumphs)", "explanation": "From the Mundaka Upanishad, inscribed at the base of the Lion Capital of Ashoka."},
+                {"title": "Universal Ethical Invariant", "type": "principle", "content": "Vasudhaiva Kutumbakam (The World is One Family)", "explanation": "Core philosophical orientation recognizing the common bond of all humanity."}
+            ],
+            "practice_questions": [
+                {"question": "How did Emperor Ashoka's governance after the Kalinga war represent a paradigm shift in political philosophy?", "hint": "Think about the transition from conquest by arms to conquest by righteousness.", "solution": "Ashoka renounced military conquest (Digvijaya) and adopted conquest by moral righteousness (Dharmavijaya), inscribing edicts mandating medical care for humans and animals, environmental conservation, and mutual religious respect across his vast empire."}
+            ],
+            "quiz": [
+                {"id": 1, "question": "Who served as the principal architect and Chairman of the Drafting Committee of the Indian Constitution?", "options": ["Mahatma Gandhi", "Dr. B. R. Ambedkar", "Jawaharlal Nehru", "Sardar Vallabhbhai Patel"], "correct_index": 1, "explanation": "Dr. Bhimrao Ramji Ambedkar chaired the Drafting Committee that framed the Constitution of India."},
+                {"id": 2, "question": "What groundbreaking mathematical contribution flourished during the Gupta Golden Age of India?", "options": ["The invention of the abacus", "The formalization of zero and decimal place-value system", "Calculus limits", "Binary electronics"], "correct_index": 1, "explanation": "Indian mathematicians like Aryabhata developed the decimal system and the operational concept of zero, which revolutionized global mathematics."}
+            ],
+            "flashcards": [
+                {"id": 1, "front": "What does the national motto 'Satyameva Jayate' mean and where does it originate?", "back": "It means 'Truth Alone Triumphs' and originates from the ancient Mundaka Upanishad.", "category": "National Symbols"},
+                {"id": 2, "front": "When did the Constitution of India come into full effect?", "back": "January 26, 1950, celebrated nationwide as Republic Day.", "category": "Constitution"}
+            ]
+        }
+
+        return {
+            "title": "India: The Epic Journey of a Continuous Civilization",
+            "domain": "history",
+            "subdomain": "Civilizations, Culture & Geopolitics",
+            "scenes": scenes,
+            "materials": materials
+        }
+
+    def _build_python_exceptions_lecture(self, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
+        scenes = [
+            {
+                "scene_id": "scene_1",
+                "index": 0,
+                "chapter_title": "1. The Production Crash: Syntax Errors vs. Runtime Exceptions",
+                "pedagogical_phase": "hook",
+                "narration_text": "Imagine writing a banking script or web server. If your code has a syntax error like a missing parenthesis, Python detects it before running a single line. But what happens when your code is syntactically flawless, yet a user inputs zero as a divisor, or a database connection suddenly drops? Without exception handling, Python panics, halts execution immediately, and crashes with an ugly traceback. Exception handling is the vital safety net that transforms fatal crashes into resilient, graceful recovery.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "concept_metaphor",
+                    "title": "Syntax Error vs. Runtime Exception",
+                    "subtitle": "Compile-Time Parsing vs. Runtime Unexpected Conditions",
+                    "parameters": {
+                        "left_title": "SyntaxError (Fatal Parser Halt)",
+                        "left_items": ["Missing colon, mismatched brackets, typos", "Caught before code begins executing", "Cannot be handled at runtime with try/except"],
+                        "right_title": "Exceptions (Recoverable Runtime Events)",
+                        "right_items": ["ZeroDivisionError, KeyError, FileNotFoundError", "Occurs while code is actively executing", "Can be caught, recovered from, and cleanly resolved!"]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "SyntaxError parse failure"},
+                        {"step": 2, "highlight": "Runtime Exception handling"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_2",
+                "index": 1,
+                "chapter_title": "2. The Four Pillars: try, except, else, and finally",
+                "pedagogical_phase": "foundation",
+                "narration_text": "Python's exception handling engine is built upon four keywords. Inside the try block, you place code that might fail. The except block catches specific error types and executes fallback logic. Many developers forget the else block: it executes strictly if no exception was raised in the try block! And finally is the unbreakable guarantee: it runs no matter what happens, whether an exception occurred, was caught, or even if the function returned early.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "code_visualizer",
+                    "title": "The Full try-except-else-finally Suite",
+                    "subtitle": "Complete Four-Keyword Error Handling Anatomy",
+                    "parameters": {
+                        "language": "python",
+                        "code": "def process_account_file(filename):\n    file = None\n    try:\n        # 1. Dangerous operation: File I/O\n        file = open(filename, 'r')\n        data = file.read()\n    except FileNotFoundError as err:\n        # 2. Recovery logic for missing file\n        print(f'Warning: {filename} missing. Using defaults.')\n        return {}\n    else:\n        # 3. Runs ONLY if try succeeded with zero errors\n        print('File successfully read without exceptions!')\n        return parse_data(data)\n    finally:\n        # 4. ALWAYS runs: Crucial resource cleanup\n        if file:\n            file.close()\n            print('Cleanup: File closed safely.')",
+                        "highlights": [
+                            {"line": 3, "label": "try block: contains code that might fail"},
+                            {"line": 7, "label": "except block: catches specific error"},
+                            {"line": 11, "label": "else block: runs strictly on success"},
+                            {"line": 15, "label": "finally block: always guaranteed to run"}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "active_line": 3, "scope": "Entering try block"},
+                        {"step": 2, "active_line": 7, "scope": "Catching FileNotFoundError"},
+                        {"step": 3, "active_line": 15, "scope": "Finally cleanup guaranteed"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_3",
+                "index": 2,
+                "chapter_title": "3. Stack Unwinding: How Exceptions Travel Up the Call Stack",
+                "pedagogical_phase": "visual_demonstration",
+                "narration_text": "When an exception occurs deep inside a nested function, Python initiates Stack Unwinding. Let's watch: main calls calculate, which calls divide. When divide attempts ten divided by zero, a ZeroDivisionError object is instantiated. Divide has no try block, so Python terminates divide and pops it off the stack! It jumps up to calculate; no handler exists there either. Finally, it arrives back at main, finds a matching except block, and handles the error gracefully without crashing your server.",
+                "estimated_duration": 26.0,
+                "visual_spec": {
+                    "visual_type": "code_visualizer",
+                    "title": "Call Stack Unwinding in Action",
+                    "subtitle": "How Exceptions Bubble Up Across Nested Functions",
+                    "parameters": {
+                        "language": "python",
+                        "code": "def divide(a, b):\n    return a / b  # <-- ZeroDivisionError raised here!\n\ndef calculate(x, y):\n    return divide(x, y)  # Unwinds up call stack\n\ndef main():\n    try:\n        result = calculate(10, 0)\n    except ZeroDivisionError as e:\n        print(f'Caught at top level: {e}')\n        result = 0\n    return result",
+                        "highlights": [
+                            {"line": 2, "label": "Error occurs in deepest leaf function"},
+                            {"line": 5, "label": "Stack frame popped: bubbles up"},
+                            {"line": 9, "label": "Target except block catches and recovers!"}
+                        ],
+                        "variables": {"a": 10, "b": 0, "active_error": "ZeroDivisionError", "stack_depth": "main -> calculate -> divide"}
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "active_line": 2, "scope": "divide(10, 0) raises error"},
+                        {"step": 2, "active_line": 5, "scope": "calculate frame unwound"},
+                        {"step": 3, "active_line": 9, "scope": "main catches ZeroDivisionError"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_4",
+                "index": 3,
+                "chapter_title": "4. The Exception Class Hierarchy & Custom Exceptions",
+                "pedagogical_phase": "edge_cases",
+                "narration_text": "In Python, all exceptions are standard object-oriented classes organized in a strict inheritance tree. At the very root sits BaseException, followed by Exception. When you write except LookupError, Python will catch both IndexError and KeyError because they are child subclasses! To write professional code, you can define your own custom exceptions by inheriting from Exception, allowing your application to signal domain-specific business logic errors.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "hierarchy_pyramid",
+                    "title": "The Python Built-In Exception Tree",
+                    "subtitle": "BaseException -> Exception -> Specific Subclasses",
+                    "parameters": {
+                        "pyramid_title": "Python Exception Class Hierarchy",
+                        "tiers": [
+                            {"tier": "BaseException (SystemExit, KeyboardInterrupt)", "note": "Root class. Should almost NEVER be caught directly in application code!"},
+                            {"tier": "Exception (Standard Application Errors)", "note": "Root for all non-system-exiting errors; base class for user custom exceptions"},
+                            {"tier": "ArithmeticError (ZeroDivisionError, OverflowError)", "note": "Mathematical failures during runtime arithmetic"},
+                            {"tier": "LookupError (KeyError, IndexError)", "note": "Dictionary key missing or list index out of bounds"}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "BaseException & SystemExit"},
+                        {"step": 2, "highlight": "Exception Subclasses"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_5",
+                "index": 4,
+                "chapter_title": "5. Production Best Practices: Antipatterns vs. Clean Code",
+                "pedagogical_phase": "summary",
+                "narration_text": "Let us conclude with the golden rules of production error handling. The cardinal sin of Python programming is the bare except pass: catching every error silently and doing nothing. This masks critical bugs, keyboard interrupts, and memory errors! Instead, follow three principles: catch only the specific exceptions you anticipate, preserve error contexts using the raise keyword, and prefer context managers with the with statement for automatic resource cleanup.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "comparison_matrix",
+                    "title": "Production Best Practices vs Antipatterns",
+                    "subtitle": "Writing Robust, Maintainable Error Handling",
+                    "parameters": {
+                        "col1": "The Silent Killer (Antipattern): 'except: pass'. Masks typos, breaks debugging, swallows KeyboardInterrupt.",
+                        "col2": "Specific & Informative: 'except (KeyError, ValueError) as err:'. Explicitly handle expected failures with logging.",
+                        "col3": "Pythonic Resource Cleanup: Use 'with open(...) as f:' context managers instead of manual try/finally close."
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Antipattern"},
+                        {"step": 2, "highlight": "Specific Exception"}
+                    ]
+                }
+            }
+        ]
+
+        materials = {
+            "summary": "Exception handling in Python provides a structured mechanism for detecting and recovering from runtime errors without crashing the program. Through try, except, else, and finally blocks, call stack unwinding, and object-oriented exception hierarchies, Python programs maintain reliability, data integrity, and clean resource management.",
+            "notes_markdown": """# Python Exception Handling: Complete Engineering Guide
+
+## 1. Syntax vs. Exception
+- **SyntaxError**: Detected during parsing before execution begins (e.g. `if x = 5:`).
+- **Exception**: Occurs during runtime when syntactically valid code encounters an impossible state (e.g. dividing by zero, file not found, network timeout).
+
+## 2. The Four Keyword Blocks
+```python
+try:
+    # Code that may raise an exception
+    value = database.fetch(user_id)
+except UserNotFoundError as e:
+    # Code executed if specific exception occurs
+    logger.warning(f"User {user_id} not found: {e}")
+    value = default_user()
+else:
+    # Executed ONLY if try block completed with NO exceptions
+    logger.info("Data fetched successfully")
+finally:
+    # ALWAYS executed regardless of success, exception, or early return
+    database.close_connection()
+```
+
+## 3. The Exception Class Hierarchy
+```
+BaseException
+ ├── SystemExit
+ ├── KeyboardInterrupt
+ └── Exception
+      ├── ArithmeticError
+      │    └── ZeroDivisionError
+      ├── LookupError
+      │    ├── IndexError
+      │    └── KeyError
+      ├── ValueError
+      └── TypeError
+```
+
+## 4. Defining Custom Exceptions
+```python
+class InsufficientFundsError(Exception):
+    def __init__(self, balance: float, amount: float):
+        self.balance = balance
+        self.amount = amount
+        super().__init__(f"Cannot withdraw ${amount}; balance is only ${balance}")
+
+# Usage:
+def withdraw(balance, amount):
+    if amount > balance:
+        raise InsufficientFundsError(balance, amount)
+    return balance - amount
+```
+""",
+            "key_concepts": [
+                {"concept": "Stack Unwinding", "definition": "The process by which the Python runtime terminates active function call frames in reverse order until a matching except block is located.", "importance": "Allows high-level functions to handle errors originating in deep helper functions."},
+                {"concept": "Bare Except Antipattern", "definition": "Writing `except:` without an exception type, which catches `BaseException` including `KeyboardInterrupt` and `SystemExit`.", "importance": "Dangerous bug masking practice; always catch `Exception` or specific subtypes."},
+                {"concept": "Context Manager (`with` statement)", "definition": "A language construct implementing `__enter__` and `__exit__` methods that guarantees cleanup even when exceptions occur.", "importance": "Pythonic alternative to verbose try/finally blocks."}
+            ],
+            "formulas_or_code": [
+                {"title": "Re-raising Exceptions", "type": "code", "content": "try:\n    perform_action()\nexcept Exception as err:\n    log_error(err)\n    raise  # Re-raises current exception preserving original traceback", "explanation": "Preserves original stack trace when logging and propagating."},
+                {"title": "Custom Exception Class", "type": "code", "content": "class CustomError(Exception):\n    pass", "explanation": "Standard idiomatic way to create domain-specific application exceptions."}
+            ],
+            "practice_questions": [
+                {"question": "In a `try-except-else-finally` block, if the `try` block executes `return 10`, does the `finally` block still execute?", "hint": "Consider the guaranteed nature of the `finally` keyword.", "solution": "Yes! The `finally` block is guaranteed to run before the function returns to the caller, even when early return statements are executed inside the `try` or `except` blocks."}
+            ],
+            "quiz": [
+                {"id": 1, "question": "When does the `else` block execute in a Python try/except construct?", "options": ["Whenever an exception is caught", "Only when the try block completes with zero exceptions", "Always right before the finally block", "Only when a syntax error occurs"], "correct_index": 1, "explanation": "The else block executes strictly if no exception was raised in the try block."},
+                {"id": 2, "question": "Why is writing `except Exception:` considered better than writing a bare `except:`?", "options": ["It runs 10x faster", "It prevents accidentally catching SystemExit and KeyboardInterrupt (Ctrl+C)", "It automatically writes to log files", "It is required by the Python compiler"], "correct_index": 1, "explanation": "A bare except catches BaseException, which intercepts critical system signals like KeyboardInterrupt and SystemExit, preventing the user from stopping the program."}
+            ],
+            "flashcards": [
+                {"id": 1, "front": "What is the difference between IndexError and KeyError?", "back": "IndexError occurs when accessing a sequence with an out-of-range integer index; KeyError occurs when looking up a non-existent key in a dictionary.", "category": "Built-in Exceptions"},
+                {"id": 2, "front": "What does the 'finally' block guarantee?", "back": "It guarantees execution under all circumstances, even after errors, caught exceptions, or early return statements.", "category": "Control Flow"}
+            ]
+        }
+
+        return {
+            "title": "Exception Handling in Python: Writing Crash-Proof Code",
+            "domain": "computer_science",
+            "subdomain": "Software Engineering & Python Runtime",
+            "scenes": scenes,
+            "materials": materials
+        }
+
+    def _build_generic_country_lecture(self, topic: str, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
+        country_name = topic.strip().title()
+        scenes = [
+            {
+                "scene_id": "scene_1",
+                "index": 0,
+                "chapter_title": f"1. Origins & Ancient Heritage of {country_name}",
+                "pedagogical_phase": "hook",
+                "narration_text": f"Every nation tells a story of human adaptation, culture, and survival. To truly understand {country_name}, we must journey back to its geographical cradle and earliest inhabitants. Natural rivers, mountains, and coastlines shaped its early trade and spiritual traditions, laying the cultural bedrock that survives to this day.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "hierarchy_pyramid",
+                    "title": f"The Cultural & Geographic Foundations of {country_name}",
+                    "subtitle": "Geographic Cradle, Early Peoples & Cultural Identity",
+                    "parameters": {
+                        "pyramid_title": f"{country_name} Civilizational Bedrock",
+                        "tiers": [
+                            {"tier": "Spiritual Ethos & Cultural Traditions", "note": "Enduring values, folklore, and community identity"},
+                            {"tier": "Early Settlements & Ancient Kingdoms", "note": "First unified governance and legal systems"},
+                            {"tier": "Geographical Landscape & Rivers", "note": "Topography, fertile valleys, and natural trade routes"}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Geographical landscape"},
+                        {"step": 2, "highlight": "Early kingdoms"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_2",
+                "index": 1,
+                "chapter_title": f"2. Golden Ages & Historical Epochs",
+                "pedagogical_phase": "foundation",
+                "narration_text": f"Across the centuries, {country_name} passed through defining historical epochs. From formative classical dynasties to transformative golden ages of arts, architecture, and commerce, these pivotal eras forged the national character and connected its people to the broader global stage.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "timeline_journey",
+                    "title": f"Historical Epochs of {country_name}",
+                    "subtitle": "From Ancient Foundations to Modern Era",
+                    "parameters": {
+                        "milestones": [
+                            {"year": "Classical Era", "title": "Formation & Antiquity", "desc": "Establishment of early national identity and commerce", "impact": "Foundational unity"},
+                            {"year": "Golden Age", "title": "Cultural & Architectural Flourishing", "desc": "Peak literature, scholarship, and trade influence", "impact": "Lasting monuments & arts"},
+                            {"year": "Modern Transition", "title": "Nation-State Consolidation", "desc": "Entering the modern industrial and geopolitical world", "impact": "Sovereignty & institutions"}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Classical Era"},
+                        {"step": 2, "highlight": "Golden Age"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_3",
+                "index": 2,
+                "chapter_title": "3. The Crucible: Struggles, Wars & Independence",
+                "pedagogical_phase": "visual_demonstration",
+                "narration_text": f"No society evolves without struggle. {country_name} has weathered external invasions, internal conflicts, and major political revolutions. How its citizens overcame these existential trials reveals the resilience and solidarity that define the nation today.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "cause_and_effect",
+                    "title": "Historical Turning Points & National Resilience",
+                    "subtitle": "Catalysts of Transformation and Rebirth",
+                    "parameters": {
+                        "root_catalyst": f"Major Historical Crucible / Reform in {country_name}",
+                        "intermediate_effects": [
+                            "Mobilization of citizen movements and military defense",
+                            "Restructuring of political and constitutional institutions"
+                        ],
+                        "ultimate_consequence": "Emergence of modern sovereign governance and national pride"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Historical Crucible"},
+                        {"step": 2, "highlight": "Sovereign Governance"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_4",
+                "index": 3,
+                "chapter_title": f"4. Society, Culture & Pluralism in {country_name}",
+                "pedagogical_phase": "edge_cases",
+                "narration_text": f"Look inside modern {country_name} and you find a vibrant human tapestry. Its language, regional traditions, festivals, and culinary heritage demonstrate how diverse communities unite under a common identity, balancing historical traditions with rapid modernization.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "comparison_matrix",
+                    "title": f"The Cultural & Social Pillars of {country_name}",
+                    "subtitle": "Language, Regional Diversity & National Institutions",
+                    "parameters": {
+                        "col1": "Linguistic & Cultural Heritage: Regional dialects, arts, music, and culinary traditions",
+                        "col2": "Social & Civic Fabric: Community values, educational institutions, and public life",
+                        "col3": "Economic Drivers: Industry, agriculture, technological innovation, and trade"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Cultural Heritage"},
+                        {"step": 2, "highlight": "Civic Fabric"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_5",
+                "index": 4,
+                "chapter_title": f"5. Modern {country_name} on the Global Stage",
+                "pedagogical_phase": "summary",
+                "narration_text": f"Today, {country_name} plays an active role in international diplomacy, global trade, science, and cultural exchange. By drawing strength from its rich history while embracing the future, {country_name} continues to inspire and contribute to humanity's collective journey.",
+                "estimated_duration": 23.0,
+                "visual_spec": {
+                    "visual_type": "spectrum_meter",
+                    "title": f"{country_name} in the 21st Century",
+                    "subtitle": "Preserving Ancient Heritage while Driving Modern Innovation",
+                    "parameters": {
+                        "left_label": "Historical Roots: Heritage, traditional arts, foundational values",
+                        "right_label": "Global Horizon: Technological advancement, international trade, diplomacy",
+                        "center_balance": "National Synthesis: Dynamic modern society grounded in deep history",
+                        "markers": [
+                            "Ancient Heritage",
+                            "National Institutions",
+                            "Global Leadership"
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Historical Roots"},
+                        {"step": 2, "highlight": "Global Horizon"}
+                    ]
+                }
+            }
+        ]
+
+        materials = {
+            "summary": f"This educational masterclass explores {country_name}: its civilizational origins and geography, golden classical eras, historical struggles and independence, cultural and social pluralism, and its modern role on the global stage.",
+            "notes_markdown": f"""# {country_name}: History, Culture & Modern Society
+
+## 1. Geographic & Ancient Foundations
+- The geographic environment, rivers, and coastlines that shaped early settlement in {country_name}.
+- Spiritual, philosophical, and folk traditions that formed the bedrock of communal life.
+
+## 2. Defining Historical Eras
+- Classical governance and early legal codes.
+- Flourishing of architecture, literature, and trade during golden epochs.
+- Modern transitions toward democratic sovereignty and constitutional governance.
+
+## 3. Society & Global Contribution
+- Pluralism, language, arts, and culinary traditions.
+- Contributions to world diplomacy, science, and the global economy.
+""",
+            "key_concepts": [
+                {"concept": f"{country_name} Civilizational Identity", "definition": "The enduring collective values, historical continuity, and shared cultural ethos of the nation.", "importance": "Unifies diverse regional traditions."},
+                {"concept": "Cultural Synthesis", "definition": "The blending of historical heritage with contemporary innovations and global connections.", "importance": "Drives dynamic social and economic development."}
+            ],
+            "formulas_or_code": [
+                {"title": "Civilizational Invariant", "type": "principle", "content": "Historical Roots + Pluralistic Unity = National Resilience", "explanation": "How nations sustain longevity across centuries of global change."}
+            ],
+            "practice_questions": [
+                {"question": f"How has geography influenced the cultural and economic development of {country_name}?", "hint": "Consider natural borders, waterways, and trade routes.", "solution": f"Natural geography in {country_name} determined agricultural centers, trade connections with neighboring regions, and protected cultural continuity across historical epochs."}
+            ],
+            "quiz": [
+                {"id": 1, "question": f"What forms the foundational bedrock of {country_name}'s cultural continuity?", "options": ["Isolation from all trade", "Deep historical heritage, shared values, and cultural traditions", "Constant total abandonment of the past", "Random chance without institutions"], "correct_index": 1, "explanation": "Nations endure through shared cultural heritage, resilient institutions, and adaptive unity."},
+                {"id": 2, "question": f"Why is understanding the historical epochs of {country_name} important today?", "options": ["It is only useful for ancient history exams", "Modern social, legal, and cultural institutions are rooted in historical developments", "History has no bearing on current affairs", "To memorize dates without context"], "correct_index": 1, "explanation": "Contemporary culture, legal systems, and national identity are directly shaped by historical milestones."}
+            ],
+            "flashcards": [
+                {"id": 1, "front": f"What is a primary characteristic of {country_name}'s social fabric?", "back": "A dynamic balance between cherished historical traditions and modern global innovation.", "category": "Culture"},
+                {"id": 2, "front": f"How do historical challenges shape {country_name}?", "back": "Overcoming adversity builds institutional resilience and reinforces shared national solidarity.", "category": "History"}
+            ]
+        }
+
+        return {
+            "title": f"{country_name}: History, Heritage & Modern Civilization",
+            "domain": "history",
+            "subdomain": "Civilizations, Culture & Geopolitics",
+            "scenes": scenes,
+            "materials": materials
+        }
+
+    def _build_generic_programming_lecture(self, topic: str, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
+        tech_title = topic.strip().title()
+        scenes = [
+            {
+                "scene_id": "scene_1",
+                "index": 0,
+                "chapter_title": f"1. The Core Problem: Why We Need {tech_title}",
+                "pedagogical_phase": "hook",
+                "narration_text": f"Every great programming feature exists to solve a real engineering pain point. Without {tech_title}, code becomes fragile, difficult to maintain, and prone to silent failures. By understanding the exact software problem it eliminates, the syntax and mechanics will make immediate intuitive sense.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "concept_metaphor",
+                    "title": f"The Engineering Problem Behind {tech_title}",
+                    "subtitle": "Fragile Ad-Hoc Code vs. Robust Structured Patterns",
+                    "parameters": {
+                        "left_title": f"Without {tech_title}",
+                        "left_items": ["Brittle, error-prone boilerplate", "Difficult to debug or scale", "Uncontrolled runtime side-effects"],
+                        "right_title": f"With {tech_title}",
+                        "right_items": ["Clean, idiomatic syntax", "Predictable execution and state flow", "Robust, production-grade maintainability"]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Brittle boilerplate"},
+                        {"step": 2, "highlight": "Robust pattern"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_2",
+                "index": 1,
+                "chapter_title": "2. Syntax & Mechanics: The Core Anatomy",
+                "pedagogical_phase": "foundation",
+                "narration_text": f"Let us examine the exact syntax structure. Notice how the language constructs establish clear boundaries. Each keyword and parameter plays a distinct role in orchestrating how data and execution flow through your application.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "code_visualizer",
+                    "title": f"{tech_title} Syntax & Structure",
+                    "subtitle": "Idiomatic Implementation & Language Rules",
+                    "parameters": {
+                        "language": "python",
+                        "code": f"# Demonstrating {tech_title}\ndef execute_pattern(data):\n    # 1. Setup preconditions\n    if not data:\n        raise ValueError('Invalid input data')\n        \n    # 2. Core construct in action\n    result = process_data(data)\n    \n    # 3. Clean return of processed state\n    return result",
+                        "highlights": [
+                            {"line": 2, "label": "Define idiomatic function signature"},
+                            {"line": 4, "label": "Input validation & error boundary"},
+                            {"line": 8, "label": "Core construct invocation"}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "active_line": 2, "scope": "Function entry"},
+                        {"step": 2, "active_line": 4, "scope": "Validation check"},
+                        {"step": 3, "active_line": 8, "scope": "Core execution"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_3",
+                "index": 2,
+                "chapter_title": "3. Live Execution Trace & Memory Scope",
+                "pedagogical_phase": "visual_demonstration",
+                "narration_text": f"Now let us watch the code execute line by line. Notice how variables transform in memory and how control flow transitions between scopes. Tracking this runtime behavior demystifies what the interpreter or compiler is doing behind the scenes.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "code_visualizer",
+                    "title": "Interactive Execution & Variable Watch",
+                    "subtitle": "Step-by-Step State Changes During Runtime",
+                    "parameters": {
+                        "language": "python",
+                        "code": f"# Runtime Tracing for {tech_title}\nitems = [10, 20, 30]\ntotal = 0\n\nfor item in items:\n    total += item\n    print(f'Active item: {{item}}, Running total: {{total}}')\n\nreturn total",
+                        "highlights": [
+                            {"line": 2, "label": "State initialized in scope"},
+                            {"line": 5, "label": "Loop iteration & accumulator update"},
+                            {"line": 8, "label": "Final state returned"}
+                        ],
+                        "variables": {"active_item": 20, "running_total": 30, "items_remaining": 1}
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "active_line": 2, "scope": "total=0"},
+                        {"step": 2, "active_line": 6, "scope": "total=30"},
+                        {"step": 3, "active_line": 8, "scope": "return total=60"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_4",
+                "index": 3,
+                "chapter_title": "4. Edge Cases, Pitfalls & Hidden Traps",
+                "pedagogical_phase": "edge_cases",
+                "narration_text": f"Experienced software engineers are defined by how they handle the edge cases. What happens when inputs are null, resources are exhausted, or concurrency conflicts occur? Knowing these traps ensures your software remains rock-solid in production.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "comparison_matrix",
+                    "title": "Common Antipatterns vs. Production Best Practices",
+                    "subtitle": f"Writing Resilient, Maintainable {tech_title}",
+                    "parameters": {
+                        "col1": "Common Trap: Ignoring boundary conditions and unhandled null/empty inputs",
+                        "col2": "Defensive Pattern: Explicit validation, clear error boundaries, and self-documenting types",
+                        "col3": "Performance Tip: Minimize unnecessary allocations and release resources promptly"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Common Trap"},
+                        {"step": 2, "highlight": "Defensive Pattern"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_5",
+                "index": 4,
+                "chapter_title": "5. Production Architecture & Real-World Use",
+                "pedagogical_phase": "summary",
+                "narration_text": f"To master {tech_title}, integrate it into your everyday architectural toolkit. By favoring clarity over cleverness, enforcing invariants, and writing self-explanatory code, you build software that is both elegant and durable.",
+                "estimated_duration": 23.0,
+                "visual_spec": {
+                    "visual_type": "comparison_matrix",
+                    "title": "Production Engineering Summary",
+                    "subtitle": "Key Takeaways for Professional Codebases",
+                    "parameters": {
+                        "col1": "Readability First: Code is read far more often than it is written",
+                        "col2": "Resource Safety: Always guarantee cleanup via context managers or finalizers",
+                        "col3": "Testability: Structure functions to be purely deterministic and easily tested"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Readability"},
+                        {"step": 2, "highlight": "Resource Safety"}
+                    ]
+                }
+            }
+        ]
+
+        materials = {
+            "summary": f"This software engineering masterclass on {tech_title} covers core syntax, execution mechanics, call stack and memory scope behavior, critical edge cases, and production-grade best practices.",
+            "notes_markdown": f"""# {tech_title}: Software Engineering Guide
+
+## 1. Executive Summary
+Understanding **{tech_title}** requires mastering both its mental model and syntax:
+- **Core Purpose**: Eliminates fragile ad-hoc code in favor of robust, idiomatic patterns.
+- **Runtime Mechanics**: Predictable execution, stack management, and scope isolation.
+- **Production Standard**: Defensive validation, explicit error boundaries, and resource safety.
+
+## 2. Best Practices Checklist
+1. Validate inputs early at boundary interfaces.
+2. Ensure all external resources (sockets, files, connections) are cleanly finalized.
+3. Write expressive, self-documenting code with meaningful names.
+""",
+            "key_concepts": [
+                {"concept": f"{tech_title} Idiom", "definition": "The standard, community-accepted way to structure this pattern cleanly.", "importance": "Ensures codebase consistency and readability."},
+                {"concept": "Resource Cleanup", "definition": "Guaranteeing that memory, handles, and connections are released even under failure.", "importance": "Prevents catastrophic memory and connection leaks in servers."}
+            ],
+            "formulas_or_code": [
+                {"title": "The Golden Rule of Software Design", "type": "principle", "content": "Clarity > Cleverness; Explicit > Implicit", "explanation": "Code should clearly communicate intent without hidden side effects."}
+            ],
+            "practice_questions": [
+                {"question": f"What is the most critical advantage of applying {tech_title} correctly?", "hint": "Think about debugging, maintainability, and production stability.", "solution": f"Applying {tech_title} correctly prevents unexpected runtime crashes, isolates failures cleanly, and makes the codebase readable and maintainable for team members."}
+            ],
+            "quiz": [
+                {"id": 1, "question": f"What should be the primary consideration when implementing {tech_title}?", "options": ["Writing the shortest, most cryptic code possible", "Clear readability, explicit error boundaries, and resource safety", "Ignoring edge cases to save time", "Using global variables everywhere"], "correct_index": 1, "explanation": "Maintainable software prioritizes readability, safety, and clear boundaries."},
+                {"id": 2, "question": f"Why is handling edge cases essential in {tech_title}?", "options": ["It is only needed for toy exercises", "Production systems almost always fail at boundary inputs if unhandled", "Edge cases never happen in real life", "It can be safely ignored"], "correct_index": 1, "explanation": "Real-world failures happen at boundaries: network dropouts, null inputs, and unexpected states."}
+            ],
+            "flashcards": [
+                {"id": 1, "front": f"What is the golden rule when writing {tech_title}?", "back": "Clarity is superior to cleverness; always write code that communicates intent explicitly.", "category": "Clean Code"},
+                {"id": 2, "front": "Why is resource finalization critical?", "back": "To avoid leaking system handles, file descriptors, or memory pools during runtime.", "category": "Architecture"}
+            ]
+        }
+
+        return {
+            "title": f"Mastering {tech_title}: Core Mechanics & Production Patterns",
+            "domain": "computer_science",
+            "subdomain": "Software Engineering & Architecture",
+            "scenes": scenes,
+            "materials": materials
+        }
 
     def _build_french_revolution_lecture(self, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
         scenes = [
@@ -1659,7 +2516,2163 @@ where:
             "materials": materials
         }
 
-    # ------------------- DYNAMIC GENERAL-PURPOSE SYNTHESIZER -------------------
+    def _build_binary_search_lecture(self, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
+        scenes = [
+            {
+                "scene_id": "scene_1",
+                "index": 0,
+                "chapter_title": "1. The Dictionary Dilemma: Linear vs Logarithmic",
+                "pedagogical_phase": "hook",
+                "narration_text": "Imagine opening a 1,000-page dictionary to find the word 'Quantum'. If you started from page 1 and flipped page by page, you would waste tremendous time checking 500 pages. Instead, you naturally flip right to the middle. If you see words starting with 'M', you know immediately that 'Q' must be in the right half, instantly discarding 500 pages in a single move. This intuitive division is the exact power of Binary Search.",
+                "estimated_duration": 22.0,
+                "visual_spec": {
+                    "visual_type": "concept_metaphor",
+                    "title": "Search Strategy Comparison",
+                    "subtitle": "Linear Page-by-Page vs. Binary Division",
+                    "parameters": {
+                        "metaphor": "dictionary_search",
+                        "left_label": "Linear Search: O(N)",
+                        "left_items": ["Page 1: A", "Page 2: B", "Page 3: C", "...", "Page 500: Target Found (500 steps)"],
+                        "right_label": "Binary Search: O(log N)",
+                        "right_items": ["Open middle (Page 500)", "Target 'Q' > 'M' -> Discard 1-500", "Open middle of remainder", "Found in ~10 steps!"]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "description": "1,000 pages search space established", "highlight": "entire_space"},
+                        {"step": 2, "description": "Dividing search space in half", "highlight": "middle_split"},
+                        {"step": 3, "description": "Discarding 500 pages instantly", "highlight": "eliminated_half"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_2",
+                "index": 1,
+                "chapter_title": "2. The Invariant: Sorted Arrays & Three Pointers",
+                "pedagogical_phase": "foundation",
+                "narration_text": "Binary search has one non-negotiable prerequisite: the array must be sorted. Without order, division is impossible. We maintain three key pointers: Low at the start of our search window, High at the end, and Mid right in the center. The formula is simple: Mid equals Low plus High minus Low divided by two, avoiding integer overflow. In each step, we inspect only the element at Mid.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "algorithm_animator",
+                    "title": "Three-Pointer Architecture",
+                    "subtitle": "Tracking Low, Mid, and High on a Sorted Array",
+                    "parameters": {
+                        "algorithm_type": "array_search",
+                        "array": [2, 5, 8, 12, 16, 23, 38, 56, 72, 91],
+                        "target": 23,
+                        "low": 0,
+                        "high": 9,
+                        "mid": 4,
+                        "state_label": "Initial State: Target = 23"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "low": 0, "high": 9, "mid": 4, "action": "Calculate mid = 0 + (9-0)//2 = 4", "val": 16, "status": "active"},
+                        {"step": 2, "low": 0, "high": 9, "mid": 4, "action": "Compare array[mid] (16) vs Target (23)", "val": 16, "status": "comparing"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_3",
+                "index": 2,
+                "chapter_title": "3. The Elimination Engine: Step-by-Step Execution",
+                "pedagogical_phase": "visual_demonstration",
+                "narration_text": "Let us watch the algorithm in motion. We are searching for 23. Mid points to index 4, which holds the value 16. Since 16 is strictly less than 23, our target cannot possibly exist anywhere from index 0 to 4. We eliminate the entire left half! We shift Low to Mid plus one, which is index 5. Now our new window is from index 5 to 9. We recalculate Mid to index 7, which holds 56. 56 is greater than 23, so we eliminate the right half! Finally, Low and High converge on index 5, value 23. Target found in just three comparisons!",
+                "estimated_duration": 29.0,
+                "visual_spec": {
+                    "visual_type": "algorithm_animator",
+                    "title": "Live Binary Search Execution",
+                    "subtitle": "Target: 23 in [2, 5, 8, 12, 16, 23, 38, 56, 72, 91]",
+                    "parameters": {
+                        "algorithm_type": "array_search",
+                        "array": [2, 5, 8, 12, 16, 23, 38, 56, 72, 91],
+                        "target": 23,
+                        "steps": [
+                            {
+                                "step_num": 1,
+                                "low": 0,
+                                "high": 9,
+                                "mid": 4,
+                                "mid_val": 16,
+                                "comparison": "16 < 23 (Target is larger)",
+                                "decision": "Eliminate left window [0..4], Move low = mid + 1",
+                                "eliminated": [0, 1, 2, 3, 4]
+                            },
+                            {
+                                "step_num": 2,
+                                "low": 5,
+                                "high": 9,
+                                "mid": 7,
+                                "mid_val": 56,
+                                "comparison": "56 > 23 (Target is smaller)",
+                                "decision": "Eliminate right window [7..9], Move high = mid - 1",
+                                "eliminated": [0, 1, 2, 3, 4, 7, 8, 9]
+                            },
+                            {
+                                "step_num": 3,
+                                "low": 5,
+                                "high": 6,
+                                "mid": 5,
+                                "mid_val": 23,
+                                "comparison": "23 == 23 (Match Found!)",
+                                "decision": "Return index 5 successfully!",
+                                "eliminated": [0, 1, 2, 3, 4, 6, 7, 8, 9],
+                                "matched": 5
+                            }
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "low": 0, "high": 9, "mid": 4, "msg": "Mid is 16. Target 23 > 16. Discard left."},
+                        {"step": 2, "low": 5, "high": 9, "mid": 7, "msg": "Mid is 56. Target 23 < 56. Discard right."},
+                        {"step": 3, "low": 5, "high": 6, "mid": 5, "msg": "Mid is 23. Match found at index 5!"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_4",
+                "index": 3,
+                "chapter_title": "4. Clean Code Implementation & Variable Watch",
+                "pedagogical_phase": "edge_cases",
+                "narration_text": "Here is the canonical Python implementation. Notice the while loop condition: while low is less than or equal to high. That 'less than or equal' is crucial for arrays with an odd length or single elements. Inside the loop, if array at mid matches target, we return mid. If the target is greater, we search the right sub-array. Otherwise, we search the left. If low crosses high without a match, we return minus one.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "code_visualizer",
+                    "title": "Python Binary Search Implementation",
+                    "subtitle": "Iterative Implementation with While Loop",
+                    "parameters": {
+                        "language": "python",
+                        "code": "def binary_search(arr, target):\n    low = 0\n    high = len(arr) - 1\n    \n    while low <= high:\n        mid = low + (high - low) // 2\n        \n        if arr[mid] == target:\n            return mid\n        elif arr[mid] < target:\n            low = mid + 1\n        else:\n            high = mid - 1\n            \n    return -1",
+                        "highlights": [
+                            {"line": 2, "label": "Initialize pointers: low=0, high=9"},
+                            {"line": 5, "label": "Loop invariant: low <= high"},
+                            {"line": 6, "label": "Safe mid calculation avoiding overflow"},
+                            {"line": 8, "label": "Base case: match found"},
+                            {"line": 10, "label": "Target in right half: low = mid + 1"},
+                            {"line": 12, "label": "Target in left half: high = mid - 1"},
+                            {"line": 14, "label": "Exhausted search space: return -1"}
+                        ],
+                        "variables": {"low": 5, "high": 6, "mid": 5, "target": 23, "return": 5}
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "active_line": 2, "scope": "low=0, high=9"},
+                        {"step": 2, "active_line": 6, "scope": "mid=4 (arr[4]=16)"},
+                        {"step": 3, "active_line": 10, "scope": "low updated to 5"},
+                        {"step": 4, "active_line": 8, "scope": "arr[5]==23 -> return 5"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_5",
+                "index": 4,
+                "chapter_title": "5. Time Complexity: Why O(log N) Changes Everything",
+                "pedagogical_phase": "summary",
+                "narration_text": "The logarithmic efficiency of binary search is staggering. For an array of 1 million items, linear search would take on average 500,000 checks. Binary search takes at most 20 checks. For 4 billion items, the entire internet population, binary search finds any user in just 32 operations. It turns an impossible problem into an instantaneous lookup. Remember: sorted input, three pointers, eliminate half each step.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "math_graph",
+                    "title": "Computational Scale: O(N) vs O(log N)",
+                    "subtitle": "Number of Operations as Input Size (N) Grows",
+                    "parameters": {
+                        "curve_type": "complexity_comparison",
+                        "x_label": "Input Elements (N)",
+                        "y_label": "Operations Required",
+                        "data_points": [
+                            {"n": "16", "linear": 16, "binary": 4},
+                            {"n": "1,024", "linear": 1024, "binary": 10},
+                            {"n": "1,000,000", "linear": 1000000, "binary": 20},
+                            {"n": "4,000,000,000", "linear": 4000000000, "binary": 32}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "description": "Plotting linear line O(N)", "highlight": "linear_curve"},
+                        {"step": 2, "description": "Plotting flat logarithmic curve O(log N)", "highlight": "log_curve"}
+                    ]
+                }
+            }
+        ]
+
+        if num_scenes == 3:
+            scenes = [scenes[0], scenes[2], scenes[4]]
+            for i, s in enumerate(scenes):
+                s["index"] = i
+
+        materials = {
+            "summary": "Binary Search is a foundational divide-and-conquer algorithm that locates an element in a sorted collection in O(log n) logarithmic time. By repeatedly examining the middle element and discarding the non-viable half of the search space, it reduces a problem of billions of elements to a handful of comparisons.",
+            "notes_markdown": """# Binary Search: Complete Masterclass Notes
+
+## 1. Core Principle
+Binary Search locates a target value within a **sorted array** by halving the search space each step.
+- **Time Complexity**:
+  - Best Case: $O(1)$ (target located at initial mid)
+  - Average Case: $O(\\log n)$
+  - Worst Case: $O(\\log n)$
+- **Space Complexity**:
+  - Iterative: $O(1)$ auxiliary space
+  - Recursive: $O(\\log n)$ call stack space
+
+## 2. The 3 Pointer Pattern
+```python
+def binary_search(arr: list[int], target: int) -> int:
+    low = 0
+    high = len(arr) - 1
+    
+    while low <= high:
+        # Avoid integer overflow (in languages like C++/Java)
+        mid = low + (high - low) // 2
+        
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            low = mid + 1  # Target is in the right half
+        else:
+            high = mid - 1 # Target is in the left half
+            
+    return -1  # Target not found
+```
+
+## 3. Essential Edge Cases
+1. **Empty Array**: `len(arr) == 0` returns `-1`.
+2. **Single Element**: Verified correctly because `low <= high` uses `<=` instead of `<`.
+3. **Target Smaller Than Minimum**: `high` moves to `-1`, terminating properly.
+4. **Target Greater Than Maximum**: `low` exceeds `len(arr)-1`, terminating properly.
+5. **Duplicates**: Standard binary search returns any valid match index. For first/last occurrence, adjust pointer without early return.
+""",
+            "key_concepts": [
+                {"concept": "Sorted Invariant", "definition": "The array must be ordered; without sorting, eliminating halves is mathematically invalid.", "importance": "Prerequisite for algorithm correctness."},
+                {"concept": "Search Space Halving", "definition": "Discarding $\\frac{N}{2}$ candidate items in every comparison step.", "importance": "Provides $O(\\log N)$ exponential reduction in computation."},
+                {"concept": "Integer Overflow Guard", "definition": "Calculating `mid = low + (high - low) // 2` rather than `(low + high) // 2`.", "importance": "Prevents arithmetic overflow in 32-bit integer systems."}
+            ],
+            "formulas_or_code": [
+                {"title": "Logarithmic Steps Formula", "type": "formula", "content": "k = \\lceil \\log_2(N) \\rceil", "explanation": "Maximum number of iterations required to find target or determine absence in an array of size N."},
+                {"title": "Midpoint Calculation", "type": "code", "content": "mid = low + (high - low) // 2", "explanation": "Calculates midpoint index safely within bounds."}
+            ],
+            "practice_questions": [
+                {"question": "How many comparisons does Binary Search take in the worst case for an array with 1,048,576 elements?", "hint": "Calculate log base 2 of 2^20.", "solution": "Since 1,048,576 = 2^20, Binary Search requires at most 20 comparisons plus 1 final check, so at most 21 operations."},
+                {"question": "What happens if we mistakenly write `while low < high:` instead of `while low <= high:`?", "hint": "Consider a single-element array like [5] with target 5.", "solution": "With low < high, a single-element array (where low == high == 0) will skip the loop entirely and return -1 without checking the target."}
+            ],
+            "quiz": [
+                {"id": 1, "question": "What is the primary prerequisite for Binary Search to function correctly?", "options": ["Array must contain unique elements", "Array must be sorted", "Array length must be an even power of 2", "Elements must all be positive integers"], "correct_index": 1, "explanation": "Binary search fundamentally relies on order so that comparing the midpoint guarantees which half can be discarded."},
+                {"id": 2, "question": "What is the worst-case time complexity of Binary Search on an array of size N?", "options": ["O(1)", "O(N)", "O(log N)", "O(N log N)"], "correct_index": 2, "explanation": "Halving the search space each step produces a logarithmic time complexity of O(log N)."},
+                {"id": 3, "question": "Why is `mid = low + (high - low) // 2` preferred over `mid = (low + high) // 2` in many programming languages?", "options": ["It computes faster on the CPU", "It prevents 32-bit integer overflow when low + high exceeds 2^31 - 1", "It handles negative numbers better", "It is required by the Python interpreter"], "correct_index": 1, "explanation": "In statically typed languages like C, C++, and Java, low + high can overflow the maximum signed 32-bit integer, resulting in a negative index."}
+            ],
+            "flashcards": [
+                {"id": 1, "front": "What is the time complexity of Binary Search?", "back": "O(log N) in both average and worst case; O(1) in best case.", "category": "Complexity"},
+                {"id": 2, "front": "Why is the loop condition 'while low <= high' and not '<'?", "back": "To allow checking the final remaining element when low and high converge on the same index.", "category": "Implementation"},
+                {"id": 3, "front": "What is the auxiliary space complexity of iterative binary search?", "back": "O(1) constant auxiliary space, as only low, high, and mid pointers are stored.", "category": "Memory"}
+            ]
+        }
+
+        return {
+            "title": "Mastering Binary Search: Intuition, Algorithm & Complexity",
+            "domain": "computer_science",
+            "subdomain": "Algorithms & Data Structures",
+            "scenes": scenes,
+            "materials": materials
+        }
+
+    def _build_neural_networks_lecture(self, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
+        scenes = [
+            {
+                "scene_id": "scene_1",
+                "index": 0,
+                "chapter_title": "1. The Artificial Neuron: Inputs, Weights & Biases",
+                "pedagogical_phase": "hook",
+                "narration_text": "How can a computer recognize a handwritten digit, translate languages, or drive a car? At the heart of deep learning is a surprisingly simple mathematical building block: the artificial neuron. Just like biological synapses, it takes multiple input signals, scales each by an adjustable weight, adds an internal bias, and passes the sum through an activation function.",
+                "estimated_duration": 23.0,
+                "visual_spec": {
+                    "visual_type": "process_simulation",
+                    "title": "The Perceptron Architecture",
+                    "subtitle": "Weighted Inputs Summed and Activated",
+                    "parameters": {
+                        "inputs": ["x1: Pixel Brightness", "x2: Edge Angle", "x3: Contrast"],
+                        "weights": ["w1 = 0.8", "w2 = -0.4", "w3 = 1.2"],
+                        "summation": "z = Σ(wi · xi) + b",
+                        "activation": "a = σ(z) = 1 / (1 + e^-z)",
+                        "output": "Probability: 0.94 (Digit '7')"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "description": "Signals flow into input dendrites"},
+                        {"step": 2, "description": "Weighted linear combination computed"},
+                        {"step": 3, "description": "Non-linear activation fires"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_2",
+                "index": 1,
+                "chapter_title": "2. Forward Propagation: From Pixels to Predictions",
+                "pedagogical_phase": "foundation",
+                "narration_text": "When we stack hundreds of these neurons into layers, we form a deep neural network. Information flows strictly forward. The input layer takes raw data, hidden layers extract increasingly abstract features like edges, textures, and object shapes, and the output layer outputs probabilities via the Softmax function.",
+                "estimated_duration": 22.0,
+                "visual_spec": {
+                    "visual_type": "diagram_board",
+                    "title": "Deep Neural Network Architecture",
+                    "subtitle": "Input Layer -> Hidden Layers -> Output Layer",
+                    "parameters": {
+                        "layers": [
+                            {"name": "Input Layer", "nodes": 4, "role": "Raw Features"},
+                            {"name": "Hidden Layer 1", "nodes": 6, "role": "Low-level Edges"},
+                            {"name": "Hidden Layer 2", "nodes": 6, "role": "High-level Shapes"},
+                            {"name": "Output Layer", "nodes": 2, "role": "Classification"}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "description": "Input pulse enters network"},
+                        {"step": 2, "description": "Hidden activations compute"},
+                        {"step": 3, "description": "Output prediction emitted"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_3",
+                "index": 2,
+                "chapter_title": "3. The Loss Landscape: Measuring Mistake",
+                "pedagogical_phase": "visual_demonstration",
+                "narration_text": "Initially, all weights are random, so the network makes wild guesses. To train it, we define a Loss Function, like Cross-Entropy or Mean Squared Error. The Loss measures how wrong the prediction is. Picture a mountainous 3D terrain: the height of each mountain represents error. Our goal is to descend the mountains to reach the lowest possible valley.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "math_graph",
+                    "title": "3D Loss Landscape & Valley of Convergence",
+                    "subtitle": "Minimizing Error via Gradient Vector",
+                    "parameters": {
+                        "curve_type": "loss_surface",
+                        "x_axis": "Weight 1",
+                        "y_axis": "Loss (Error)",
+                        "formula": "L(w) = (y_pred - y_true)^2"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "description": "High error starting position"},
+                        {"step": 2, "description": "Calculating steepest slope"},
+                        {"step": 3, "description": "Stepping down toward global minimum"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_4",
+                "index": 3,
+                "chapter_title": "4. Backpropagation & The Chain Rule",
+                "pedagogical_phase": "edge_cases",
+                "narration_text": "Here is the breakthrough: Backpropagation. Using calculus and the chain rule of derivatives, we compute the gradient: how much did each individual weight contribute to the final error? We propagate this error backward from output to input, updating every weight in the opposite direction of the gradient scaled by a learning rate.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "code_visualizer",
+                    "title": "Gradient Descent Weight Update Rule",
+                    "subtitle": "The Mathematical Engine of Learning",
+                    "parameters": {
+                        "language": "python",
+                        "code": "# Backpropagation Step\nfor epoch in range(num_epochs):\n    # 1. Forward Pass\n    y_pred = model.forward(X)\n    loss = criterion(y_pred, y_true)\n    \n    # 2. Backward Pass (Chain Rule)\n    loss.backward()\n    \n    # 3. Parameter Update: w = w - lr * grad\n    with torch.no_grad():\n        for param in model.parameters():\n            param -= learning_rate * param.grad\n            param.grad.zero_()",
+                        "highlights": [
+                            {"line": 4, "label": "Forward pass prediction"},
+                            {"line": 8, "label": "Compute gradients via chain rule"},
+                            {"line": 13, "label": "Nudge weights downhill by learning rate"}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "active_line": 4, "scope": "Computing forward activations"},
+                        {"step": 2, "active_line": 8, "scope": "Error gradients propagating backwards"},
+                        {"step": 3, "active_line": 13, "scope": "Weights updated downhill"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_5",
+                "index": 4,
+                "chapter_title": "5. Training in Action & Overfitting",
+                "pedagogical_phase": "summary",
+                "narration_text": "After millions of micro-adjustments, the network converges. But beware of overfitting: if the model simply memorizes the training data without learning generalized patterns, it will fail in the real world. Techniques like dropout, regularization, and batch normalization keep our neural network robust, enabling modern AI models to generalize remarkably.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "comparison_matrix",
+                    "title": "Generalization vs Overfitting",
+                    "subtitle": "Finding the Optimal Model Complexity",
+                    "parameters": {
+                        "col1": "Underfitting (High Bias): Model is too simple, fails to capture trend",
+                        "col2": "Balanced (Optimal): Smooth decision boundary, high test accuracy",
+                        "col3": "Overfitting (High Variance): Fits noise, fails on new unseen data"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Underfitting"},
+                        {"step": 2, "highlight": "Balanced"},
+                        {"step": 3, "highlight": "Overfitting"}
+                    ]
+                }
+            }
+        ]
+
+        materials = {
+            "summary": "Neural Networks learn by combining linear transformations with non-linear activations. Through forward propagation, predictions are made; through loss calculation and backpropagation using the calculus chain rule, gradients are passed backward to iteratively update weights using gradient descent.",
+            "notes_markdown": """# Neural Networks & Backpropagation: Core Lecture Notes
+
+## 1. Mathematical Anatomy of a Single Neuron
+A neuron computes:
+$$z = \\sum_{i=1}^{n} w_i x_i + b = \\mathbf{w}^T \\mathbf{x} + b$$
+$$a = \\sigma(z)$$
+where:
+- $\\mathbf{x}$: Input feature vector
+- $\\mathbf{w}$: Learned weights vector
+- $b$: Bias term
+- $\\sigma$: Non-linear activation function (ReLU, Sigmoid, GELU)
+
+## 2. The Backpropagation Algorithm
+To minimize loss $L$, we compute partial derivatives $\\frac{\\partial L}{\\partial w_{ij}}$ via the Chain Rule:
+$$\\frac{\\partial L}{\\partial w} = \\frac{\\partial L}{\\partial a} \\cdot \\frac{\\partial a}{\\partial z} \\cdot \\frac{\\partial z}{\\partial w}$$
+
+## 3. Gradient Descent Parameter Update
+$$w \\leftarrow w - \\eta \\cdot \\frac{\\partial L}{\\partial w}$$
+where $\\eta$ represents the **learning rate**.
+""",
+            "key_concepts": [
+                {"concept": "Non-Linear Activation", "definition": "Functions like ReLU ($f(x) = \\max(0, x)$) that enable networks to approximate non-linear boundary functions.", "importance": "Without non-linearities, any deep network collapses mathematically into a single linear matrix."},
+                {"concept": "Gradient Descent", "definition": "An iterative optimization algorithm that steps in the opposite direction of the gradient to minimize the loss.", "importance": "Core optimization mechanism powering all deep learning models."},
+                {"concept": "Learning Rate", "definition": "Hyperparameter determining the step size taken downhill during gradient descent.", "importance": "Too high causes divergence; too low causes sluggish or trapped training."}
+            ],
+            "formulas_or_code": [
+                {"title": "Weight Update Rule", "type": "formula", "content": "w_{t+1} = w_t - \\eta \\nabla L(w_t)", "explanation": "Updates parameter weights downhill along the negative gradient."},
+                {"title": "ReLU Activation", "type": "formula", "content": "f(x) = \\max(0, x)", "explanation": "Most popular activation function, avoids vanishing gradient problem for positive inputs."}
+            ],
+            "practice_questions": [
+                {"question": "Why can't a multi-layer neural network with only linear activation functions solve the XOR problem?", "hint": "Consider the composition of linear transformations.", "solution": "A composition of linear functions is always strictly linear. The XOR problem requires a non-linear decision boundary, which is impossible without non-linear activations."}
+            ],
+            "quiz": [
+                {"id": 1, "question": "What is the primary role of the activation function in a neural network?", "options": ["Speed up floating point arithmetic", "Introduce non-linearity so the network can learn complex patterns", "Normalize weights to sum to one", "Prevent memory leaks in GPU tensors"], "correct_index": 1, "explanation": "Without non-linear activation functions, a network of any depth is mathematically equivalent to a single linear layer."},
+                {"id": 2, "question": "What mathematical principle underpins backpropagation?", "options": ["Pythagorean theorem", "The Calculus Chain Rule", "Fourier transform", "Markov chains"], "correct_index": 1, "explanation": "Backpropagation computes partial derivatives through composite functions using the chain rule of calculus."}
+            ],
+            "flashcards": [
+                {"id": 1, "front": "What does the gradient vector point towards?", "back": "The direction of steepest increase of the loss function.", "category": "Calculus"},
+                {"id": 2, "front": "Why do we subtract the gradient during weight updates?", "back": "Because we want to minimize error, so we move in the opposite direction (steepest descent).", "category": "Optimization"}
+            ]
+        }
+
+        return {
+            "title": "Neural Networks & Backpropagation: Visualizing How AI Learns",
+            "domain": "computer_science",
+            "subdomain": "Artificial Intelligence & Machine Learning",
+            "scenes": scenes,
+            "materials": materials
+        }
+
+    def _build_async_await_lecture(self, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
+        scenes = [
+            {
+                "scene_id": "scene_1",
+                "index": 0,
+                "chapter_title": "1. The Restaurant Chef: Synchronous vs Asynchronous",
+                "pedagogical_phase": "hook",
+                "narration_text": "Imagine a chef in a restaurant kitchen. In a synchronous world, the chef puts bread in the toaster and stands completely frozen, doing nothing for three minutes until the toast pops up. Customers starve while the kitchen sits idle! In an asynchronous kitchen, the chef drops the bread into the toaster, immediately starts chopping vegetables, and only comes back to grab the toast when a chime rings. This non-blocking concurrency is what async and await deliver to software.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "concept_metaphor",
+                    "title": "The Chef Kitchen Metaphor",
+                    "subtitle": "Blocking I/O vs. Non-Blocking Event-Driven Concurrency",
+                    "parameters": {
+                        "left_title": "Synchronous (Blocking)",
+                        "left_items": ["Wait for Toaster (3m idle)", "Wait for Water to Boil (5m idle)", "Cook Stew: Total 15 mins wasted"],
+                        "right_title": "Async / Event Loop (Non-blocking)",
+                        "right_items": ["Start Toaster -> Delegate to Timer", "Chop Veggies concurrently", "Grab toast upon event notification!"]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Blocking freeze"},
+                        {"step": 2, "highlight": "Async delegation"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_2",
+                "index": 1,
+                "chapter_title": "2. The Event Loop Architecture",
+                "pedagogical_phase": "foundation",
+                "narration_text": "Under the hood, single-threaded runtimes like Python asyncio or Node.js utilize an Event Loop. The Call Stack runs your JavaScript or Python code line by line. When an I/O operation like a database query or network request occurs, it is handed off to the OS background pool. The main thread never freezes; it continues handling user clicks or other requests, checking the Task Queue whenever the stack is clear.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "process_simulation",
+                    "title": "Event Loop & Task Queue Cycle",
+                    "subtitle": "Call Stack -> Web APIs / OS Kernel -> Callback Queue",
+                    "parameters": {
+                        "components": [
+                            {"name": "Call Stack", "desc": "Current execution frame"},
+                            {"name": "OS / Web API", "desc": "Handling network socket I/O"},
+                            {"name": "Task Queue", "desc": "Completed callbacks waiting"},
+                            {"name": "Event Loop", "desc": "Continuously pumping tasks into stack"}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "description": "Call stack encounters await fetch()"},
+                        {"step": 2, "description": "Network request offloaded to background"},
+                        {"step": 3, "description": "Task queue notifies event loop on completion"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_3",
+                "index": 2,
+                "chapter_title": "3. Code Anatomy: async def and await",
+                "pedagogical_phase": "visual_demonstration",
+                "narration_text": "Writing asynchronous code used to mean messy callback hell. The async and await keywords make asynchronous code read like clean synchronous code. Declaring async def defines a coroutine. When you write await, execution pauses at that exact line and releases the thread. When the awaited operation completes, execution resumes smoothly with the returned value.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "code_visualizer",
+                    "title": "Async/Await in Action (Python Asyncio)",
+                    "subtitle": "Suspending and Resuming Coroutines",
+                    "parameters": {
+                        "language": "python",
+                        "code": "import asyncio\n\nasync def fetch_user_data(user_id):\n    print(f'Fetching user {user_id}...')\n    # Non-blocking pause: thread released!\n    await asyncio.sleep(2) \n    return {'id': user_id, 'name': 'Alex'}\n\nasync def main():\n    # Run multiple tasks concurrently with gather\n    results = await asyncio.gather(\n        fetch_user_data(1),\n        fetch_user_data(2)\n    )\n    print(results)\n\nasyncio.run(main())",
+                        "highlights": [
+                            {"line": 3, "label": "Defines an async coroutine"},
+                            {"line": 6, "label": "await pauses function without blocking thread"},
+                            {"line": 11, "label": "Runs both I/O operations simultaneously in parallel time!"}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "active_line": 3, "scope": "Coroutine registered"},
+                        {"step": 2, "active_line": 6, "scope": "Thread yields control during sleep"},
+                        {"step": 3, "active_line": 11, "scope": "Gather resolves in 2s total instead of 4s!"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_4",
+                "index": 3,
+                "chapter_title": "4. Common Pitfalls: Blocking the Loop",
+                "pedagogical_phase": "edge_cases",
+                "narration_text": "The number one mistake developers make is running CPU-heavy operations inside an async function. If you calculate Fibonacci or run an image filter on the event loop, you block every other user connected to your server! For CPU-heavy work, offload to a worker process or thread pool. Async is strictly designed for I/O-bound operations.",
+                "estimated_duration": 22.0,
+                "visual_spec": {
+                    "visual_type": "comparison_matrix",
+                    "title": "I/O Bound vs CPU Bound",
+                    "subtitle": "Choosing the Right Concurrency Tool",
+                    "parameters": {
+                        "col1": "I/O Bound (Network, DB, Disk): Perfect for Async/Await & Event Loop",
+                        "col2": "CPU Bound (Video encoding, ML, Encryption): Requires Multi-Processing / ThreadPool",
+                        "col3": "Golden Rule: Never call time.sleep() or sync DB drivers in async def"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "I/O Bound"},
+                        {"step": 2, "highlight": "CPU Bound"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_5",
+                "index": 4,
+                "chapter_title": "5. Real-World Power: High Throughput Servers",
+                "pedagogical_phase": "summary",
+                "narration_text": "By eliminating idle thread memory, frameworks like FastAPI and Node.js can handle tens of thousands of concurrent websocket and HTTP connections on a single machine. Async and await provide clean syntax, high efficiency, and modern scalability. Code synchronously, execute asynchronously.",
+                "estimated_duration": 21.0,
+                "visual_spec": {
+                    "visual_type": "math_graph",
+                    "title": "Server Concurrency Throughput",
+                    "subtitle": "Thread-per-request vs. Asynchronous Event-Driven Architecture",
+                    "parameters": {
+                        "x_axis": "Concurrent Connections (Thousands)",
+                        "y_axis": "RAM Usage (MB)",
+                        "data_points": [
+                            {"c": "1k", "threaded": "1,000 MB (1MB per thread)", "async": "35 MB"},
+                            {"c": "10k", "threaded": "10,000 MB (Crash)", "async": "80 MB"}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "description": "Thread stack memory explosion"},
+                        {"step": 2, "description": "Flat lightweight async coroutine footprint"}
+                    ]
+                }
+            }
+        ]
+
+        materials = {
+            "summary": "Async/Await enables asynchronous, non-blocking programming with clean, sequential syntax. An Event Loop coordinates operations by running code on a call stack while offloading I/O-bound tasks to operating system background handlers.",
+            "notes_markdown": """# Async / Await & Concurrency Master Notes
+
+## 1. Why Non-Blocking Concurrency?
+Traditional thread-per-connection models incur ~1-8 MB RAM per thread and high context-switching overhead.
+Async event-driven architectures handle tens of thousands of concurrent I/O connections on a single thread by yielding during network wait times.
+
+## 2. Key Terminology
+- **Coroutine**: A specialized function that can pause execution via `await` and resume later without blocking the thread.
+- **Event Loop**: The central loop checking the call stack and dispatching callbacks from the completed task queue.
+- **Task**: A scheduled coroutine wrapped for concurrent execution.
+
+## 3. Python Asyncio Best Practices
+```python
+import asyncio
+
+async def fetch_item(item_id: int):
+    # Simulating non-blocking network request
+    await asyncio.sleep(1)
+    return f"Item {item_id}"
+
+async def main():
+    # Run multiple tasks concurrently in parallel time
+    items = await asyncio.gather(
+        fetch_item(1),
+        fetch_item(2),
+        fetch_item(3)
+    )
+    print(items) # Completes in 1 second, NOT 3 seconds!
+
+asyncio.run(main())
+```
+""",
+            "key_concepts": [
+                {"concept": "Event Loop", "definition": "A single-threaded loop that monitors and schedules execution of tasks and callbacks.", "importance": "Heart of non-blocking I/O in Python and JavaScript."},
+                {"concept": "Coroutine", "definition": "A function defined with `async def` whose execution can be suspended at `await` points.", "importance": "Allows human-readable sequential code for async workflows."},
+                {"concept": "Gather / Promise.all", "definition": "Utility that launches multiple coroutines concurrently and waits for all to finish.", "importance": "Drastically reduces wall-clock time for multiple independent I/O tasks."}
+            ],
+            "formulas_or_code": [
+                {"title": "Concurrent Execution", "type": "code", "content": "results = await asyncio.gather(*tasks)", "explanation": "Executes list of coroutines concurrently."}
+            ],
+            "practice_questions": [
+                {"question": "If you call `time.sleep(5)` inside an `async def` endpoint in FastAPI, what happens?", "hint": "Think about the single-threaded event loop.", "solution": "It blocks the entire thread and event loop for 5 seconds, freezing requests from all other users during that interval. Use `await asyncio.sleep(5)` instead."}
+            ],
+            "quiz": [
+                {"id": 1, "question": "What does the `await` keyword do when encountered in a coroutine?", "options": ["Spawns a new OS background thread", "Pauses the coroutine and yields control back to the event loop", "Stops the entire Python interpreter until finished", "Deletes the task from memory"], "correct_index": 1, "explanation": "Await suspends the current coroutine, allowing the event loop to execute other ready tasks while waiting for I/O."},
+                {"id": 2, "question": "When should you NOT use async/await?", "options": ["When querying a remote PostgreSQL database", "When downloading 50 URLs via HTTP", "When executing a heavy CPU-bound image convolution filter", "When waiting for a webhook response"], "correct_index": 2, "explanation": "Heavy CPU tasks block the event loop; they must be offloaded to worker processes or a ProcessPoolExecutor."}
+            ],
+            "flashcards": [
+                {"id": 1, "front": "What is the difference between concurrency and parallelism?", "back": "Concurrency is dealing with lots of things at once (structure); parallelism is doing lots of things at once (hardware execution).", "category": "Core Principle"},
+                {"id": 2, "front": "Does `async def` create a new OS thread?", "back": "No! It runs on the same thread within the event loop cooperative scheduling.", "category": "Architecture"}
+            ]
+        }
+
+        return {
+            "title": "Async / Await Explained: Concurrency, Event Loops & Clean Code",
+            "domain": "computer_science",
+            "subdomain": "Software Engineering & Concurrency",
+            "scenes": scenes,
+            "materials": materials
+        }
+
+    def _build_calculus_derivative_lecture(self, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
+        scenes = [
+            {
+                "scene_id": "scene_1",
+                "index": 0,
+                "chapter_title": "1. The Speedometer Paradox: Instantaneous Rate of Change",
+                "pedagogical_phase": "hook",
+                "narration_text": "If you drive a car from home to school, you can easily calculate your average speed: total distance divided by total time. But at the exact moment you glance at your speedometer, it reads exactly 60 miles per hour. How can you have speed at a single, frozen instant when zero distance is traversed over zero time? Zero divided by zero is undefined! Resolving this paradox is the very birth of calculus and the derivative.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "concept_metaphor",
+                    "title": "The Speedometer Paradox",
+                    "subtitle": "Average Speed vs. Instantaneous Velocity",
+                    "parameters": {
+                        "left_title": "Average Speed",
+                        "left_items": ["Δx / Δt", "Total Distance / Total Time", "Easy to calculate over an interval"],
+                        "right_title": "Instantaneous Speed",
+                        "right_items": ["At exact time t = 2.000s", "Distance = 0, Time = 0 -> 0/0 ??", "Solved by the concept of Limits!"]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Interval measurement"},
+                        {"step": 2, "highlight": "Instantaneous point"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_2",
+                "index": 1,
+                "chapter_title": "2. The Secant Line & The Moving Point",
+                "pedagogical_phase": "foundation",
+                "narration_text": "Let us place this on a Cartesian coordinate plane. Consider a curve f of x. If we pick two points on the curve separated by a horizontal distance h, the line connecting them is called a secant line. Its slope is rise over run: f of x plus h minus f of x, all divided by h. This gives the average rate of change over the window h.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "math_graph",
+                    "title": "Secant Line on Function f(x) = x²",
+                    "subtitle": "Connecting (x, f(x)) to (x+h, f(x+h))",
+                    "parameters": {
+                        "curve": "f(x) = x^2",
+                        "x0": 2,
+                        "h": 1.5,
+                        "formula": "Slope = [f(x+h) - f(x)] / h"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "description": "Points (2, 4) and (3.5, 12.25) plotted"},
+                        {"step": 2, "description": "Secant line drawn with slope = 5.5"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_3",
+                "index": 2,
+                "chapter_title": "3. Taking the Limit: Secant Becomes Tangent",
+                "pedagogical_phase": "visual_demonstration",
+                "narration_text": "Now, let us watch the magic of calculus. We shrink the distance h closer and closer to zero. As h drops from 1 to 0.1 to 0.001, the second point slides down the curve. The secant line pivots smoothly until, at the limit where h approaches zero, it touches the curve at exactly one point. It transforms into the Tangent Line! The slope of this tangent line is the exact derivative at that point.",
+                "estimated_duration": 27.0,
+                "visual_spec": {
+                    "visual_type": "math_graph",
+                    "title": "Dynamic Limit Convergence",
+                    "subtitle": "Watch the Secant Morph into a Tangent Line as h -> 0",
+                    "parameters": {
+                        "curve": "f(x) = x^2",
+                        "x0": 2,
+                        "h_steps": [1.5, 0.8, 0.3, 0.05, 0.001],
+                        "tangent_slope": 4.0
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "h": 1.5, "slope": 5.5, "label": "h = 1.5 (Secant)"},
+                        {"step": 2, "h": 0.5, "slope": 4.5, "label": "h = 0.5 (Closing in)"},
+                        {"step": 3, "h": 0.01, "slope": 4.01, "label": "h -> 0 (Tangent slope = 4.0)"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_4",
+                "index": 3,
+                "chapter_title": "4. The Formal Definition & Power Rule",
+                "pedagogical_phase": "edge_cases",
+                "narration_text": "This brings us to the formal definition of the derivative: f prime of x equals the limit as h approaches zero of f of x plus h minus f of x over h. If we plug in f of x equals x squared, the algebra simplifies to two x plus h. As h approaches zero, what remains is simply two x. At x equals two, the slope is exactly four! This leads directly to the famous Power Rule: the derivative of x to the n is n times x to the n minus one.",
+                "estimated_duration": 26.0,
+                "visual_spec": {
+                    "visual_type": "code_visualizer",
+                    "title": "Algebraic Limit Walkthrough & Power Rule",
+                    "subtitle": "Step-by-Step Expansion of (x+h)²",
+                    "parameters": {
+                        "language": "latex",
+                        "code": "% Limit Definition of Derivative\nf'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}\n\n% For f(x) = x^2:\nf'(x) = \\lim_{h \\to 0} \\frac{(x+h)^2 - x^2}{h}\n      = \\lim_{h \\to 0} \\frac{x^2 + 2xh + h^2 - x^2}{h}\n      = \\lim_{h \\to 0} \\frac{2xh + h^2}{h}\n      = \\lim_{h \\to 0} (2x + h)\n      = 2x\n\n% Power Rule:\n\\frac{d}{dx}[x^n] = n \\cdot x^{n-1}",
+                        "highlights": [
+                            {"line": 2, "label": "The universal limit definition"},
+                            {"line": 6, "label": "Cancelling out x² terms"},
+                            {"line": 8, "label": "Dividing out h eliminates 0/0 indeterminate form!"},
+                            {"line": 10, "label": "Final clean derivative 2x"}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "active_line": 2, "scope": "Universal Definition"},
+                        {"step": 2, "active_line": 8, "scope": "h cancelled out"},
+                        {"step": 3, "active_line": 13, "scope": "General Power Rule"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_5",
+                "index": 4,
+                "chapter_title": "5. Real-World Applications: Optimization & AI",
+                "pedagogical_phase": "summary",
+                "narration_text": "Derivatives are not just textbook exercises; they power our modern world. In physics, the derivative of position is velocity, and the derivative of velocity is acceleration. In business, marginal cost is the derivative of total cost. And in machine learning, derivatives tell algorithms how to optimize billions of weights. The derivative gives us the power to optimize anything that changes.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "comparison_matrix",
+                    "title": "Everyday Derivatives in Action",
+                    "subtitle": "Physics, Finance, and Artificial Intelligence",
+                    "parameters": {
+                        "col1": "Physics: Position -> Velocity (dx/dt) -> Acceleration (d²x/dt²)",
+                        "col2": "Economics: Profit Optimization where Marginal Revenue = Marginal Cost (dProfit/dQ = 0)",
+                        "col3": "Machine Learning: Gradient Descent updates weights using partial derivatives"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Physics"},
+                        {"step": 2, "highlight": "Economics"},
+                        {"step": 3, "highlight": "Machine Learning"}
+                    ]
+                }
+            }
+        ]
+
+        materials = {
+            "summary": "The derivative is the fundamental mathematical tool for measuring instantaneous rate of change. By taking the limit of secant line slopes as the interval shrinks to zero, the derivative yields the exact slope of the tangent line to a curve at any point.",
+            "notes_markdown": """# Calculus: The Derivative & Instantaneous Change
+
+## 1. The Limit Definition of the Derivative
+For any continuous function $f(x)$, its derivative $f'(x)$ is defined as:
+$$f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}$$
+
+## 2. Geometric Interpretation
+- The secant line connects $(x, f(x))$ and $(x+h, f(x+h))$ with slope:
+  $$m_{\\text{secant}} = \\frac{f(x+h) - f(x)}{h}$$
+- As $h \\to 0$, the secant line rotates into the **tangent line** at $x$, whose slope is $f'(x)$.
+
+## 3. Essential Differentiation Rules
+1. **Power Rule**: $\\frac{d}{dx}[x^n] = n x^{n-1}$
+2. **Constant Multiple Rule**: $\\frac{d}{dx}[c \\cdot f(x)] = c \\cdot f'(x)$
+3. **Sum / Difference Rule**: $\\frac{d}{dx}[f(x) \\pm g(x)] = f'(x) \\pm g'(x)$
+4. **Product Rule**: $\\frac{d}{dx}[f \\cdot g] = f' g + f g'$
+5. **Chain Rule**: $\\frac{d}{dx}[f(g(x))] = f'(g(x)) \\cdot g'(x)$
+""",
+            "key_concepts": [
+                {"concept": "Tangent Line", "definition": "A straight line that touches a smooth curve at a single point, matching the curve's instantaneous direction.", "importance": "Geometric representation of the derivative."},
+                {"concept": "Limit ($h \\to 0$)", "definition": "The mathematical operation allowing us to evaluate behavior arbitrarily close to zero without dividing by zero.", "importance": "Overcomes the 0/0 indeterminacy paradox."},
+                {"concept": "Instantaneous Rate of Change", "definition": "The rate at which a variable changes at a single precise instant in time.", "importance": "Differentiates modern calculus from basic average arithmetic."}
+            ],
+            "formulas_or_code": [
+                {"title": "Limit Definition of Derivative", "type": "formula", "content": "f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}", "explanation": "The fundamental mathematical foundation of differentiation."},
+                {"title": "Power Rule", "type": "formula", "content": "\\frac{d}{dx}[x^n] = n x^{n-1}", "explanation": "Quick shortcut formula for differentiating polynomials."}
+            ],
+            "practice_questions": [
+                {"question": "Find the derivative of $f(x) = 3x^4 - 5x^2 + 7$.", "hint": "Apply the power rule to each term independently.", "solution": "f'(x) = 3(4x^3) - 5(2x) + 0 = 12x^3 - 10x."}
+            ],
+            "quiz": [
+                {"id": 1, "question": "What geometric feature of a function curve does the derivative $f'(a)$ represent?", "options": ["The area under the curve from 0 to a", "The slope of the tangent line at x = a", "The maximum y-value of the curve", "The distance from the origin to (a, f(a))"], "correct_index": 1, "explanation": "The derivative at a point is precisely the slope of the tangent line to the curve at that point."},
+                {"id": 2, "question": "What is the derivative of $f(x) = x^3$ using the Power Rule?", "options": ["3x", "x^2", "3x^2", "3x^3"], "correct_index": 2, "explanation": "By the power rule d/dx[x^n] = n * x^(n-1), so d/dx[x^3] = 3x^2."}
+            ],
+            "flashcards": [
+                {"id": 1, "front": "What does a derivative equal to zero ($f'(x) = 0$) signify?", "back": "A horizontal tangent line, indicating a potential local maximum, local minimum, or saddle point.", "category": "Calculus"},
+                {"id": 2, "front": "What is the derivative of a constant number $c$?", "back": "0, because a constant does not change (rate of change is zero).", "category": "Rules"}
+            ]
+        }
+
+        return {
+            "title": "Calculus: Intuition, Limits & The Power of The Derivative",
+            "domain": "mathematics",
+            "subdomain": "Calculus & Analysis",
+            "scenes": scenes,
+            "materials": materials
+        }
+
+    def _build_photosynthesis_lecture(self, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
+        scenes = [
+            {
+                "scene_id": "scene_1",
+                "index": 0,
+                "chapter_title": "1. Solar Energy into Chemical Life: The Global Engine",
+                "pedagogical_phase": "hook",
+                "narration_text": "Every breath of oxygen you take, and virtually every calorie of food consumed by living things on Earth, traces back to a single biological miracle: photosynthesis. Plants, algae, and cyanobacteria harvest photons emitted by the sun 93 million miles away and lock that radiant energy into stable sugar molecules. Let us journey inside the leaf to see how this biochemical factory operates.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "concept_metaphor",
+                    "title": "Photosynthesis: The Biosphere's Energy Converter",
+                    "subtitle": "Sunlight + Water + Carbon Dioxide -> Glucose + Oxygen",
+                    "parameters": {
+                        "inputs": ["Sunlight (Photons)", "Water (H2O via Roots)", "Carbon Dioxide (CO2 via Stomata)"],
+                        "engine": "Chloroplast (Thylakoid & Stroma)",
+                        "outputs": ["Glucose (C6H12O6 Food)", "Oxygen (O2 Released to Atmosphere)"]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "description": "Photons and water absorbed"},
+                        {"step": 2, "description": "Energy captured in chloroplast"},
+                        {"step": 3, "description": "Oxygen released and glucose synthesized"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_2",
+                "index": 1,
+                "chapter_title": "2. Inside the Chloroplast: The Two-Stage Process",
+                "pedagogical_phase": "foundation",
+                "narration_text": "Inside plant cells lie disc-shaped organelles called chloroplasts. Photosynthesis is split into two distinct stages: the Light-Dependent Reactions, which occur in coin-like membrane stacks called Thylakoids, and the Light-Independent Reactions, known as the Calvin Cycle, which occur in the surrounding fluid called the Stroma.",
+                "estimated_duration": 23.0,
+                "visual_spec": {
+                    "visual_type": "process_simulation",
+                    "title": "Chloroplast Architecture: Two Linked Stages",
+                    "subtitle": "Light Reactions (Thylakoid) <-> Calvin Cycle (Stroma)",
+                    "parameters": {
+                        "stage1": "Light Reactions: Uses Light + H2O -> Produces ATP + NADPH + O2",
+                        "link": "Energy shuttle: ATP and NADPH transfer energy across the membrane",
+                        "stage2": "Calvin Cycle: Uses CO2 + ATP + NADPH -> Produces Glucose Sugar"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Thylakoid Light Absorption"},
+                        {"step": 2, "highlight": "ATP/NADPH Energy Shuttle"},
+                        {"step": 3, "highlight": "Stroma Calvin Cycle Synthesis"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_3",
+                "index": 2,
+                "chapter_title": "3. The Light Reactions: Splitting Water with Light",
+                "pedagogical_phase": "visual_demonstration",
+                "narration_text": "Let us zoom into the thylakoid membrane. Sunlight strikes chlorophyll in Photosystem II, exciting electrons to a high energy state. To replace these lost electrons, the plant splits water molecules, H2O, into hydrogen ions and oxygen gas. This is why plants release oxygen! As excited electrons tumble down the electron transport chain, they pump protons across the membrane, driving the ATP Synthase turbine like a microscopic hydroelectric dam.",
+                "estimated_duration": 28.0,
+                "visual_spec": {
+                    "visual_type": "diagram_board",
+                    "title": "Electron Transport Chain & ATP Synthase",
+                    "subtitle": "Splitting Water and Generating ATP via Proton Gradient",
+                    "parameters": {
+                        "elements": [
+                            "Photosystem II (Photons excite electrons)",
+                            "Water Splitting: 2 H2O -> 4 H+ + O2 + 4e-",
+                            "Cytochrome b6f (Proton Pump)",
+                            "Photosystem I (NADPH Production)",
+                            "ATP Synthase (Rotary Molecular Motor)"
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "description": "Photon strikes chlorophyll"},
+                        {"step": 2, "description": "H2O split into oxygen"},
+                        {"step": 3, "description": "Proton gradient spins ATP Synthase"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_4",
+                "index": 3,
+                "chapter_title": "4. The Calvin Cycle: Fixing Air into Food",
+                "pedagogical_phase": "edge_cases",
+                "narration_text": "Now in the stroma, the plant uses that newly formed ATP and NADPH to perform Carbon Fixation. The enzyme RuBisCO, the most abundant protein on Earth, captures carbon dioxide from the air and fuses it into a five-carbon sugar. Through a continuous cyclic chain of transformations, high-energy three-carbon sugars are produced, which combine to form glucose and starch.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "process_simulation",
+                    "title": "The Calvin Cycle (Dark Reactions)",
+                    "subtitle": "Carbon Fixation via RuBisCO in the Stroma",
+                    "parameters": {
+                        "cycle_phases": [
+                            "Phase 1: Carbon Fixation (CO2 + RuBP catalyzed by RuBisCO)",
+                            "Phase 2: Reduction (ATP and NADPH convert 3-PGA into G3P sugar)",
+                            "Phase 3: Regeneration (Remaining G3P regenerated back into RuBP)"
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "description": "CO2 fixation by RuBisCO"},
+                        {"step": 2, "description": "Reduction with ATP/NADPH energy"},
+                        {"step": 3, "description": "G3P sugar exits to form glucose"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_5",
+                "index": 4,
+                "chapter_title": "5. Why Photosynthesis Shapes Our Climate & Future",
+                "pedagogical_phase": "summary",
+                "narration_text": "Without photosynthesis, Earth would have no breathable oxygen atmosphere and no protective ozone layer. Understanding this mechanism is vital today: by studying photosynthesis, scientists are developing artificial leaves, drought-resistant crops, and enhanced carbon capture technologies to fight climate change. Nature's solar panel is the ultimate blueprint for sustainable energy.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "comparison_matrix",
+                    "title": "Ecological & Technological Impact",
+                    "subtitle": "Natural Cycle vs. Next-Gen Bioengineering",
+                    "parameters": {
+                        "col1": "Atmospheric Balance: Consumes CO2, supplies planetary O2 and ozone layer",
+                        "col2": "Food Web Foundation: Primary producer supporting all animal life",
+                        "col3": "Artificial Photosynthesis: Engineering solar cells to produce hydrogen fuel"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Atmosphere"},
+                        {"step": 2, "highlight": "Biosphere"},
+                        {"step": 3, "highlight": "Future tech"}
+                    ]
+                }
+            }
+        ]
+
+        materials = {
+            "summary": "Photosynthesis is the biological process by which plants, algae, and cyanobacteria convert light energy into chemical energy stored in glucose. It occurs in two connected phases: the Light Reactions in the thylakoid membrane and the Calvin Cycle in the stroma.",
+            "notes_markdown": """# Photosynthesis: Complete Educational Study Notes
+
+## 1. Overall Chemical Equation
+$$6\\text{CO}_2 + 6\\text{H}_2\\text{O} + \\text{Light Energy} \\longrightarrow \\text{C}_6\\text{H}_{12}\\text{O}_6 + 6\\text{O}_2$$
+
+## 2. Stage Comparison
+| Feature | Light-Dependent Reactions | Calvin Cycle (Light-Independent) |
+| :--- | :--- | :--- |
+| **Location** | Thylakoid Membrane | Stroma (Fluid) |
+| **Input** | Light, $\\text{H}_2\\text{O}$, NADP+, ADP | $\\text{CO}_2$, ATP, NADPH |
+| **Output** | $\\text{O}_2$ (byproduct), ATP, NADPH | G3P (Glucose precursor), ADP, NADP+ |
+| **Key Enzyme** | ATP Synthase, Cytochrome $b_6f$ | RuBisCO (Ribulose-1,5-bisphosphate carboxylase) |
+""",
+            "key_concepts": [
+                {"concept": "Thylakoid Membrane", "definition": "Internal membrane discs within chloroplasts where photon absorption and water-splitting occur.", "importance": "Site of the light reactions."},
+                {"concept": "RuBisCO", "definition": "The enzyme responsible for fixing atmospheric CO2 onto organic molecules.", "importance": "The critical gateway enzyme connecting inorganic carbon to the biological food chain."},
+                {"concept": "Photolysis", "definition": "The light-driven chemical decomposition of water molecules into hydrogen ions, electrons, and oxygen.", "importance": "Source of Earth's atmospheric oxygen."}
+            ],
+            "formulas_or_code": [
+                {"title": "Water Splitting Photolysis Equation", "type": "formula", "content": "2 \\text{H}_2\\text{O} \\longrightarrow 4\\text{H}^+ + 4e^- + \\text{O}_2", "explanation": "Replaces lost electrons in Photosystem II while releasing oxygen."}
+            ],
+            "practice_questions": [
+                {"question": "What is the ultimate source of electrons that replace those lost by chlorophyll in Photosystem II?", "hint": "Think about what is consumed to release oxygen gas.", "solution": "Water molecules (H2O) are split by photolysis, providing electrons to Photosystem II."}
+            ],
+            "quiz": [
+                {"id": 1, "question": "Where do the light-independent reactions (Calvin Cycle) take place inside the chloroplast?", "options": ["Outer chloroplast membrane", "Thylakoid lumen", "Stroma", "Mitochondrial matrix"], "correct_index": 2, "explanation": "The Calvin cycle takes place in the stroma, the fluid-filled space surrounding the thylakoids."},
+                {"id": 2, "question": "What molecule is released as a byproduct during the light reactions of photosynthesis?", "options": ["Carbon dioxide", "Oxygen (O2)", "Glucose", "Methane"], "correct_index": 1, "explanation": "Oxygen gas is released as a byproduct when water is split to donate electrons."}
+            ],
+            "flashcards": [
+                {"id": 1, "front": "What two high-energy molecules link the light reactions to the Calvin cycle?", "back": "ATP and NADPH.", "category": "Biochemistry"},
+                {"id": 2, "front": "What is the primary function of chlorophyll?", "back": "To absorb blue and red wavelengths of light and transfer photon energy to electrons.", "category": "Pigments"}
+            ]
+        }
+
+        return {
+            "title": "Photosynthesis: How Plants Power Life on Earth",
+            "domain": "science",
+            "subdomain": "Cellular Biology & Bioenergetics",
+            "scenes": scenes,
+            "materials": materials
+        }
+
+    def _build_generic_history_lecture(self, topic: str, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
+        epoch_title = topic.strip().title()
+        scenes = [
+            {
+                "scene_id": "scene_1",
+                "index": 0,
+                "chapter_title": f"1. The Gathering Storm: Catalysts of {epoch_title}",
+                "pedagogical_phase": "hook",
+                "narration_text": f"Historical turning points do not emerge from a vacuum. Long before {epoch_title} shook the world, underlying socioeconomic pressures, shifting power dynamics, and philosophical ideas were silently colliding. Understanding these root catalysts reveals why a transformation became inevitable.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "cause_and_effect",
+                    "title": f"Root Catalysts & Tensions Leading to {epoch_title}",
+                    "subtitle": "The Social, Economic and Ideological Seeds of Change",
+                    "parameters": {
+                        "root_catalyst": f"Structural Inequities & Systemic Strains in Pre-{epoch_title}",
+                        "intermediate_effects": [
+                            "Emergence of new philosophical and political ideals",
+                            "Economic hardship, institutional decay, or military friction",
+                            "A sudden sparking incident that shattered public tolerance"
+                        ],
+                        "ultimate_consequence": f"The Outbreak and Irreversible Ignition of {epoch_title}"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Systemic Strains"},
+                        {"step": 2, "highlight": "Ideological Awakening"},
+                        {"step": 3, "highlight": "The Spark"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_2",
+                "index": 1,
+                "chapter_title": "2. Pivotal Moments & Chronological Turning Points",
+                "pedagogical_phase": "foundation",
+                "narration_text": f"As events rapidly unfolded, history accelerated through critical milestones. Each battle, treaty, and popular proclamation redefined what was possible, sweeping away old orders and testing the courage of those involved.",
+                "estimated_duration": 26.0,
+                "visual_spec": {
+                    "visual_type": "timeline_journey",
+                    "title": f"Key Turning Points of {epoch_title}",
+                    "subtitle": "Chronological Roadmap of Pivotal Historical Milestones",
+                    "parameters": {
+                        "milestones": [
+                            {"year": "Stage 1", "title": "The Awakening & Spark", "desc": "Initial uprising, manifesto, or geopolitical realignment", "impact": "Breaks the status quo"},
+                            {"year": "Stage 2", "title": "Escalation & Crisis", "desc": "Direct confrontation, intense conflict, and national mobilization", "impact": "High-stakes struggle"},
+                            {"year": "Stage 3", "title": "The Climax", "desc": "Decisive battle, revolution victory, or institutional overthrow", "impact": "Irreversible shift of power"},
+                            {"year": "Stage 4", "title": "New Order Established", "desc": "Treaty ratification, constitution drafting, and sovereign stabilization", "impact": "Foundation for modern era"}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "The Awakening"},
+                        {"step": 2, "highlight": "The Climax"},
+                        {"step": 3, "highlight": "New Order"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_3",
+                "index": 2,
+                "chapter_title": "3. Clashing Ideologies & Competing Factions",
+                "pedagogical_phase": "visual_demonstration",
+                "narration_text": f"Behind every historical epoch were real human beings with competing visions for society. Examining the key factions, their ideological motivations, and the compromises they made allows us to see this conflict with balanced historical empathy.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "comparison_matrix",
+                    "title": "Competing Factions & Ideologies",
+                    "subtitle": "Contrasting Visions for Society, Governance and Power",
+                    "parameters": {
+                        "col1": "The Traditional Order: Vested interests defending established hierarchy, monarchy, or empires",
+                        "col2": "The Reformers / Revolutionaries: Mobilized populations demanding sovereignty, liberty, and rights",
+                        "col3": "The Emerging Compromise: Pragmatic institutions formed in the crucible of post-crisis peace"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Traditional Order"},
+                        {"step": 2, "highlight": "Revolutionaries"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_4",
+                "index": 3,
+                "chapter_title": "4. The Human Toll & Unintended Consequences",
+                "pedagogical_phase": "edge_cases",
+                "narration_text": f"Great historical transformations rarely follow a simple linear path. Often, radicalization, economic disruption, and innocent suffering accompanied the upheaval, serving as a sobering reminder of the complex consequences of political fracture.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "cause_and_effect",
+                    "title": "Intended Goals vs. Historical Realities",
+                    "subtitle": "Weighing Idealism against Practical and Human Consequences",
+                    "parameters": {
+                        "root_catalyst": "Radical Upheaval & Breakdown of Law and Order",
+                        "intermediate_effects": [
+                            "Civil instability and economic hyper-volatility",
+                            "Rise of factional rivalry and emergency powers"
+                        ],
+                        "ultimate_consequence": "eventual realization that lasting stability requires institutional checks and balances"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Breakdown of Law"},
+                        {"step": 2, "highlight": "Institutional Checks"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_5",
+                "index": 4,
+                "chapter_title": f"5. The Living Legacy of {epoch_title}",
+                "pedagogical_phase": "summary",
+                "narration_text": f"Centuries later, the echoes of {epoch_title} still reverberate across our laws, borders, and modern concepts of human rights. By studying this defining epoch, we gain profound perspective on the fragility and resilience of human civilization.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "spectrum_meter",
+                    "title": f"The Enduring Global Legacy of {epoch_title}",
+                    "subtitle": "From Historical Turmoil to Modern Societal Principles",
+                    "parameters": {
+                        "left_label": "Historical Context: Feudalism, autocratic rule, and systemic oppression",
+                        "right_label": "Modern Consequence: Constitutional governance, human rights, and popular sovereignty",
+                        "center_balance": "Historical Synthesis: Understanding the price and responsibility of freedom",
+                        "markers": [
+                            "Systemic Collapse",
+                            "Democratic Awakening",
+                            "Global Blueprint"
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Historical Context"},
+                        {"step": 2, "highlight": "Modern Consequence"}
+                    ]
+                }
+            }
+        ]
+
+        materials = {
+            "summary": f"A comprehensive historical masterclass on {epoch_title}: examining its deep-seated root catalysts, key chronological milestones, clashing political factions, human costs, and lasting global legacy.",
+            "notes_markdown": f"""# {epoch_title}: Masterclass Historical Notes
+
+## 1. Context & Catalysts
+- Long-term economic strains, social inequality, and institutional decay.
+- The role of circulating ideas, manifestos, and changing public consciousness.
+
+## 2. Chronological Milestones
+- **The Initial Spark**: The event that crossed the point of no return.
+- **The Peak Conflict**: Military engagements, popular revolts, or legislative decrees.
+- **The Resolution**: Treaties, constitutional frameworks, and new balances of power.
+
+## 3. Enduring Legacy
+- How modern sovereign democracy, civic rights, and international law trace back to this pivotal epoch.
+""",
+            "key_concepts": [
+                {"concept": "Historical Catalyst", "definition": "A critical event or condition that accelerates social transformation beyond peaceful containment.", "importance": "Explains why revolutions or wars happen at specific moments."},
+                {"concept": "Institutional Legacy", "definition": "The enduring laws, treaties, and political structures left in the wake of major historical events.", "importance": "Continues to shape contemporary governance."}
+            ],
+            "formulas_or_code": [
+                {"title": "The Iron Law of Historical Change", "type": "principle", "content": "Unaddressed systemic inequality + Compelling alternative vision = Inevitable upheaval", "explanation": "Why societies that refuse timely reform face eventual dramatic restructuring."}
+            ],
+            "practice_questions": [
+                {"question": f"What was the most consequential long-term outcome of {epoch_title} for modern society?", "hint": "Think about human rights, legal equality, and national sovereignty.", "solution": f"{epoch_title} demonstrated that political power ultimately derives from the consent of the governed, setting historical precedents for constitutional limits on authority."}
+            ],
+            "quiz": [
+                {"id": 1, "question": f"Why is studying the root causes of {epoch_title} more informative than only memorizing battle dates?", "options": ["Battles are not real", "Understanding underlying socioeconomic forces helps identify similar vulnerabilities in modern societies", "Dates change over time", "It is easier to guess causes"], "correct_index": 1, "explanation": "History's true value lies in understanding why human societies fracture and how sustainable peace is achieved."}
+            ],
+            "flashcards": [
+                {"id": 1, "front": f"What lesson does {epoch_title} offer to modern governance?", "back": "Institutions must proactively address public grievances and protect individual rights to avoid destabilization.", "category": "Historical Analysis"}
+            ]
+        }
+
+        return {
+            "title": f"{epoch_title}: Turning Points that Shaped the World",
+            "domain": "history",
+            "subdomain": "World History & Turning Points",
+            "scenes": scenes,
+            "materials": materials
+        }
+
+    def _build_generic_economics_lecture(self, topic: str, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
+        econ_title = topic.strip().title()
+        scenes = [
+            {
+                "scene_id": "scene_1",
+                "index": 0,
+                "chapter_title": f"1. The Core Economic Reality of {econ_title}",
+                "pedagogical_phase": "hook",
+                "narration_text": f"Every dollar, transaction, and resource allocation in human society is guided by fundamental economic incentives. To understand {econ_title}, we must cut through confusing jargon and observe how everyday people, businesses, and governments make decisions under conditions of scarcity.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "concept_metaphor",
+                    "title": f"Demystifying {econ_title}",
+                    "subtitle": "Scarcity, Incentives and Real-World Value",
+                    "parameters": {
+                        "left_title": "The Conventional Intuition",
+                        "left_items": ["Assuming prices and markets are arbitrary", "Viewing wealth purely as printed paper", "Ignoring delayed second-order effects"],
+                        "right_title": "The Economic Reality",
+                        "right_items": ["Incentives determine behavior across markets", "Value is subjective, dynamic, and scarcity-driven", "Every policy intervention carries invisible trade-offs"]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Conventional Intuition"},
+                        {"step": 2, "highlight": "Economic Reality"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_2",
+                "index": 1,
+                "chapter_title": "2. Market Forces & Dynamic Equilibrium",
+                "pedagogical_phase": "foundation",
+                "narration_text": f"At the heart of {econ_title} lies market dynamics: when supply changes, or buyer preferences shift, price acts as an information signal. Watch how equilibrium adjusts continuously like a self-correcting organism, balancing production with human demand.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "cross_section_sim",
+                    "title": "The Dynamic Market Equilibrium",
+                    "subtitle": "How Price Signals Balance Buyer Demand and Producer Supply",
+                    "parameters": {
+                        "chamber_top": "High Demand Zone: Drives upward price signals, attracting investment",
+                        "chamber_middle": "Market Equilibrium: Where willingness to pay equals marginal cost of production",
+                        "chamber_bottom": "Supply Surplus Zone: Forces downward price discounting to clear inventory"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Equilibrium point"},
+                        {"step": 2, "highlight": "Supply-Demand Shift"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_3",
+                "index": 2,
+                "chapter_title": "3. The Capital & Money Flow Cycle",
+                "pedagogical_phase": "visual_demonstration",
+                "narration_text": f"Money is not static; it is a circulating bloodstream. In this dynamic flow, households supply labor and spend income, businesses innovate and hire, and central banks modulate interest rates. Let's trace how {econ_title} ripples across this entire macroeconomic cycle.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "cycle_loop",
+                    "title": "The Macroeconomic Circulation Loop",
+                    "subtitle": "Tracking Value and Capital Movement across Society",
+                    "parameters": {
+                        "loop_title": "Economic Flow Cycle",
+                        "stages": [
+                            {"stage": "1. Household Income & Consumption", "desc": "Earned wages allocated between immediate consumption and savings"},
+                            {"stage": "2. Financial Intermediation & Banking", "desc": "Savings pooled into capital investments, loans, and business expansion"},
+                            {"stage": "3. Production of Goods & Services", "desc": "Enterprises create tangible output, hiring talent and purchasing materials"},
+                            {"stage": "4. Revenue & Value Realization", "desc": "Sales revenue returned to suppliers, employees, and reinvested equity"}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Household Allocation"},
+                        {"step": 2, "highlight": "Capital Investment"},
+                        {"step": 3, "highlight": "Value Realization"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_4",
+                "index": 3,
+                "chapter_title": "4. Trade-Offs & Policy Dilemmas",
+                "pedagogical_phase": "edge_cases",
+                "narration_text": f"In economics, there are no pure solutions—only trade-offs. Stimulating growth can spark inflation, while aggressive cooling can trigger recessions. Navigating {econ_title} requires balancing risk against reward across time horizons.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "spectrum_meter",
+                    "title": "The Policy Trade-Off Spectrum",
+                    "subtitle": "Navigating Conflicting Goals in Economic Decision-Making",
+                    "parameters": {
+                        "left_label": "Loose Monetary Stance: Fast growth, cheap credit, higher inflation risks",
+                        "right_label": "Tight Monetary Stance: Price stability, strong currency, slower immediate growth",
+                        "center_balance": "Sustainable Neutral Rate: Real productive growth without asset bubbles",
+                        "markers": [
+                            "Expansionary",
+                            "Neutral Equilibrium",
+                            "Contractionary"
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Expansionary Risks"},
+                        {"step": 2, "highlight": "Neutral Equilibrium"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_5",
+                "index": 4,
+                "chapter_title": "5. Practical Application: Navigating Real-World Markets",
+                "pedagogical_phase": "summary",
+                "narration_text": f"How do you apply these principles to your own financial life and career? By distinguishing nominal prices from real purchasing power, diversifying risks, and understanding where we stand in the economic cycle, you can make clear-headed decisions in an uncertain world.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "comparison_matrix",
+                    "title": "Actionable Financial Principles",
+                    "subtitle": "Protecting Value and Capitalizing on Economic Cycles",
+                    "parameters": {
+                        "col1": "Focus on Real Purchasing Power: Nominal wage increases mean little if goods rise faster",
+                        "col2": "Own Productive Assets: Equities, real property, and high-demand skills compound over time",
+                        "col3": "Maintain Liquidity Reserves: Having an emergency buffer prevents selling assets at market bottoms"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Purchasing Power"},
+                        {"step": 2, "highlight": "Productive Assets"}
+                    ]
+                }
+            }
+        ]
+
+        materials = {
+            "summary": f"This economics masterclass analyzes {econ_title}: unpacking market price signals, the circular flow of capital, policy trade-off spectrums, and actionable strategies for preserving real wealth.",
+            "notes_markdown": f"""# {econ_title}: Comprehensive Economics Guide
+
+## 1. Core Principles
+- **Scarcity & Choice**: Resources are limited; every choice involves an opportunity cost.
+- **Price as Information**: Prices coordinate millions of independent buyers and sellers without centralized command.
+
+## 2. The Macro Cycle
+- Capital flows between households, financial institutions, and productive enterprises.
+- Central bank policies impact the cost of borrowing and currency velocity.
+
+## 3. Practical Wealth Rules
+1. Distinguish between nominal and real (inflation-adjusted) returns.
+2. Invest in productive assets that produce genuine economic output.
+3. Understand debt cycles and maintain financial resilience.
+""",
+            "key_concepts": [
+                {"concept": "Opportunity Cost", "definition": "The loss of potential gain from other alternatives when one alternative is chosen.", "importance": "The foundation of all rational economic decision-making."},
+                {"concept": "Price Elasticity", "definition": "How responsive buyers or sellers are to a change in the price of a good.", "importance": "Dictates market behavior during supply or demand shocks."}
+            ],
+            "formulas_or_code": [
+                {"title": "The Real Return Equation", "type": "formula", "content": "Real Return ≈ Nominal Return - Inflation Rate - Fees/Taxes", "explanation": "The true increase in purchasing power after accounting for dollar devaluation."}
+            ],
+            "practice_questions": [
+                {"question": f"Why does printing more currency fail to permanently increase real national wealth in the context of {econ_title}?", "hint": "Think about the total quantity of goods and services produced.", "solution": "Wealth consists of the real goods, infrastructure, food, and services available, not the pieces of paper representing them. Increasing currency supply without increasing output simply bids up prices across the board."}
+            ],
+            "quiz": [
+                {"id": 1, "question": "What is the primary role of prices in a market economy?", "options": ["To make items expensive", "To act as decentralized information signals coordinating supply and demand", "To ensure government taxes are paid", "To prevent all foreign trade"], "correct_index": 1, "explanation": "Prices signal scarcity and abundance, directing resources to where they are most urgently needed."}
+            ],
+            "flashcards": [
+                {"id": 1, "front": "What is the difference between nominal and real value?", "back": "Nominal value is expressed in raw currency figures; real value is adjusted for changes in purchasing power (inflation).", "category": "Core Economics"}
+            ]
+        }
+
+        return {
+            "title": f"Understanding {econ_title}: Economics, Markets & Money",
+            "domain": "economics_business",
+            "subdomain": "Economics, Markets & Finance",
+            "scenes": scenes,
+            "materials": materials
+        }
+
+    def _build_generic_psychology_lecture(self, topic: str, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
+        psy_title = topic.strip().title()
+        scenes = [
+            {
+                "scene_id": "scene_1",
+                "index": 0,
+                "chapter_title": f"1. The Architecture of the Mind: Why {psy_title} Matters",
+                "pedagogical_phase": "hook",
+                "narration_text": f"The human brain evolved to survive in ancestral savannas, not to navigate twenty-first-century digital overload. Because of this evolutionary mismatch, our automatic emotional reactions frequently misdirect our actions. By studying {psy_title}, we pull back the curtain on our subconscious programming.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "concept_metaphor",
+                    "title": f"Subconscious Instinct vs. Conscious Clarity in {psy_title}",
+                    "subtitle": "Evolutionary Wiring vs. Intentional Living",
+                    "parameters": {
+                        "left_title": "The Automatic Default (System 1)",
+                        "left_items": ["Impulsive emotional triggers", "Cognitive biases and threat hypersensitivity", "Short-term dopamine seeking"],
+                        "right_title": "The Intentional Mind (System 2)",
+                        "right_items": ["Rational metacognition and reflection", "Long-term values alignment", "Emotional regulation and deliberate choice"]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Automatic Default"},
+                        {"step": 2, "highlight": "Intentional Mind"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_2",
+                "index": 1,
+                "chapter_title": "2. The Cognitive Feedback Loop",
+                "pedagogical_phase": "foundation",
+                "narration_text": f"Every thought, emotional reaction, and habitual behavior operates within a circular feedback loop. An environmental trigger sparks an automated interpretation, which floods our physiology with emotion, driving an action that reinforces the original neural circuit.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "cycle_loop",
+                    "title": "The Psychological Feedback Cycle",
+                    "subtitle": "Trigger -> Cognitive Appraisal -> Emotion -> Behavioral Reinforcement",
+                    "parameters": {
+                        "loop_title": "The Mind-Behavior Cycle",
+                        "stages": [
+                            {"stage": "1. Environmental Trigger", "desc": "A sensory event, notification, or social interaction occurs"},
+                            {"stage": "2. Cognitive Appraisal", "desc": "The mind automatically assigns meaning: safe, threatening, or rewarding"},
+                            {"stage": "3. Neurochemical Emotion", "desc": "Dopamine, cortisol, or adrenaline shifts internal bodily state"},
+                            {"stage": "4. Habitual Action & Feedback", "desc": "Behavior executed; dopamine reward reinforces the neural pathway"}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Environmental Trigger"},
+                        {"step": 2, "highlight": "Cognitive Appraisal"},
+                        {"step": 3, "highlight": "Behavioral Reinforcement"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_3",
+                "index": 2,
+                "chapter_title": "3. The Hierarchy of Psychological Needs & Values",
+                "pedagogical_phase": "visual_demonstration",
+                "narration_text": f"Human psychological well-being is organized into foundational layers. Without safety and belonging, self-actualization remains out of reach. Let us map out how {psy_title} integrates into our core human hierarchy.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "hierarchy_pyramid",
+                    "title": f"The Structural Hierarchy of {psy_title}",
+                    "subtitle": "Foundational Survival to Higher Transcendent Purpose",
+                    "parameters": {
+                        "pyramid_title": "Psychological Hierarchy",
+                        "tiers": [
+                            {"tier": "Purpose & Self-Actualization", "note": "Meaningful contribution, creative expression, and moral integrity"},
+                            {"tier": "Autonomy & Psychological Mastery", "note": "Competence, emotional self-regulation, and internal locus of control"},
+                            {"tier": "Social Belonging & Trust", "note": "Secure relationships, community bonds, and vulnerability"},
+                            {"tier": "Physiological & Mental Baseline", "note": "Sleep, nutrition, physical safety, and calm nervous system"}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Physiological Baseline"},
+                        {"step": 2, "highlight": "Autonomy & Mastery"},
+                        {"step": 3, "highlight": "Self-Actualization"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_4",
+                "index": 3,
+                "chapter_title": "4. Cognitive Biases & Blind Spots",
+                "pedagogical_phase": "edge_cases",
+                "narration_text": f"No human mind is immune to blind spots. From confirmation bias—seeking only what confirms our prejudices—to catastrophic thinking and sunk-cost fallacies, awareness of these distortions is the true beginning of wisdom.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "comparison_matrix",
+                    "title": "Cognitive Distortions vs. Mental Clarity",
+                    "subtitle": "Recognizing and Overcoming Human Blind Spots",
+                    "parameters": {
+                        "col1": "Confirmation Bias: Only absorbing data that agrees with your pre-existing narrative",
+                        "col2": "Emotional Reasoning: Believing that because an anxiety feels intense, a catastrophe must be true",
+                        "col3": "Metacognitive Reframing: Observing thoughts like clouds without being controlled by them"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Confirmation Bias"},
+                        {"step": 2, "highlight": "Metacognitive Reframing"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_5",
+                "index": 4,
+                "chapter_title": "5. Daily Practice & Psychological Resilience",
+                "pedagogical_phase": "summary",
+                "narration_text": f"Philosophy and psychology are not spectator sports; they are daily practices. By pausing between stimulus and response, choosing conscious reframing, and cultivating grateful self-awareness, we transform {psy_title} into lived resilience and flourishing.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "spectrum_meter",
+                    "title": "The Spectrum of Psychological Resilience",
+                    "subtitle": "Moving from Reactive Vulnerability to Antifragile Strength",
+                    "parameters": {
+                        "left_label": "Reactive Stance: Buffeted by external circumstances, blaming outside forces",
+                        "right_label": "Antifragile Mastery: Using adversity as fuel for psychological growth and wisdom",
+                        "center_balance": "Stoic Groundedness: Clear boundary between what you control and what you do not",
+                        "markers": [
+                            "Vulnerability",
+                            "Emotional Balance",
+                            "Antifragile Resilience"
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Reactive Stance"},
+                        {"step": 2, "highlight": "Antifragile Mastery"}
+                    ]
+                }
+            }
+        ]
+
+        materials = {
+            "summary": f"This psychology and philosophical masterclass deconstructs {psy_title}: exploring evolutionary cognitive wiring, habit feedback loops, structural needs hierarchies, cognitive bias mitigation, and daily resilience.",
+            "notes_markdown": f"""# {psy_title}: Psychological & Philosophical Guide
+
+## 1. Foundational Concepts
+- **System 1 vs. System 2**: Fast, emotional, automatic processing versus slow, logical, reflective deliberation.
+- **The Space Between Stimulus & Response**: Freedom lies in cultivating the pause before reacting.
+
+## 2. The Cognitive Loop
+1. **Trigger**: External or internal prompt.
+2. **Appraisal**: The narrative the mind constructs.
+3. **Affect**: Somatic emotional activation.
+4. **Behavior**: The action that solidifies the neural circuit.
+
+## 3. Daily Resilience Protocols
+- Practice metacognition: watch thoughts without judging them.
+- Separate what is within your voluntary control from what is not.
+""",
+            "key_concepts": [
+                {"concept": "Metacognition", "definition": "The capacity to observe, analyze, and regulate one's own thought processes.", "importance": "Breaks destructive automated cognitive loops."},
+                {"concept": "Internal Locus of Control", "definition": "The psychological belief that one's decisions and effort determine life outcomes, rather than luck or external fate.", "importance": "Strongly correlated with mental health, resilience, and achievement."}
+            ],
+            "formulas_or_code": [
+                {"title": "Viktor Frankl's Principle", "type": "principle", "content": "Between stimulus and response there is a space. In that space is our power to choose our response.", "explanation": "The ultimate foundation of human psychological freedom."}
+            ],
+            "practice_questions": [
+                {"question": f"How can someone break an unhelpful automated thought loop related to {psy_title}?", "hint": "Think about the pause between stimulus and response.", "solution": "By labeling the emotional surge without immediate action ('I notice I am feeling anxiety'), questioning the underlying cognitive appraisal, and deliberately choosing a constructive response."}
+            ],
+            "quiz": [
+                {"id": 1, "question": "What is the key difference between automatic emotional reactions and conscious deliberation?", "options": ["There is no difference", "Emotional reactions are fast and evolutionary; deliberation is slow, conscious, and values-aligned", "Emotions are always correct", "Deliberation causes depression"], "correct_index": 1, "explanation": "Evolutionary System 1 prioritizes fast survival shortcuts, whereas System 2 allows thoughtful alignment with long-term goals."}
+            ],
+            "flashcards": [
+                {"id": 1, "front": "What does 'Metacognition' mean?", "back": "Thinking about thinking: the ability to observe one's own mental states objectively.", "category": "Cognitive Science"}
+            ]
+        }
+
+        return {
+            "title": f"Mastering {psy_title}: Psychology, Mindset & Resilience",
+            "domain": "psychology_philosophy",
+            "subdomain": "Cognitive Psychology & Philosophy",
+            "scenes": scenes,
+            "materials": materials
+        }
+
+    def _build_generic_biology_lecture(self, topic: str, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
+        bio_title = topic.strip().title()
+        scenes = [
+            {
+                "scene_id": "scene_1",
+                "index": 0,
+                "chapter_title": f"1. The Marvel of Life: Why {bio_title} Evolved",
+                "pedagogical_phase": "hook",
+                "narration_text": f"Life on Earth has refined its biochemical machinery over billions of years of natural selection. In {bio_title}, nature solved a profound physical challenge: how to capture energy, defend against microscopic invaders, or maintain cellular homeostasis against the laws of entropy.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "concept_metaphor",
+                    "title": f"The Evolutionary Engineering of {bio_title}",
+                    "subtitle": "Biological Solutions to Fundamental Physical Problems",
+                    "parameters": {
+                        "left_title": "The Physical Challenge",
+                        "left_items": ["Entropy and cellular decay", "Fluctuating external environmental stresses", "Energy scarcity and microscopic pathogens"],
+                        "right_title": "The Biological Innovation",
+                        "right_items": ["Self-healing cellular membranes and enzymes", "Precision molecular signaling cascades", "Dynamic homeostasis maintaining optimal internal equilibrium"]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Physical Challenge"},
+                        {"step": 2, "highlight": "Biological Innovation"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_2",
+                "index": 1,
+                "chapter_title": "2. Anatomical Structure & Cellular Cross-Section",
+                "pedagogical_phase": "foundation",
+                "narration_text": f"Let us zoom into the microscopic cutaway. Notice how specialized organelles and membranes are positioned with architectural precision. Each receptor, ion channel, and enzyme carries out targeted chemical transformations with near-perfect fidelity.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "cross_section_sim",
+                    "title": "Microscopic Cellular Architecture",
+                    "subtitle": "Organelles, Selective Membranes and Biochemical Chambers",
+                    "parameters": {
+                        "chamber_top": "Extracellular Matrix: Signaling ligands, nutrients, and immune checkpoints",
+                        "chamber_middle": "Semi-Permeable Lipid Bilayer: Dynamic protein channels and voltage-gated pumps",
+                        "chamber_bottom": "Intracellular Cytoplasm: Mitochondria energy production, ribosome translation, and enzyme cascades"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Extracellular Matrix"},
+                        {"step": 2, "highlight": "Lipid Bilayer"},
+                        {"step": 3, "highlight": "Intracellular Cytoplasm"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_3",
+                "index": 2,
+                "chapter_title": "3. Dynamic Pathways & Physiological Cycles",
+                "pedagogical_phase": "visual_demonstration",
+                "narration_text": f"Biology is never static; it is an orchestrated biochemical dance. As biochemical inputs trigger receptors, intracellular messengers cascade through the system, switching genes on or off and cycling metabolites into usable cellular fuel.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "cycle_loop",
+                    "title": "The Biochemical Signaling Pathway",
+                    "subtitle": "Receptor Activation -> Second Messengers -> Cellular Response",
+                    "parameters": {
+                        "loop_title": "Physiological Cascade",
+                        "stages": [
+                            {"stage": "1. Receptor Binding", "desc": "Ligand or photon docks with membrane protein"},
+                            {"stage": "2. Second Messenger Cascade", "desc": "cAMP, calcium ions, or kinase phosphorylation amplifies signal"},
+                            {"stage": "3. Nuclear Transcription", "desc": "Transcription factors activate specific genetic programs"},
+                            {"stage": "4. Negative Feedback Reset", "desc": "Phosphatases and receptor internalization restore basal sensitivity"}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Receptor Binding"},
+                        {"step": 2, "highlight": "Signal Amplification"},
+                        {"step": 3, "highlight": "Negative Feedback"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_4",
+                "index": 3,
+                "chapter_title": "4. Disruptions, Diseases & Immunological Defenses",
+                "pedagogical_phase": "edge_cases",
+                "narration_text": f"When this delicate equilibrium is stressed by chronic inflammation, genetic mutations, or environmental toxins, disease manifests. Understanding these failure modes has unlocked miraculous therapies in modern medicine, from targeted immunotherapy to gene editing.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "cause_and_effect",
+                    "title": "Homeostasis vs. Pathological Disruption",
+                    "subtitle": "How Stressors Compromise Cellular Balance and How Defenses Respond",
+                    "parameters": {
+                        "root_catalyst": "External Stressor / Genetic Mutation / Toxic Influx",
+                        "intermediate_effects": [
+                            "Mitochondrial oxidative stress and inflammatory cytokine surge",
+                            "Mobilization of innate and adaptive immune cell defenses"
+                        ],
+                        "ultimate_consequence": "Cellular repair and adaptation, or chronic pathology requiring medical intervention"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Oxidative Stress"},
+                        {"step": 2, "highlight": "Immune Mobilization"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_5",
+                "index": 4,
+                "chapter_title": "5. Human Health & Evidence-Based Protocols",
+                "pedagogical_phase": "summary",
+                "narration_text": f"How can we optimize our own biology in light of {bio_title}? By respecting our natural evolutionary rhythms—prioritizing restorative sleep, nutrient-dense nutrition, physical movement, and managing chronic stressors—we harmonize with millions of years of biological wisdom.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "comparison_matrix",
+                    "title": "Evidence-Based Biological Optimization",
+                    "subtitle": "Translating Cellular Insights into Daily Health Protocols",
+                    "parameters": {
+                        "col1": "Circadian Synchronization: Align light exposure, meals, and rest with natural solar rhythms",
+                        "col2": "Cellular Stress Adaptation (Hormesis): Exercise and thermal changes spur mitochondrial biogenesis",
+                        "col3": "Metabolic & Immune Care: Eliminate chronic systemic inflammation through whole-food nutrition"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Circadian Synchronization"},
+                        {"step": 2, "highlight": "Hormesis Adaptation"}
+                    ]
+                }
+            }
+        ]
+
+        materials = {
+            "summary": f"This human biology and health masterclass investigates {bio_title}: mapping evolutionary purposes, microscopic cellular anatomy, biochemical signaling cascades, disease vulnerabilities, and evidence-based health protocols.",
+            "notes_markdown": f"""# {bio_title}: Biological & Physiological Study Notes
+
+## 1. Principles of Cellular Life
+- **Homeostasis**: The active maintenance of a stable internal environment despite external fluctuations.
+- **Biochemical Specificity**: Lock-and-key interactions between enzymes, receptors, and substrates.
+
+## 2. Signaling & Pathways
+- Receptor phosphorylation, second-messenger amplification, and targeted gene expression.
+- Feedback inhibition: how biological systems prevent runaway reactions.
+
+## 3. Practical Health Implications
+- The power of **hormesis**: mild biological stressors (exercise, temperature) trigger cellular repair mechanisms.
+- Protecting cellular integrity through restorative sleep, micronutrients, and hydration.
+""",
+            "key_concepts": [
+                {"concept": "Homeostasis", "definition": "The self-regulating process by which biological systems maintain internal stability while adjusting to changing external conditions.", "importance": "The core prerequisite for life itself."},
+                {"concept": "Hormesis", "definition": "A biological phenomenon whereby a beneficial effect results from exposure to low doses of an otherwise stressful agent (e.g., exercise, cold, fasting).", "importance": "Drives cellular resilience and longevity."}
+            ],
+            "formulas_or_code": [
+                {"title": "The Biological Invariant", "type": "principle", "content": "Structure Dictates Function; Homeostasis Preserves Life", "explanation": "The shape of proteins determines what they do; feedback loops keep the organism alive."}
+            ],
+            "practice_questions": [
+                {"question": f"Why is negative feedback so prevalent in biological regulation related to {bio_title}?", "hint": "Think about what happens when a thermostat never turns off.", "solution": "Negative feedback ensures that once an optimal level is achieved, the pathway automatically slows down, preventing toxic accumulation or energy waste."}
+            ],
+            "quiz": [
+                {"id": 1, "question": "What is the primary function of cellular homeostasis?", "options": ["To stop all chemical reactions", "To maintain stable, life-supporting internal conditions despite changing environments", "To double body weight every week", "To eliminate the need for oxygen"], "correct_index": 1, "explanation": "Homeostasis dynamically balances temperature, pH, fluid levels, and energy."}
+            ],
+            "flashcards": [
+                {"id": 1, "front": "What does 'Hormesis' describe in biology?", "back": "The process where mild, controlled stressors trigger positive adaptive repair in cells.", "category": "Physiology"}
+            ]
+        }
+
+        return {
+            "title": f"The Science of {bio_title}: Cellular Mechanics & Human Health",
+            "domain": "health_biology",
+            "subdomain": "Health Sciences & Human Biology",
+            "scenes": scenes,
+            "materials": materials
+        }
+
+    def _build_generic_science_lecture(self, topic: str, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
+        sci_title = topic.strip().title()
+        scenes = [
+            {
+                "scene_id": "scene_1",
+                "index": 0,
+                "chapter_title": f"1. The Natural Mystery of {sci_title}",
+                "pedagogical_phase": "hook",
+                "narration_text": f"Look closely at the natural world, and familiar everyday sights suddenly reveal profound physical mysteries. Why does {sci_title} behave the way it does? By stripping away preconceived notions, we discover that the universe operates according to breathtakingly elegant mathematical and physical laws.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "concept_metaphor",
+                    "title": f"Observing {sci_title}: From Intuition to Physics",
+                    "subtitle": "Everyday Observation vs. Fundamental Physical Reality",
+                    "parameters": {
+                        "left_title": "The Surface Observation",
+                        "left_items": ["Appears simple or taken for granted", "Intuitive assumptions often contradict nature", "Conceals invisible forces at work"],
+                        "right_title": "The Underlying Physics",
+                        "right_items": ["Governed by conservation of energy and momentum", "Emerges from atomic and quantum interactions", "Universal laws apply from the laboratory to deep space"]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Surface Observation"},
+                        {"step": 2, "highlight": "Underlying Physics"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_2",
+                "index": 1,
+                "chapter_title": "2. Cross-Section & Force Dynamics",
+                "pedagogical_phase": "foundation",
+                "narration_text": f"Let us examine the physical cross-section. Observe the opposing forces: gravity pulling downward, pressure gradients pushing outward, and electromagnetic fields directing energy. When these vector forces interact, dynamic equilibrium is established.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "cross_section_sim",
+                    "title": "Cross-Section & Dynamic Force Equilibrium",
+                    "subtitle": "Visualizing Interacting Vectors, Pressure and Energy Gradients",
+                    "parameters": {
+                        "chamber_top": "High-Potential Field: Inward pressure or gravitational potential",
+                        "chamber_middle": "The Interaction Boundary: Wave interference, refraction, or kinetic transfer",
+                        "chamber_bottom": "Equilibrium Base: Dispersed radiation, stabilized matter, or ground state"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "High Potential Field"},
+                        {"step": 2, "highlight": "Interaction Boundary"},
+                        {"step": 3, "highlight": "Equilibrium Base"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_3",
+                "index": 2,
+                "chapter_title": "3. The Governing Scientific Law",
+                "pedagogical_phase": "visual_demonstration",
+                "narration_text": f"Behind this phenomenon lies an unbreakable law of nature. Whether it is thermodynamics, Maxwell's electromagnetism, or Newton's mechanics, nature calculates outcomes with mathematical certainty. Let us track the cause-and-effect relationship.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "cause_and_effect",
+                    "title": "The Fundamental Physical Mechanism",
+                    "subtitle": "Input Stimulus -> Atomic/Wave Interaction -> Observable Phenomenon",
+                    "parameters": {
+                        "root_catalyst": f"Energy Influx or Gravitational/Atomic Stimulus in {sci_title}",
+                        "intermediate_effects": [
+                            "Conservation laws dictate redistribution of momentum and energy",
+                            "Wave frequency shifts, thermal excitation, or particle acceleration"
+                        ],
+                        "ultimate_consequence": f"The Observable Natural Phenomenon of {sci_title}"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Energy Influx"},
+                        {"step": 2, "highlight": "Wave/Particle Action"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_4",
+                "index": 3,
+                "chapter_title": "4. Extreme Boundaries & Quantum Paradoxes",
+                "pedagogical_phase": "edge_cases",
+                "narration_text": f"What happens when we push {sci_title} to extreme limits—approaching absolute zero, traveling near the speed of light, or compressing matter inside a neutron star? At these boundaries, classical intuition shatters, paving the way for relativity and quantum physics.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "spectrum_meter",
+                    "title": "The Spectrum of Physical Extremes",
+                    "subtitle": "From Classical Everyday Scales to Relativistic Boundaries",
+                    "parameters": {
+                        "left_label": "Microscopic Quantum Domain: Wave-particle duality, uncertainty, tunneling",
+                        "right_label": "Cosmological Extremes: General relativity, curved spacetime, singularity",
+                        "center_balance": "Classical Mechanics: Predictable everyday physics at human scales",
+                        "markers": [
+                            "Quantum Scale",
+                            "Everyday Realm",
+                            "Relativistic Universe"
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Quantum Domain"},
+                        {"step": 2, "highlight": "Everyday Realm"},
+                        {"step": 3, "highlight": "Relativistic Universe"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_5",
+                "index": 4,
+                "chapter_title": "5. Human Engineering & Modern Technology",
+                "pedagogical_phase": "summary",
+                "narration_text": f"The ultimate triumph of understanding {sci_title} is using it to engineer a better world. From semiconductors and lasers to spaceflight and medical imaging, mastering this scientific principle allows humanity to transform nature's laws into transformative technology.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "comparison_matrix",
+                    "title": "From Natural Principle to Human Innovation",
+                    "subtitle": "How Scientific Discovery Drives Breakthrough Engineering",
+                    "parameters": {
+                        "col1": "Natural Law: Fundamental behavior observed in nature and experimentally verified",
+                        "col2": "Engineering Innovation: Harnessing the principle inside specialized hardware or sensors",
+                        "col3": "Global Impact: Modern computing, satellite communication, clean energy, and health"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Natural Law"},
+                        {"step": 2, "highlight": "Engineering Innovation"}
+                    ]
+                }
+            }
+        ]
+
+        materials = {
+            "summary": f"This natural sciences and physics masterclass demystifies {sci_title}: exploring physical cutaways, vector force interactions, fundamental conservation laws, extreme relativistic boundaries, and engineering innovations.",
+            "notes_markdown": f"""# {sci_title}: Fundamental Physics & Science Notes
+
+## 1. Physical Principles
+- **Conservation Laws**: Energy, momentum, and mass are conserved through all physical interactions.
+- **Equilibrium & Forces**: Net force equals zero in steady state; unbalanced forces drive acceleration.
+
+## 2. Microscopic vs. Macroscopic
+- How subatomic behaviors combine to produce large-scale observable phenomena.
+- Boundary conditions at extreme temperatures, pressures, and velocities.
+
+## 3. Engineering Applications
+- Translating theoretical physics into real-world sensors, engines, and digital technologies.
+""",
+            "key_concepts": [
+                {"concept": "Conservation of Energy", "definition": "The law stating that energy cannot be created or destroyed, only transformed from one form to another.", "importance": "The universal bedrock of all physical science."},
+                {"concept": "Vector Equilibrium", "definition": "A state where opposing physical forces balance each other out, resulting in zero net acceleration.", "importance": "Explains stability in structures, celestial orbits, and fluids."}
+            ],
+            "formulas_or_code": [
+                {"title": "Fundamental Conservation Principle", "type": "formula", "content": "ΔE_system = Q - W (First Law of Thermodynamics)", "explanation": "The change in internal energy equals heat added minus work done."}
+            ],
+            "practice_questions": [
+                {"question": f"Why is understanding the physical laws behind {sci_title} essential for engineering modern technologies?", "hint": "Consider predictability and materials science.", "solution": "Without precise mathematical models of physical forces and energy transfer, engineers cannot design reliable circuits, aerospace vehicles, or medical devices."}
+            ],
+            "quiz": [
+                {"id": 1, "question": "What happens when opposing forces acting on a physical system are completely balanced?", "options": ["The system explodes", "The system achieves dynamic equilibrium with zero net acceleration", "Time stops", "Gravity ceases to exist"], "correct_index": 1, "explanation": "Balanced forces result in equilibrium, maintaining constant velocity or rest."}
+            ],
+            "flashcards": [
+                {"id": 1, "front": "What does conservation of energy guarantee?", "back": "Energy in an isolated system can never be created or destroyed, only transformed between states.", "category": "Physics"}
+            ]
+        }
+
+        return {
+            "title": f"The Physics of {sci_title}: Natural Laws & Scientific Marvels",
+            "domain": "science_nature",
+            "subdomain": "Natural Sciences & Phenomenon Exploration",
+            "scenes": scenes,
+            "materials": materials
+        }
+
+    def _build_generic_algorithm_math_lecture(self, topic: str, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
+        math_title = topic.strip().title()
+        scenes = [
+            {
+                "scene_id": "scene_1",
+                "index": 0,
+                "chapter_title": f"1. The Problem Space & Bottleneck of {math_title}",
+                "pedagogical_phase": "hook",
+                "narration_text": f"In mathematics and computer science, brilliance lies in efficiency. Without {math_title}, problems that should take milliseconds would take billions of years to compute! By formulating the problem rigorously, we unlock a structured path to optimal solutions.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "concept_metaphor",
+                    "title": f"The Computational Challenge in {math_title}",
+                    "subtitle": "Brute Force Inefficiency vs. Algorithmic Elegance",
+                    "parameters": {
+                        "left_title": "Brute Force Approach",
+                        "left_items": ["O(N^2) or exponential blowup", "Exhaustive, redundant recalculation", "Fails catastrophically at scale"],
+                        "right_title": f"The {math_title} Solution",
+                        "right_items": ["Optimal mathematical invariants", "Pruning unnecessary search space", "Scales smoothly to millions of inputs"]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Brute Force Inefficiency"},
+                        {"step": 2, "highlight": "Algorithmic Elegance"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_2",
+                "index": 1,
+                "chapter_title": "2. Step-by-Step State Simulator",
+                "pedagogical_phase": "foundation",
+                "narration_text": f"Let us watch the algorithm execute step by step. Notice how pointers track the active boundary, invariant conditions are preserved, and search space contracts exponentially with each decision.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "algorithm_animator",
+                    "title": "Interactive State & Memory Simulator",
+                    "subtitle": "Pointer Movements, State Updates and Invariant Maintenance",
+                    "parameters": {
+                        "array": [2, 5, 8, 12, 16, 23, 38, 56, 72, 91],
+                        "active_indices": [3, 4],
+                        "target": 16,
+                        "pointers": {"low": 0, "mid": 4, "high": 9},
+                        "explanation": f"State updated: invariant satisfied for {math_title}"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "active_pointer": "low", "highlight": "State initialized"},
+                        {"step": 2, "active_pointer": "mid", "highlight": "Invariant comparison"},
+                        {"step": 3, "active_pointer": "high", "highlight": "Search space halved"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_3",
+                "index": 2,
+                "chapter_title": "3. Mathematical Coordinates & Curve Representation",
+                "pedagogical_phase": "visual_demonstration",
+                "narration_text": f"Now let us visualize the mathematical function. Notice the relationship between the independent variable and the rate of change. By graphing the function, the geometric meaning becomes unmistakably clear.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "math_graph",
+                    "title": "Mathematical Curve & Tangent Limits",
+                    "subtitle": "Coordinate Geometry, Function Curves and Slope Evolution",
+                    "parameters": {
+                        "function_type": "polynomial",
+                        "curve_equation": "f(x) = x^2 - 4x + 6",
+                        "tangent_point": {"x": 2, "y": 2, "slope": 0},
+                        "domain_range": [-2, 6],
+                        "asymptotes": []
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Function Curve plotted"},
+                        {"step": 2, "highlight": "Tangent point at minimum (x=2)"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_4",
+                "index": 3,
+                "chapter_title": "4. Time & Space Complexity Boundaries",
+                "pedagogical_phase": "edge_cases",
+                "narration_text": f"Rigorous analysis demands understanding the limits. What is the worst-case Big-O runtime? How much auxiliary memory is required? Evaluating these boundaries proves whether an algorithm is ready for hyperscale deployment.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "comparison_matrix",
+                    "title": "Complexity Boundaries: Best vs Worst Case",
+                    "subtitle": "Asymptotic Performance Across Data Distributions",
+                    "parameters": {
+                        "col1": "Best Case: O(1) or optimal shortcut when inputs match ideal preconditions",
+                        "col2": "Average Case: Stable, predictable asymptotic execution across random data",
+                        "col3": "Worst Case / Edge Trap: Pathological inputs (e.g. reverse sorted) and memory limits"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Best Case"},
+                        {"step": 2, "highlight": "Worst Case"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_5",
+                "index": 4,
+                "chapter_title": "5. Clean Production Implementation",
+                "pedagogical_phase": "summary",
+                "narration_text": f"To conclude, let us inspect an idiomatic, battle-tested implementation. Notice the absence of off-by-one errors, the clean boundary checks, and the self-documenting structure that makes this algorithm production-grade.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "code_visualizer",
+                    "title": f"Production Implementation of {math_title}",
+                    "subtitle": "Battle-Tested, Idiomatic Algorithm Code",
+                    "parameters": {
+                        "language": "python",
+                        "code": "def solve_algorithm(items):\n    # 1. Base condition check\n    if not items:\n        return None\n    \n    # 2. Initialize pointers / state\n    left, right = 0, len(items) - 1\n    \n    # 3. Core invariant loop\n    while left <= right:\n        mid = (left + right) // 2\n        if evaluate_condition(items[mid]):\n            return items[mid]\n        left += 1\n        \n    return None",
+                        "highlights": [
+                            {"line": 2, "label": "Precondition boundary check"},
+                            {"line": 6, "label": "Pointer initialization"},
+                            {"line": 9, "label": "Safe integer midpoint calculation"}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "active_line": 2, "scope": "Validation"},
+                        {"step": 2, "active_line": 9, "scope": "Core evaluation"}
+                    ]
+                }
+            }
+        ]
+
+        materials = {
+            "summary": f"This mathematical and algorithmic masterclass deconstructs {math_title}: formulating computational efficiency, step-by-step memory simulation, coordinate curve graphing, Big-O complexity analysis, and idiomatic production code.",
+            "notes_markdown": f"""# {math_title}: Algorithm & Applied Math Guide
+
+## 1. Mathematical Foundation
+- **Invariants**: Conditions that remain true throughout every iteration of the algorithm.
+- **Asymptotic Analysis**: Measuring growth rate of computational work as input size $N$ approaches infinity.
+
+## 2. Complexity Matrix
+- **Time Complexity**: Best, Average, and Worst-case bounds (Big-O).
+- **Space Complexity**: Memory footprint and auxiliary cache overhead.
+
+## 3. Implementation Checklist
+- Prevent off-by-one bugs in loop termination conditions.
+- Handle empty, single-element, and duplicate edge inputs cleanly.
+""",
+            "key_concepts": [
+                {"concept": "Loop Invariant", "definition": "A formal property that holds true before and after each iteration of a loop, used to prove algorithmic correctness.", "importance": "Guarantees bug-free code logic."},
+                {"concept": "Big-O Notation", "definition": "A mathematical notation that describes the limiting behavior of a function when the argument tends towards a particular value or infinity.", "importance": "Universal standard for evaluating algorithmic scalability."}
+            ],
+            "formulas_or_code": [
+                {"title": "Asymptotic Dominance", "type": "formula", "content": "O(1) < O(log N) < O(N) < O(N log N) < O(N^2) < O(2^N)", "explanation": "The fundamental hierarchy of computational complexity."}
+            ],
+            "practice_questions": [
+                {"question": f"Why is preserving the loop invariant so essential in implementing {math_title}?", "hint": "Think about edge case errors and termination guarantees.", "solution": "Preserving the loop invariant guarantees that at termination, the algorithm has either found the correct result or proven that no solution exists within the search space."}
+            ],
+            "quiz": [
+                {"id": 1, "question": "What is the primary reason developers analyze Big-O complexity?", "options": ["To make code look complicated", "To predict how memory and runtime will scale as data grows to millions of items", "To satisfy the compiler", "To avoid writing unit tests"], "correct_index": 1, "explanation": "Big-O reveals whether an algorithm will remain fast or crash servers under production scale."}
+            ],
+            "flashcards": [
+                {"id": 1, "front": "What does a loop invariant guarantee?", "back": "That a key correctness condition remains unbroken before, during, and after loop execution.", "category": "Algorithm Theory"}
+            ]
+        }
+
+        return {
+            "title": f"Mastering {math_title}: Algorithmic Elegance & Mathematical Rigor",
+            "domain": "computer_science" if "algorithm" in topic.lower() or "search" in topic.lower() or "tree" in topic.lower() else "mathematics",
+            "subdomain": "Algorithms, Systems & Applied Mathematics",
+            "scenes": scenes,
+            "materials": materials
+        }
+
+    def _build_generic_arts_lecture(self, topic: str, level: str, purpose: str, num_scenes: int, voice_name: str) -> Dict[str, Any]:
+        arts_title = topic.strip().title()
+        scenes = [
+            {
+                "scene_id": "scene_1",
+                "index": 0,
+                "chapter_title": f"1. The Creative Spark & Emotional Core of {arts_title}",
+                "pedagogical_phase": "hook",
+                "narration_text": f"Art is the lie that enables us to realize the truth. Behind every enduring narrative, melody, or visual composition lies a fundamental human longing. To understand {arts_title}, we must explore how creators distill universal emotional truths into structured artistic form.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "concept_metaphor",
+                    "title": f"The Creative Tension in {arts_title}",
+                    "subtitle": "Raw Human Emotion vs. Disciplined Artistic Craft",
+                    "parameters": {
+                        "left_title": "The Raw Human Experience",
+                        "left_items": ["Unconscious desires, vulnerabilities, and fears", "Chaos of daily reality", "The hunger for meaning and connection"],
+                        "right_title": "The Masterful Artistic Form",
+                        "right_items": ["Harmonic structure, rhythm, and pacing", "Archetypal character arcs and symbolic motifs", "Cathartic resolution that touches the human spirit"]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Raw Experience"},
+                        {"step": 2, "highlight": "Artistic Form"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_2",
+                "index": 1,
+                "chapter_title": "2. The Narrative Arc & Dramatic Tension Mountain",
+                "pedagogical_phase": "foundation",
+                "narration_text": f"Notice how storytelling and artistic compositions mimic the natural heartbeat of human tension. Beginning in the ordinary world, tension steadily climbs through progressive complications until reaching an intense, transformative climax.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "narrative_arc",
+                    "title": "The Dramatic Tension Arc",
+                    "subtitle": "Exposition -> Inciting Incident -> Rising Action -> Climax -> Resolution",
+                    "parameters": {
+                        "arc_stages": [
+                            {"stage": "Exposition", "tension": 15, "desc": "Establishment of the ordinary world and flawed status quo"},
+                            {"stage": "Inciting Incident", "desc": "The catalyst that disrupts life and demands action", "tension": 35},
+                            {"stage": "Rising Action", "tension": 65, "desc": "Escalating stakes, tests of character, and mounting complications"},
+                            {"stage": "The Climax", "tension": 95, "desc": "The ultimate confrontation; point of no return"},
+                            {"stage": "Resolution & Catharsis", "tension": 25, "desc": "Integration of lessons; the transformed new world"}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Inciting Incident"},
+                        {"step": 2, "highlight": "The Climax"},
+                        {"step": 3, "highlight": "Resolution"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_3",
+                "index": 2,
+                "chapter_title": "3. Archetypes & Psychological Depth",
+                "pedagogical_phase": "visual_demonstration",
+                "narration_text": f"Why do certain characters and symbols resonate across cultures? Carl Jung identified them as archetypes: universal figures stored in humanity's collective unconscious. Understanding these figures gives your artistic analysis immense psychological depth.",
+                "estimated_duration": 25.0,
+                "visual_spec": {
+                    "visual_type": "hierarchy_pyramid",
+                    "title": "The Archetypal Architecture of Art",
+                    "subtitle": "Universal Figures of the Collective Unconscious",
+                    "parameters": {
+                        "pyramid_title": "Artistic & Character Archetypes",
+                        "tiers": [
+                            {"tier": "The Transcendent Whole", "note": "Integration of the Shadow, Anima/Animus, and Individuation"},
+                            {"tier": "The Mentor & Herald", "note": "Wise guides providing the supernatural aid or catalyst call"},
+                            {"tier": "The Shadow & Antagonist", "note": "Represents the unacknowledged fears and repressed traits"},
+                            {"tier": "The Protagonist / Seeker", "note": "The relatable, flawed avatar of the audience embarking on the journey"}
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "The Protagonist"},
+                        {"step": 2, "highlight": "The Shadow"},
+                        {"step": 3, "highlight": "The Transcendent Whole"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_4",
+                "index": 3,
+                "chapter_title": "4. Masterwork Dissection: Techniques of the Greats",
+                "pedagogical_phase": "edge_cases",
+                "narration_text": f"Let us dissect how master creators deploy motif, juxtaposition, and silence. Great art is distinguished not just by what is presented, but by what is deliberately withheld, inviting the audience's imagination to complete the canvas.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "comparison_matrix",
+                    "title": "Techniques of Master Craftsmanship",
+                    "subtitle": "Contrasting Amateur Tropes with Enduring Masterworks",
+                    "parameters": {
+                        "col1": "Subtext vs. Exposition: Show, don't tell; trust the audience to infer emotional truths",
+                        "col2": "Pacing & Negative Space: Pauses and silence amplify emotional impact far more than noise",
+                        "col3": "Thematic Unity: Every scene, dialogue, and brushstroke serves a central governing idea"
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Subtext"},
+                        {"step": 2, "highlight": "Negative Space"}
+                    ]
+                }
+            },
+            {
+                "scene_id": "scene_5",
+                "index": 4,
+                "chapter_title": f"5. The Timeless Resonance of {arts_title}",
+                "pedagogical_phase": "summary",
+                "narration_text": f"Great art outlives the civilizations that gave it birth. By mastering {arts_title}, whether as a creator, critic, or passionate observer, you connect with the sacred human tradition of turning mortal experience into immortal beauty.",
+                "estimated_duration": 24.0,
+                "visual_spec": {
+                    "visual_type": "spectrum_meter",
+                    "title": "The Spectrum of Artistic Impact",
+                    "subtitle": "From Ephemeral Entertainment to Timeless Cultural Monument",
+                    "parameters": {
+                        "left_label": "Ephemeral Entertainment: Temporary distraction quickly forgotten",
+                        "right_label": "Immortal Masterwork: Shapes language, worldview, and human consciousness across generations",
+                        "center_balance": "Cultivated Craft: Resonant work executed with technical excellence and heart",
+                        "markers": [
+                            "Distraction",
+                            "Resonant Craft",
+                            "Timeless Masterwork"
+                        ]
+                    },
+                    "keyframe_steps": [
+                        {"step": 1, "highlight": "Ephemeral"},
+                        {"step": 2, "highlight": "Timeless Masterwork"}
+                    ]
+                }
+            }
+        ]
+
+        materials = {
+            "summary": f"This arts and humanities masterclass explores {arts_title}: deconstructing the creative spark, the narrative tension curve, archetypal psychology, masterwork craftsmanship, and timeless cultural impact.",
+            "notes_markdown": f"""# {arts_title}: Masterclass Arts & Literature Notes
+
+## 1. The Core Artistic Invariant
+- **Form Follows Emotion**: Technical structures (rhythm, lighting, prose) exist to amplify emotional resonance.
+- **The Power of Subtext**: The unsaid carries more weight than explicit dialogue.
+
+## 2. Structural Principles
+- **The Tension Curve**: Exposition, inciting incident, rising action, climax, and catharsis.
+- **Archetypal Resonance**: Universal patterns that mirror the collective human psyche.
+
+## 3. The Craftsman's Rulebook
+1. Kill your darlings: ruthlessly cut elements that do not serve thematic unity.
+2. Value negative space: silence gives notes their power; pauses give words their weight.
+""",
+            "key_concepts": [
+                {"concept": "Catharsis", "definition": "The purification and purgation of emotions (especially pity and fear) through dramatic art.", "importance": "Provides psychological renewal and empathy for audiences."},
+                {"concept": "Subtext", "definition": "The implicit or underlying meaning of a literary or theatrical work, distinct from the literal text.", "importance": "Creates depth, tension, and realistic dialogue."}
+            ],
+            "formulas_or_code": [
+                {"title": "The Golden Rule of Storytelling", "type": "principle", "content": "Specific Details + Universal Truth = Enduring Resonance", "explanation": "The more truthfully specific the human experience, the more universally it is felt."}
+            ],
+            "practice_questions": [
+                {"question": f"Why does understanding the dramatic tension arc improve both the creation and analysis of {arts_title}?", "hint": "Think about audience engagement and emotional payoff.", "solution": "The tension arc mirrors the natural psychological rhythm of expectation, struggle, and relief, ensuring the audience remains emotionally invested until the final catharsis."}
+            ],
+            "quiz": [
+                {"id": 1, "question": "What is the primary function of dramatic subtext in masterwork literature or cinema?", "options": ["To confuse the audience", "To convey deep emotional truth through unspoken implications and behavioral clues", "To hide spelling errors", "To make scenes longer"], "correct_index": 1, "explanation": "Subtext creates emotional authenticity by acknowledging that humans rarely state their rawest desires directly."}
+            ],
+            "flashcards": [
+                {"id": 1, "front": "What does 'Catharsis' mean in dramatic theory?", "back": "The emotional release and purification experienced by the audience at a story's climax.", "category": "Literary Theory"}
+            ]
+        }
+
+        return {
+            "title": f"The Art of {arts_title}: Narrative Architecture & Creative Mastery",
+            "domain": "arts_literature",
+            "subdomain": "Arts, Humanities & Narrative Architecture",
+            "scenes": scenes,
+            "materials": materials
+        }
 
     def _build_adaptive_topic_lecture(
         self, topic: str, level: str, purpose: str, teaching_style: str, num_scenes: int, voice_name: str

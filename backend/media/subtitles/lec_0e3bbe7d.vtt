@@ -1,0 +1,83 @@
+WEBVTT
+
+NOTE Chapter: 1. The Production Crash: Syntax Errors vs. Runtime Exceptions
+
+00:00:00.100 --> 00:00:03.730
+Imagine writing a banking script or web server.
+
+00:00:03.670 --> 00:00:10.510
+If your code has a syntax error like a missing parenthesis, Python detects it before running a single line.
+
+00:00:10.510 --> 00:00:19.150
+But what happens when your code is syntactically flawless, yet a user inputs zero as a divisor, or a database connection suddenly drops?
+
+00:00:19.150 --> 00:00:26.960
+Without exception handling, Python panics, halts execution immediately, and crashes with an ugly traceback.
+
+00:00:26.960 --> 00:00:34.030
+Exception handling is the vital safety net that transforms fatal crashes into resilient, graceful recovery.
+
+NOTE Chapter: 2. The Four Pillars: try, except, else, and finally
+
+00:00:34.130 --> 00:00:38.730
+Python's exception handling engine is built upon four keywords.
+
+00:00:38.680 --> 00:00:42.680
+Inside the try block, you place code that might fail.
+
+00:00:42.680 --> 00:00:47.940
+The except block catches specific error types and executes fallback logic.
+
+00:00:47.940 --> 00:00:54.840
+Many developers forget the else block: it executes strictly if no exception was raised in the try block!
+
+00:00:54.840 --> 00:01:04.560
+And finally is the unbreakable guarantee: it runs no matter what happens, whether an exception occurred, was caught, or even if the function returned early.
+
+NOTE Chapter: 3. Stack Unwinding: How Exceptions Travel Up the Call Stack
+
+00:01:04.660 --> 00:01:10.860
+When an exception occurs deep inside a nested function, Python initiates Stack Unwinding.
+
+00:01:10.810 --> 00:01:15.410
+Let's watch: main calls calculate, which calls divide.
+
+00:01:15.410 --> 00:01:21.540
+When divide attempts ten divided by zero, a ZeroDivisionError object is instantiated.
+
+00:01:21.540 --> 00:01:27.320
+Divide has no try block, so Python terminates divide and pops it off the stack!
+
+00:01:27.320 --> 00:01:31.630
+It jumps up to calculate; no handler exists there either.
+
+00:01:31.630 --> 00:01:39.890
+Finally, it arrives back at main, finds a matching except block, and handles the error gracefully without crashing your server.
+
+NOTE Chapter: 4. The Exception Class Hierarchy & Custom Exceptions
+
+00:01:39.990 --> 00:01:46.860
+In Python, all exceptions are standard object-oriented classes organized in a strict inheritance tree.
+
+00:01:46.810 --> 00:01:51.240
+At the very root sits BaseException, followed by Exception.
+
+00:01:51.240 --> 00:01:58.340
+When you write except LookupError, Python will catch both IndexError and KeyError because they are child subclasses!
+
+00:01:58.340 --> 00:02:08.620
+To write professional code, you can define your own custom exceptions by inheriting from Exception, allowing your application to signal domain-specific business logic errors.
+
+NOTE Chapter: 5. Production Best Practices: Antipatterns vs. Clean Code
+
+00:02:08.720 --> 00:02:12.890
+Let us conclude with the golden rules of production error handling.
+
+00:02:12.840 --> 00:02:20.140
+The cardinal sin of Python programming is the bare except pass: catching every error silently and doing nothing.
+
+00:02:20.150 --> 00:02:25.330
+This masks critical bugs, keyboard interrupts, and memory errors!
+
+00:02:25.330 --> 00:02:38.450
+Instead, follow three principles: catch only the specific exceptions you anticipate, preserve error contexts using the raise keyword, and prefer context managers with the with statement for automatic resource cleanup.

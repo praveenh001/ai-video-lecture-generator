@@ -3979,5 +3979,2575 @@
         }
       ]
     }
+  },
+  "0be5cc18": {
+    "id": "0be5cc18",
+    "topic": "INDIA",
+    "title": "India: Intuitive Visual Masterclass",
+    "domain": "general",
+    "subdomain": "General Knowledge & Life Skills",
+    "knowledge_level": "intermediate",
+    "teaching_style": "concept_metaphor",
+    "duration_target": "quick",
+    "voice_name": "en-US-ChristopherNeural",
+    "created_at": "2026-09-24 22:57",
+    "total_duration": 83.3,
+    "scenes": [
+      {
+        "scene_id": "lec_0be5cc18_s0",
+        "index": 0,
+        "chapter_title": "1. The Core Paradox: Why India Matters",
+        "pedagogical_phase": "hook",
+        "narration_text": "To truly grasp India, we must look past superficial definitions and confront the core dilemma that makes it so vital. What breakdown happens in its absence? How does understanding this concept transform how we perceive the world? Let us build an intuitive mental model from first principles.",
+        "estimated_duration": 22.0,
+        "visual_spec": {
+          "visual_type": "concept_metaphor",
+          "title": "The Core Intuition of India",
+          "subtitle": "Unpacking the Fundamental Paradox and Value",
+          "parameters": {
+            "left_title": "Conventional View / Without Insight",
+            "left_items": [
+              "Superficial understanding or confusion",
+              "Vulnerable to common misconceptions",
+              "Unintended friction in decisions"
+            ],
+            "right_title": "With India",
+            "right_items": [
+              "Crystal-clear conceptual mental model",
+              "Systematic understanding of underlying drivers",
+              "Practical clarity and informed action"
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Conventional confusion"
+            },
+            {
+              "step": 2,
+              "highlight": "Deep clarity"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_0be5cc18_s0.mp3",
+        "actual_duration": 19.2,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 7.44,
+            "text": "To truly grasp India, we must look past superficial definitions and confront the core dilemma that makes it so vital."
+          },
+          {
+            "start": 7.39,
+            "end": 10.39,
+            "text": "What breakdown happens in its absence?"
+          },
+          {
+            "start": 10.39,
+            "end": 14.85,
+            "text": "How does understanding this concept transform how we perceive the world?"
+          },
+          {
+            "start": 14.85,
+            "end": 19.2,
+            "text": "Let us build an intuitive mental model from first principles."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_0be5cc18_s1",
+        "index": 1,
+        "chapter_title": "2. Structural Architecture & Core Mechanics",
+        "pedagogical_phase": "foundation",
+        "narration_text": "Every robust framework operates through fundamental components. In India, dynamic forces interact according to consistent rules. When we map out its structural roadmap, the moving parts fall into place with natural clarity.",
+        "estimated_duration": 24.0,
+        "visual_spec": {
+          "visual_type": "process_simulation",
+          "title": "Foundational Architecture of India",
+          "subtitle": "The Essential Building Blocks and Flow",
+          "parameters": {
+            "milestones": [
+              {
+                "year": "Foundation",
+                "title": "Preconditions & Origins",
+                "desc": "Initial conditions that trigger action",
+                "impact": "Baseline established"
+              },
+              {
+                "year": "Mechanics",
+                "title": "Core Dynamic Transformation",
+                "desc": "Primary operational rules in action",
+                "impact": "System in motion"
+              },
+              {
+                "year": "Maturity",
+                "title": "Equilibrium & Culmination",
+                "desc": "Long-term steady state outcome",
+                "impact": "Enduring consequence"
+              }
+            ],
+            "tiers": [
+              {
+                "tier": "Tier 1: Foundational Preconditions of India",
+                "note": "Baseline elements required for stability"
+              },
+              {
+                "tier": "Tier 2: Intermediate Dynamic Mechanisms",
+                "note": "Active processing and operational flow"
+              },
+              {
+                "tier": "Tier 3: Peak Manifestation & Mastery",
+                "note": "Highest level of performance and insight"
+              }
+            ],
+            "subject": "Internal Dynamics of India",
+            "layers": [
+              {
+                "name": "Input Layer",
+                "role": "Catalysts and environmental signals"
+              },
+              {
+                "name": "Core Process Engine",
+                "role": "Fundamental transformations and interactions"
+              },
+              {
+                "name": "Observable Outcome",
+                "role": "Final equilibrium and measurable impact"
+              }
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Foundation"
+            },
+            {
+              "step": 2,
+              "highlight": "Core Mechanics"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_0be5cc18_s1.mp3",
+        "actual_duration": 15.43,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 4.6,
+            "text": "Every robust framework operates through fundamental components."
+          },
+          {
+            "start": 4.55,
+            "end": 9.38,
+            "text": "In India, dynamic forces interact according to consistent rules."
+          },
+          {
+            "start": 9.38,
+            "end": 15.43,
+            "text": "When we map out its structural roadmap, the moving parts fall into place with natural clarity."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_0be5cc18_s2",
+        "index": 2,
+        "chapter_title": "3. The Engine in Motion: Step-by-Step Demonstration",
+        "pedagogical_phase": "visual_demonstration",
+        "narration_text": "Now let us examine India in dynamic motion. Notice how each state transition follows from the previous one. Understanding this continuous cycle allows us to predict outcomes and navigate complex scenarios with confidence.",
+        "estimated_duration": 25.0,
+        "visual_spec": {
+          "visual_type": "hierarchy_pyramid",
+          "title": "India in Action",
+          "subtitle": "Tracking Active Cycles and Interactive Relationships",
+          "parameters": {
+            "cycle_title": "The Operational Cycle of India",
+            "stages": [
+              {
+                "name": "1. Catalyst / Trigger",
+                "role": "Initial event sets process into motion"
+              },
+              {
+                "name": "2. Intermediate Dynamics",
+                "role": "System components interact and transform"
+              },
+              {
+                "name": "3. Equilibrium Output",
+                "role": "Outcome is delivered and reinforced through feedback"
+              }
+            ],
+            "col1": "Traditional View: Linear, simplistic cause and effect",
+            "col2": "Systemic Reality: Interdependent feedback loops and non-linear shifts",
+            "col3": "Strategic Mastery: Leveraging high-impact leverage points"
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Trigger"
+            },
+            {
+              "step": 2,
+              "highlight": "Dynamic Transformation"
+            },
+            {
+              "step": 3,
+              "highlight": "Equilibrium"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_0be5cc18_s2.mp3",
+        "actual_duration": 15.17,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 3.74,
+            "text": "Now let us examine India in dynamic motion."
+          },
+          {
+            "start": 3.69,
+            "end": 8.03,
+            "text": "Notice how each state transition follows from the previous one."
+          },
+          {
+            "start": 8.03,
+            "end": 15.17,
+            "text": "Understanding this continuous cycle allows us to predict outcomes and navigate complex scenarios with confidence."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_0be5cc18_s3",
+        "index": 3,
+        "chapter_title": "4. Nuances, Pitfalls & Critical Boundaries",
+        "pedagogical_phase": "edge_cases",
+        "narration_text": "Mastery requires knowing where a concept encounters its limits. In India, common pitfalls occur when boundary conditions are ignored. By recognizing these friction points in advance, we avoid costly misjudgments.",
+        "estimated_duration": 24.0,
+        "visual_spec": {
+          "visual_type": "comparison_matrix",
+          "title": "Nuances, Pitfalls & The Balance Spectrum",
+          "subtitle": "Navigating Extreme Assumptions and Hidden Traps",
+          "parameters": {
+            "left_label": "Over-Simplification: Ignoring vital context and nuance",
+            "right_label": "Over-Complication: Paralyzed by excessive detail",
+            "center_balance": "Pragmatic Mastery: Actionable clarity grounded in sound judgment",
+            "markers": [
+              "Naive Assumption",
+              "Balanced Prudence",
+              "Over-Engineered"
+            ],
+            "root_catalyst": "Misunderstanding Boundary Constraints",
+            "intermediate_effects": [
+              "Applying models outside their valid domain",
+              "Ignoring feedback loops and unintended consequences"
+            ],
+            "ultimate_consequence": "Suboptimal decisions and systemic friction"
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Over-Simplification"
+            },
+            {
+              "step": 2,
+              "highlight": "Pragmatic Balance"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_0be5cc18_s3.mp3",
+        "actual_duration": 15.12,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 4.5,
+            "text": "Mastery requires knowing where a concept encounters its limits."
+          },
+          {
+            "start": 4.45,
+            "end": 9.44,
+            "text": "In India, common pitfalls occur when boundary conditions are ignored."
+          },
+          {
+            "start": 9.44,
+            "end": 15.12,
+            "text": "By recognizing these friction points in advance, we avoid costly misjudgments."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_0be5cc18_s4",
+        "index": 4,
+        "chapter_title": "5. Real-World Applications & Strategic Takeaways",
+        "pedagogical_phase": "summary",
+        "narration_text": "To conclude our masterclass on India: this knowledge is not merely theoretical—it is an actionable lens for real-world clarity. By retaining the core intuition, respecting the underlying mechanisms, and navigating trade-offs prudently, you can apply this across your learning, career, and life.",
+        "estimated_duration": 23.0,
+        "visual_spec": {
+          "visual_type": "cycle_loop",
+          "title": "India: Key Takeaways & Toolkit",
+          "subtitle": "Synthesizing Core Principles for Practical Application",
+          "parameters": {
+            "col1": "Core Principle: Focus on the root drivers, not surface noise",
+            "col2": "Systemic Invariant: Consistency of application across changing conditions",
+            "col3": "Actionable Habit: Regularly audit your mental models against reality"
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Core Principle"
+            },
+            {
+              "step": 2,
+              "highlight": "Actionable Habit"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_0be5cc18_s4.mp3",
+        "actual_duration": 18.38,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 8.11,
+            "text": "To conclude our masterclass on India: this knowledge is not merely theoretical—it is an actionable lens for real-world clarity."
+          },
+          {
+            "start": 8.06,
+            "end": 18.38,
+            "text": "By retaining the core intuition, respecting the underlying mechanisms, and navigating trade-offs prudently, you can apply this across your learning, career, and life."
+          }
+        ]
+      }
+    ],
+    "video_url": "/media/videos/lecture_0be5cc18.mp4",
+    "subtitles_vtt_url": "/media/subtitles/lec_0be5cc18.vtt",
+    "materials": {
+      "summary": "This comprehensive masterclass on India deconstructs the foundational paradox, the structural architecture, step-by-step dynamic mechanics, critical edge boundaries, and practical applications.",
+      "notes_markdown": "# India: Comprehensive Study Guide\n\n## 1. Executive Summary\nUnderstanding **India** requires building a clear mental model from simple intuition to nuanced real-world dynamics:\n- **Core Purpose**: Explains foundational realities and solves complex problems with elegance.\n- **Key Invariants**: Predictable principles that remain true under shifting conditions.\n- **Practical Relevance**: Widely applicable across analytical thinking, strategic decision-making, and general education.\n\n## 2. Structural Principles\n1. **First Principles Thinking**: Strip away assumptions to understand the foundational root drivers.\n2. **Dynamic Feedback**: Understand how changes in one variable ripple across the entire system.\n3. **Boundary Awareness**: Recognize where models work effectively and where edge cases require caution.\n",
+      "key_concepts": [
+        {
+          "concept": "India Core Invariant",
+          "definition": "The central principle that reliably governs behavior within this domain.",
+          "importance": "Ensures sound reasoning from first principles."
+        },
+        {
+          "concept": "Dynamic Feedback",
+          "definition": "How outcomes loop back to influence the original inputs of the system.",
+          "importance": "Prevents over-simplified linear thinking."
+        }
+      ],
+      "formulas_or_code": [
+        {
+          "title": "India Heuristic",
+          "type": "principle",
+          "content": "Clarity of Principles \\times Consistency of Application = Mastery",
+          "explanation": "Success depends on foundational clarity paired with disciplined execution."
+        }
+      ],
+      "practice_questions": [
+        {
+          "question": "What is the most common mistake people make when encountering India for the first time?",
+          "hint": "Think about surface appearances vs. root causes.",
+          "solution": "People often confuse surface symptoms with root causes. Truly understanding India requires looking past immediate impressions to analyze systemic drivers."
+        }
+      ],
+      "quiz": [
+        {
+          "id": 1,
+          "question": "What is the foundation of mastering India?",
+          "options": [
+            "Memorizing isolated facts without context",
+            "Understanding root principles and how components interact dynamically",
+            "Ignoring edge cases and limitations",
+            "Relying on random chance"
+          ],
+          "correct_index": 1,
+          "explanation": "True mastery comes from understanding underlying mechanisms and causal relationships."
+        },
+        {
+          "id": 2,
+          "question": "Why is awareness of edge cases critical in India?",
+          "options": [
+            "It is only useful for academic tests",
+            "Models and systems tend to fail at boundary conditions if unhandled",
+            "Edge cases never occur in real life",
+            "It replaces the need for basic understanding"
+          ],
+          "correct_index": 1,
+          "explanation": "Critical failures almost always occur at boundaries and unanticipated edge conditions."
+        }
+      ],
+      "flashcards": [
+        {
+          "id": 1,
+          "front": "What is the core takeaway of India?",
+          "back": "Focus on root mechanisms and systematic relationships rather than surface symptoms.",
+          "category": "Core Principle"
+        },
+        {
+          "id": 2,
+          "front": "How should you apply India in practice?",
+          "back": "Use it as a decision-making framework, auditing your assumptions regularly.",
+          "category": "Application"
+        }
+      ]
+    }
+  },
+  "1359ffc9": {
+    "id": "1359ffc9",
+    "topic": "India",
+    "title": "India: The Epic Journey of a Continuous Civilization",
+    "domain": "history",
+    "subdomain": "Civilizations, Culture & Geopolitics",
+    "knowledge_level": "Intermediate",
+    "teaching_style": "Animated Visual First",
+    "duration_target": "Standard (4-5 mins)",
+    "voice_name": "en-US-ChristopherNeural",
+    "created_at": "2026-09-24 23:18",
+    "total_duration": 177.12,
+    "scenes": [
+      {
+        "scene_id": "lec_1359ffc9_s0",
+        "index": 0,
+        "chapter_title": "1. The Sacred Cradle: Antiquity & Spiritual Roots",
+        "pedagogical_phase": "hook",
+        "narration_text": "India is not merely a nation; it is one of humanity's oldest continuous living civilizations, spanning over five thousand years. Along the fertile banks of the Indus and the sacred Saraswati rivers, advanced planned cities like Harappa and Mohenjo-daro thrived with sophisticated metallurgy and civic drainage. From these ancient soils arose profound spiritual traditions: Sanatana Dharma, the poetic philosophy of the Vedas, the introspective depth of the Upanishads, and the timeless moral paths of Buddhism and Jainism. Here, truth was recognized as one, expressed in myriad forms.",
+        "estimated_duration": 26.0,
+        "visual_spec": {
+          "visual_type": "hierarchy_pyramid",
+          "title": "Ancient Spiritual & Philosophical Foundations",
+          "subtitle": "The Intellectual & Metaphysical Heritage of Ancient India",
+          "parameters": {
+            "pyramid_title": "Vedic & Philosophical Heritage",
+            "tiers": [
+              {
+                "tier": "Moksha & Self-Realization (The Upanishads)",
+                "note": "Ultimate liberation through spiritual realization (Aham Brahmasmi)"
+              },
+              {
+                "tier": "Dharma & Ethical Living (The Epics & Gita)",
+                "note": "Righteous duty, moral action without attachment to fruits (Nishkama Karma)"
+              },
+              {
+                "tier": "Spiritual Diversity: Buddhism, Jainism, Darshanas",
+                "note": "Ahimsa (non-violence), Yoga, Vedanta, Nyaya, and Samkhya systems"
+              },
+              {
+                "tier": "Indus Valley Civilization (~3300 - 1300 BCE)",
+                "note": "Urban grid cities, standardized weights, maritime commerce, bronze mastery"
+              }
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Indus Valley Foundation"
+            },
+            {
+              "step": 2,
+              "highlight": "Vedic & Philosophical Heritage"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_1359ffc9_s0.mp3",
+        "actual_duration": 37.73,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 8.75,
+            "text": "India is not merely a nation; it is one of humanity's oldest continuous living civilizations, spanning over five thousand years."
+          },
+          {
+            "start": 8.7,
+            "end": 19.42,
+            "text": "Along the fertile banks of the Indus and the sacred Saraswati rivers, advanced planned cities like Harappa and Mohenjo-daro thrived with sophisticated metallurgy and civic drainage."
+          },
+          {
+            "start": 19.43,
+            "end": 32.67,
+            "text": "From these ancient soils arose profound spiritual traditions: Sanatana Dharma, the poetic philosophy of the Vedas, the introspective depth of the Upanishads, and the timeless moral paths of Buddhism and Jainism."
+          },
+          {
+            "start": 32.67,
+            "end": 37.73,
+            "text": "Here, truth was recognized as one, expressed in myriad forms."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_1359ffc9_s1",
+        "index": 1,
+        "chapter_title": "2. Epochs of Enlightenment: Maurya, Gupta & Cultural Synthesis",
+        "pedagogical_phase": "foundation",
+        "narration_text": "Across centuries, great dynasties united the subcontinent in scholarship and architectural grandeur. Emperor Ashoka of the Maurya Empire renounced war after Kalinga, carving edicts of peace, religious tolerance, and animal welfare upon stone pillars across Asia. Under the Gupta Golden Age, Indian mathematicians invented the decimal system and the concept of zero, while astronomers like Aryabhata calculated the solar year. Universities like Nalanda welcomed thousands of scholars from China to Greece, making India the intellectual beacon of the ancient world.",
+        "estimated_duration": 27.0,
+        "visual_spec": {
+          "visual_type": "timeline_journey",
+          "title": "The Golden Epochs of Classical India",
+          "subtitle": "From Ancient Empires to Global Intellectual Influence",
+          "parameters": {
+            "milestones": [
+              {
+                "year": "321 - 185 BCE",
+                "title": "Mauryan Empire & Ashoka",
+                "desc": "Pan-Indian unification; Ashokan Edicts spread Buddhist ethics of Ahimsa",
+                "impact": "Universal moral governance"
+              },
+              {
+                "year": "320 - 550 CE",
+                "title": "Gupta Empire (Golden Age)",
+                "desc": "Aryabhata invents zero & decimal place-value; Kalidasa's classical Sanskrit poetry",
+                "impact": "Foundations of modern mathematics"
+              },
+              {
+                "year": "427 - 1197 CE",
+                "title": "Nalanda University",
+                "desc": "World's premier residential university with 10,000 students and massive library",
+                "impact": "Global hub of Buddhist & secular study"
+              },
+              {
+                "year": "9th - 13th Cent",
+                "title": "Chola Maritime Empire",
+                "desc": "Magnificent Brihadeeswarar bronze & stone temples; naval trade to Southeast Asia",
+                "impact": "Cultural diaspora across Indochina"
+              }
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Mauryan Empire"
+            },
+            {
+              "step": 2,
+              "highlight": "Gupta Golden Age"
+            },
+            {
+              "step": 3,
+              "highlight": "Nalanda & Cholas"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_1359ffc9_s1.mp3",
+        "actual_duration": 35.64,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 6.65,
+            "text": "Across centuries, great dynasties united the subcontinent in scholarship and architectural grandeur."
+          },
+          {
+            "start": 6.6,
+            "end": 17.38,
+            "text": "Emperor Ashoka of the Maurya Empire renounced war after Kalinga, carving edicts of peace, religious tolerance, and animal welfare upon stone pillars across Asia."
+          },
+          {
+            "start": 17.38,
+            "end": 27.27,
+            "text": "Under the Gupta Golden Age, Indian mathematicians invented the decimal system and the concept of zero, while astronomers like Aryabhata calculated the solar year."
+          },
+          {
+            "start": 27.27,
+            "end": 35.64,
+            "text": "Universities like Nalanda welcomed thousands of scholars from China to Greece, making India the intellectual beacon of the ancient world."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_1359ffc9_s2",
+        "index": 2,
+        "chapter_title": "3. The Crucible of Freedom: Colonial Struggle to 1947",
+        "pedagogical_phase": "visual_demonstration",
+        "narration_text": "By the eighteenth century, European colonial expansion culminated in the British East India Company and the British Raj, which systematically exploited India's textiles and wealth. But the spirit of India rose in resistance. From the brave rebellion of 1857 to the revolutionary bravery of Bhagat Singh, Netaji Subhas Chandra Bose's Indian National Army, and Mahatma Gandhi's mass non-violent Satyagraha, millions mobilized. On the midnight of August 15, 1947, as Jawaharlal Nehru declared, India awoke to life and freedom.",
+        "estimated_duration": 26.0,
+        "visual_spec": {
+          "visual_type": "cause_and_effect",
+          "title": "The Freedom Movement & The Dawn of Independence",
+          "subtitle": "How Colonial Resistance Forged a Sovereign Republic",
+          "parameters": {
+            "root_catalyst": "British Colonial Exploitation & The Revolt of 1857",
+            "intermediate_effects": [
+              "Birth of Indian National Congress (1885) and Swadeshi economic boycott",
+              "Mahatma Gandhi's Non-Violent Satyagraha, Salt March & Quit India Movement",
+              "Netaji Subhas Chandra Bose & The Indian National Army challenge British military power"
+            ],
+            "ultimate_consequence": "Midnight of August 15, 1947: Sovereign Independence; Constitution ratified in 1950"
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Revolt of 1857"
+            },
+            {
+              "step": 2,
+              "highlight": "Satyagraha & INA"
+            },
+            {
+              "step": 3,
+              "highlight": "Independence 1947"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_1359ffc9_s2.mp3",
+        "actual_duration": 35.71,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 10.9,
+            "text": "By the eighteenth century, European colonial expansion culminated in the British East India Company and the British Raj, which systematically exploited India's textiles and wealth."
+          },
+          {
+            "start": 10.85,
+            "end": 14.19,
+            "text": "But the spirit of India rose in resistance."
+          },
+          {
+            "start": 14.19,
+            "end": 27.5,
+            "text": "From the brave rebellion of 1857 to the revolutionary bravery of Bhagat Singh, Netaji Subhas Chandra Bose's Indian National Army, and Mahatma Gandhi's mass non-violent Satyagraha, millions mobilized."
+          },
+          {
+            "start": 27.5,
+            "end": 35.71,
+            "text": "On the midnight of August 15, 1947, as Jawaharlal Nehru declared, India awoke to life and freedom."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_1359ffc9_s3",
+        "index": 3,
+        "chapter_title": "4. Unity in Diversity: The Constitutional Tapestry",
+        "pedagogical_phase": "edge_cases",
+        "narration_text": "What makes modern India truly miraculous is its constitutional achievement. Architected by Dr. B. R. Ambedkar, the Indian Constitution established the world's largest sovereign democracy. Within one single nation live twenty-eight states, twenty-two officially recognized languages, and every major world religion—Hinduism, Islam, Christianity, Sikhism, Buddhism, and Jainism. Despite immense complexity, India thrives not by enforcing conformity, but by celebrating Unity in Diversity as its sacred national creed.",
+        "estimated_duration": 25.0,
+        "visual_spec": {
+          "visual_type": "comparison_matrix",
+          "title": "The Pluralistic Mosaic of the Republic",
+          "subtitle": "Democracy, Linguistic Richness & Spiritual Coexistence",
+          "parameters": {
+            "col1": "World's Largest Democracy: 1.4 billion people, 900+ million voters, peaceful constitutional transitions of power",
+            "col2": "Linguistic & Cultural Tapestry: 22 Eighth Schedule languages, classical literatures (Tamil, Sanskrit, Kannada, Telugu)",
+            "col3": "Spiritual Synthesis: Birthplace of Hinduism, Buddhism, Jainism, Sikhism; thriving home of Islam, Christianity, Zoroastrianism"
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Democracy"
+            },
+            {
+              "step": 2,
+              "highlight": "Linguistic Tapestry"
+            },
+            {
+              "step": 3,
+              "highlight": "Spiritual Synthesis"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_1359ffc9_s3.mp3",
+        "actual_duration": 35.14,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 5.04,
+            "text": "What makes modern India truly miraculous is its constitutional achievement."
+          },
+          {
+            "start": 4.99,
+            "end": 12.59,
+            "text": "Architected by Dr. B. R. Ambedkar, the Indian Constitution established the world's largest sovereign democracy."
+          },
+          {
+            "start": 12.59,
+            "end": 26.02,
+            "text": "Within one single nation live twenty-eight states, twenty-two officially recognized languages, and every major world religion—Hinduism, Islam, Christianity, Sikhism, Buddhism, and Jainism."
+          },
+          {
+            "start": 26.02,
+            "end": 35.14,
+            "text": "Despite immense complexity, India thrives not by enforcing conformity, but by celebrating Unity in Diversity as its sacred national creed."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_1359ffc9_s4",
+        "index": 4,
+        "chapter_title": "5. Modern India: Space, Digital Revolution & Global Horizon",
+        "pedagogical_phase": "summary",
+        "narration_text": "Today, India stands as a vibrant global powerhouse where ancient heritage meets twenty-first-century innovation. With ISRO's Chandrayaan landing on the lunar South Pole, a revolutionary digital public infrastructure powering billions of instant UPI transactions, and a young demographic driving global technology and entrepreneurship, India continues its civilizational mission. Guided by the timeless motto 'Vasudhaiva Kutumbakam'—the world is one family—India shines as a beacon of democracy, culture, and progress.",
+        "estimated_duration": 25.0,
+        "visual_spec": {
+          "visual_type": "spectrum_meter",
+          "title": "The Civilizational Synthesis of Modern India",
+          "subtitle": "Ancient Timeless Wisdom Harmonizing with Cutting-Edge Innovation",
+          "parameters": {
+            "left_label": "Timeless Spiritual Wisdom: Yoga, Ayurveda, Vedanta, Ahimsa",
+            "right_label": "High-Tech Frontier: ISRO Space Exploration, Digital Public Infrastructure, AI Leadership",
+            "center_balance": "Vasudhaiva Kutumbakam: 'The World is One Family' Guided by Democratic Values",
+            "markers": [
+              "Vedic Heritage",
+              "World's Largest Democracy",
+              "Global Innovation Leader"
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Spiritual Heritage"
+            },
+            {
+              "step": 2,
+              "highlight": "High-Tech Frontier"
+            },
+            {
+              "step": 3,
+              "highlight": "Vasudhaiva Kutumbakam"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_1359ffc9_s4.mp3",
+        "actual_duration": 32.9,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 7.25,
+            "text": "Today, India stands as a vibrant global powerhouse where ancient heritage meets twenty-first-century innovation."
+          },
+          {
+            "start": 7.2,
+            "end": 23.1,
+            "text": "With ISRO's Chandrayaan landing on the lunar South Pole, a revolutionary digital public infrastructure powering billions of instant UPI transactions, and a young demographic driving global technology and entrepreneurship, India continues its civilizational mission."
+          },
+          {
+            "start": 23.1,
+            "end": 32.9,
+            "text": "Guided by the timeless motto 'Vasudhaiva Kutumbakam'—the world is one family—India shines as a beacon of democracy, culture, and progress."
+          }
+        ]
+      }
+    ],
+    "video_url": "/media/videos/lecture_1359ffc9.mp4",
+    "subtitles_vtt_url": "/media/subtitles/lec_1359ffc9.vtt",
+    "materials": {
+      "summary": "India (Bharat) is one of the world's oldest and most profound continuous civilizations. Spanning the ancient Indus Valley, the philosophical depths of the Vedas and Upanishads, golden classical empires, a heroic non-violent freedom struggle, and the world's largest constitutional democracy, India harmoniously bridges ancient spiritual wisdom with modern technological leadership in space, digital infrastructure, and global affairs.",
+      "notes_markdown": "# India: Comprehensive Civilizational & National Study Notes\n\n## 1. Antiquity & The Vedic Heritage\n- **Indus Valley Civilization (~3300 - 1300 BCE)**: Advanced planned urban centers at Harappa, Mohenjo-daro, and Dholavira with standardized brick architecture, water management, and extensive international trade.\n- **The Vedic Tradition & Philosophy**: The composition of the Rigveda, Samaveda, Yajurveda, and Atharvaveda, progressing to the **Upanishads**, which explored the fundamental nature of reality (*Brahman*) and the self (*Atman*).\n- **Core Spiritual Concepts**:\n  - *Dharma*: Cosmic order, moral duty, and ethical action.\n  - *Karma*: The law of cause and effect governing actions.\n  - *Ahimsa*: Non-violence and reverence for all living beings, championed by Mahavira and Gautama Buddha.\n\n## 2. Classical Golden Empires\n1. **The Maurya Empire (321 - 185 BCE)**: Unified under Chandragupta Maurya and Chanakya (author of the *Arthashastra*). Emperor Ashoka embraced Buddhism after the Kalinga war, carving edicts of tolerance and ethics across Asia.\n2. **The Gupta Golden Age (320 - 550 CE)**: Remarkable mathematical breakthroughs including the formalization of zero as a number, decimal place-value, and trigonometry by mathematicians like **Aryabhata** and **Varahamihira**.\n3. **Nalanda University**: Premier residential center of global learning hosting scholars from across the Silk Road.\n4. **Southern Dynasties (Cholas, Pandyas, Pallavas)**: Renowned for exquisite Dravidian temple architecture, bronze sculpture, and trans-oceanic trade networks.\n\n## 3. The Freedom Struggle & Independence\n- **Colonial Era**: British East India Company hegemony followed by direct British Crown rule (British Raj) after the historic **Revolt of 1857**.\n- **The National Movement**:\n  - *Mahatma Gandhi*: Championed mass non-violent resistance (*Satyagraha*), leading the Non-Cooperation Movement, Salt March (1930), and Quit India Movement (1942).\n  - *Netaji Subhas Chandra Bose*: Established the Indian National Army (Azad Hind Fauj) to militarily challenge British rule.\n  - *Revolutionary Heroes*: Bhagat Singh, Chandrashekhar Azad, Rani Lakshmibai.\n- **Midnight of August 15, 1947**: India attained sovereign independence, celebrated in Jawaharlal Nehru's historic 'Tryst with Destiny' address.\n\n## 4. The Republic of India\n- **The Constitution (Adopted Nov 26, 1949; in effect Jan 26, 1950)**: Drafted under the chairmanship of **Dr. B. R. Ambedkar**, creating a Sovereign, Socialist, Secular, Democratic Republic.\n- **Unity in Diversity**: 28 States, 8 Union Territories, 22 Eighth Schedule languages, and a multi-religious secular constitutional fabric.\n- **Modern Milestones**:\n  - **Space Leadership (ISRO)**: Successful Chandrayaan-3 lunar south-pole landing and Aditya-L1 solar mission.\n  - **Digital Public Infrastructure (India Stack)**: Unified Payments Interface (UPI) facilitating billions of real-time transactions monthly.\n",
+      "key_concepts": [
+        {
+          "concept": "Unity in Diversity",
+          "definition": "The philosophical and constitutional principle that diverse ethnic, linguistic, and religious communities coexist in harmonious shared citizenship.",
+          "importance": "Foundational bedrock of the Indian Republic."
+        },
+        {
+          "concept": "Ahimsa",
+          "definition": "The ancient ethical doctrine of non-violence in thought, word, and deed, central to Hinduism, Buddhism, and Jainism.",
+          "importance": "Inspired Mahatma Gandhi's freedom movement and modern global civil rights struggles."
+        },
+        {
+          "concept": "Vasudhaiva Kutumbakam",
+          "definition": "A Sanskrit phrase from the Maha Upanishad meaning 'The World is One Family'.",
+          "importance": "Guides India's cultural diplomacy and global humanitarian outlook."
+        }
+      ],
+      "formulas_or_code": [
+        {
+          "title": "The National Motto",
+          "type": "quote",
+          "content": "Satyameva Jayate (Truth Alone Triumphs)",
+          "explanation": "From the Mundaka Upanishad, inscribed at the base of the Lion Capital of Ashoka."
+        },
+        {
+          "title": "Universal Ethical Invariant",
+          "type": "principle",
+          "content": "Vasudhaiva Kutumbakam (The World is One Family)",
+          "explanation": "Core philosophical orientation recognizing the common bond of all humanity."
+        }
+      ],
+      "practice_questions": [
+        {
+          "question": "How did Emperor Ashoka's governance after the Kalinga war represent a paradigm shift in political philosophy?",
+          "hint": "Think about the transition from conquest by arms to conquest by righteousness.",
+          "solution": "Ashoka renounced military conquest (Digvijaya) and adopted conquest by moral righteousness (Dharmavijaya), inscribing edicts mandating medical care for humans and animals, environmental conservation, and mutual religious respect across his vast empire."
+        }
+      ],
+      "quiz": [
+        {
+          "id": 1,
+          "question": "Who served as the principal architect and Chairman of the Drafting Committee of the Indian Constitution?",
+          "options": [
+            "Mahatma Gandhi",
+            "Dr. B. R. Ambedkar",
+            "Jawaharlal Nehru",
+            "Sardar Vallabhbhai Patel"
+          ],
+          "correct_index": 1,
+          "explanation": "Dr. Bhimrao Ramji Ambedkar chaired the Drafting Committee that framed the Constitution of India."
+        },
+        {
+          "id": 2,
+          "question": "What groundbreaking mathematical contribution flourished during the Gupta Golden Age of India?",
+          "options": [
+            "The invention of the abacus",
+            "The formalization of zero and decimal place-value system",
+            "Calculus limits",
+            "Binary electronics"
+          ],
+          "correct_index": 1,
+          "explanation": "Indian mathematicians like Aryabhata developed the decimal system and the operational concept of zero, which revolutionized global mathematics."
+        }
+      ],
+      "flashcards": [
+        {
+          "id": 1,
+          "front": "What does the national motto 'Satyameva Jayate' mean and where does it originate?",
+          "back": "It means 'Truth Alone Triumphs' and originates from the ancient Mundaka Upanishad.",
+          "category": "National Symbols"
+        },
+        {
+          "id": 2,
+          "front": "When did the Constitution of India come into full effect?",
+          "back": "January 26, 1950, celebrated nationwide as Republic Day.",
+          "category": "Constitution"
+        }
+      ]
+    }
+  },
+  "7dd0eb53": {
+    "id": "7dd0eb53",
+    "topic": "Exception in Python",
+    "title": "Exception Handling in Python: Writing Crash-Proof Code",
+    "domain": "computer_science",
+    "subdomain": "Software Engineering & Python Runtime",
+    "knowledge_level": "Intermediate",
+    "teaching_style": "Animated Visual First",
+    "duration_target": "Standard (4-5 mins)",
+    "voice_name": "en-US-ChristopherNeural",
+    "created_at": "2026-09-24 23:18",
+    "total_duration": 158.45,
+    "scenes": [
+      {
+        "scene_id": "lec_7dd0eb53_s0",
+        "index": 0,
+        "chapter_title": "1. The Production Crash: Syntax Errors vs. Runtime Exceptions",
+        "pedagogical_phase": "hook",
+        "narration_text": "Imagine writing a banking script or web server. If your code has a syntax error like a missing parenthesis, Python detects it before running a single line. But what happens when your code is syntactically flawless, yet a user inputs zero as a divisor, or a database connection suddenly drops? Without exception handling, Python panics, halts execution immediately, and crashes with an ugly traceback. Exception handling is the vital safety net that transforms fatal crashes into resilient, graceful recovery.",
+        "estimated_duration": 24.0,
+        "visual_spec": {
+          "visual_type": "concept_metaphor",
+          "title": "Syntax Error vs. Runtime Exception",
+          "subtitle": "Compile-Time Parsing vs. Runtime Unexpected Conditions",
+          "parameters": {
+            "left_title": "SyntaxError (Fatal Parser Halt)",
+            "left_items": [
+              "Missing colon, mismatched brackets, typos",
+              "Caught before code begins executing",
+              "Cannot be handled at runtime with try/except"
+            ],
+            "right_title": "Exceptions (Recoverable Runtime Events)",
+            "right_items": [
+              "ZeroDivisionError, KeyError, FileNotFoundError",
+              "Occurs while code is actively executing",
+              "Can be caught, recovered from, and cleanly resolved!"
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "SyntaxError parse failure"
+            },
+            {
+              "step": 2,
+              "highlight": "Runtime Exception handling"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_7dd0eb53_s0.mp3",
+        "actual_duration": 34.03,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 3.73,
+            "text": "Imagine writing a banking script or web server."
+          },
+          {
+            "start": 3.67,
+            "end": 10.51,
+            "text": "If your code has a syntax error like a missing parenthesis, Python detects it before running a single line."
+          },
+          {
+            "start": 10.51,
+            "end": 19.15,
+            "text": "But what happens when your code is syntactically flawless, yet a user inputs zero as a divisor, or a database connection suddenly drops?"
+          },
+          {
+            "start": 19.15,
+            "end": 26.96,
+            "text": "Without exception handling, Python panics, halts execution immediately, and crashes with an ugly traceback."
+          },
+          {
+            "start": 26.96,
+            "end": 34.03,
+            "text": "Exception handling is the vital safety net that transforms fatal crashes into resilient, graceful recovery."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_7dd0eb53_s1",
+        "index": 1,
+        "chapter_title": "2. The Four Pillars: try, except, else, and finally",
+        "pedagogical_phase": "foundation",
+        "narration_text": "Python's exception handling engine is built upon four keywords. Inside the try block, you place code that might fail. The except block catches specific error types and executes fallback logic. Many developers forget the else block: it executes strictly if no exception was raised in the try block! And finally is the unbreakable guarantee: it runs no matter what happens, whether an exception occurred, was caught, or even if the function returned early.",
+        "estimated_duration": 25.0,
+        "visual_spec": {
+          "visual_type": "code_visualizer",
+          "title": "The Full try-except-else-finally Suite",
+          "subtitle": "Complete Four-Keyword Error Handling Anatomy",
+          "parameters": {
+            "language": "python",
+            "code": "def process_account_file(filename):\n    file = None\n    try:\n        # 1. Dangerous operation: File I/O\n        file = open(filename, 'r')\n        data = file.read()\n    except FileNotFoundError as err:\n        # 2. Recovery logic for missing file\n        print(f'Warning: {filename} missing. Using defaults.')\n        return {}\n    else:\n        # 3. Runs ONLY if try succeeded with zero errors\n        print('File successfully read without exceptions!')\n        return parse_data(data)\n    finally:\n        # 4. ALWAYS runs: Crucial resource cleanup\n        if file:\n            file.close()\n            print('Cleanup: File closed safely.')",
+            "highlights": [
+              {
+                "line": 3,
+                "label": "try block: contains code that might fail"
+              },
+              {
+                "line": 7,
+                "label": "except block: catches specific error"
+              },
+              {
+                "line": 11,
+                "label": "else block: runs strictly on success"
+              },
+              {
+                "line": 15,
+                "label": "finally block: always guaranteed to run"
+              }
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "active_line": 3,
+              "scope": "Entering try block"
+            },
+            {
+              "step": 2,
+              "active_line": 7,
+              "scope": "Catching FileNotFoundError"
+            },
+            {
+              "step": 3,
+              "active_line": 15,
+              "scope": "Finally cleanup guaranteed"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_7dd0eb53_s1.mp3",
+        "actual_duration": 30.53,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 4.7,
+            "text": "Python's exception handling engine is built upon four keywords."
+          },
+          {
+            "start": 4.65,
+            "end": 8.65,
+            "text": "Inside the try block, you place code that might fail."
+          },
+          {
+            "start": 8.65,
+            "end": 13.91,
+            "text": "The except block catches specific error types and executes fallback logic."
+          },
+          {
+            "start": 13.91,
+            "end": 20.81,
+            "text": "Many developers forget the else block: it executes strictly if no exception was raised in the try block!"
+          },
+          {
+            "start": 20.81,
+            "end": 30.53,
+            "text": "And finally is the unbreakable guarantee: it runs no matter what happens, whether an exception occurred, was caught, or even if the function returned early."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_7dd0eb53_s2",
+        "index": 2,
+        "chapter_title": "3. Stack Unwinding: How Exceptions Travel Up the Call Stack",
+        "pedagogical_phase": "visual_demonstration",
+        "narration_text": "When an exception occurs deep inside a nested function, Python initiates Stack Unwinding. Let's watch: main calls calculate, which calls divide. When divide attempts ten divided by zero, a ZeroDivisionError object is instantiated. Divide has no try block, so Python terminates divide and pops it off the stack! It jumps up to calculate; no handler exists there either. Finally, it arrives back at main, finds a matching except block, and handles the error gracefully without crashing your server.",
+        "estimated_duration": 26.0,
+        "visual_spec": {
+          "visual_type": "code_visualizer",
+          "title": "Call Stack Unwinding in Action",
+          "subtitle": "How Exceptions Bubble Up Across Nested Functions",
+          "parameters": {
+            "language": "python",
+            "code": "def divide(a, b):\n    return a / b  # <-- ZeroDivisionError raised here!\n\ndef calculate(x, y):\n    return divide(x, y)  # Unwinds up call stack\n\ndef main():\n    try:\n        result = calculate(10, 0)\n    except ZeroDivisionError as e:\n        print(f'Caught at top level: {e}')\n        result = 0\n    return result",
+            "highlights": [
+              {
+                "line": 2,
+                "label": "Error occurs in deepest leaf function"
+              },
+              {
+                "line": 5,
+                "label": "Stack frame popped: bubbles up"
+              },
+              {
+                "line": 9,
+                "label": "Target except block catches and recovers!"
+              }
+            ],
+            "variables": {
+              "a": 10,
+              "b": 0,
+              "active_error": "ZeroDivisionError",
+              "stack_depth": "main -> calculate -> divide"
+            }
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "active_line": 2,
+              "scope": "divide(10, 0) raises error"
+            },
+            {
+              "step": 2,
+              "active_line": 5,
+              "scope": "calculate frame unwound"
+            },
+            {
+              "step": 3,
+              "active_line": 9,
+              "scope": "main catches ZeroDivisionError"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_7dd0eb53_s2.mp3",
+        "actual_duration": 35.33,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 6.3,
+            "text": "When an exception occurs deep inside a nested function, Python initiates Stack Unwinding."
+          },
+          {
+            "start": 6.25,
+            "end": 10.85,
+            "text": "Let's watch: main calls calculate, which calls divide."
+          },
+          {
+            "start": 10.85,
+            "end": 16.98,
+            "text": "When divide attempts ten divided by zero, a ZeroDivisionError object is instantiated."
+          },
+          {
+            "start": 16.98,
+            "end": 22.76,
+            "text": "Divide has no try block, so Python terminates divide and pops it off the stack!"
+          },
+          {
+            "start": 22.76,
+            "end": 27.07,
+            "text": "It jumps up to calculate; no handler exists there either."
+          },
+          {
+            "start": 27.07,
+            "end": 35.33,
+            "text": "Finally, it arrives back at main, finds a matching except block, and handles the error gracefully without crashing your server."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_7dd0eb53_s3",
+        "index": 3,
+        "chapter_title": "4. The Exception Class Hierarchy & Custom Exceptions",
+        "pedagogical_phase": "edge_cases",
+        "narration_text": "In Python, all exceptions are standard object-oriented classes organized in a strict inheritance tree. At the very root sits BaseException, followed by Exception. When you write except LookupError, Python will catch both IndexError and KeyError because they are child subclasses! To write professional code, you can define your own custom exceptions by inheriting from Exception, allowing your application to signal domain-specific business logic errors.",
+        "estimated_duration": 25.0,
+        "visual_spec": {
+          "visual_type": "hierarchy_pyramid",
+          "title": "The Python Built-In Exception Tree",
+          "subtitle": "BaseException -> Exception -> Specific Subclasses",
+          "parameters": {
+            "pyramid_title": "Python Exception Class Hierarchy",
+            "tiers": [
+              {
+                "tier": "BaseException (SystemExit, KeyboardInterrupt)",
+                "note": "Root class. Should almost NEVER be caught directly in application code!"
+              },
+              {
+                "tier": "Exception (Standard Application Errors)",
+                "note": "Root for all non-system-exiting errors; base class for user custom exceptions"
+              },
+              {
+                "tier": "ArithmeticError (ZeroDivisionError, OverflowError)",
+                "note": "Mathematical failures during runtime arithmetic"
+              },
+              {
+                "tier": "LookupError (KeyError, IndexError)",
+                "note": "Dictionary key missing or list index out of bounds"
+              }
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "BaseException & SystemExit"
+            },
+            {
+              "step": 2,
+              "highlight": "Exception Subclasses"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_7dd0eb53_s3.mp3",
+        "actual_duration": 28.73,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 6.97,
+            "text": "In Python, all exceptions are standard object-oriented classes organized in a strict inheritance tree."
+          },
+          {
+            "start": 6.92,
+            "end": 11.35,
+            "text": "At the very root sits BaseException, followed by Exception."
+          },
+          {
+            "start": 11.35,
+            "end": 18.45,
+            "text": "When you write except LookupError, Python will catch both IndexError and KeyError because they are child subclasses!"
+          },
+          {
+            "start": 18.45,
+            "end": 28.73,
+            "text": "To write professional code, you can define your own custom exceptions by inheriting from Exception, allowing your application to signal domain-specific business logic errors."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_7dd0eb53_s4",
+        "index": 4,
+        "chapter_title": "5. Production Best Practices: Antipatterns vs. Clean Code",
+        "pedagogical_phase": "summary",
+        "narration_text": "Let us conclude with the golden rules of production error handling. The cardinal sin of Python programming is the bare except pass: catching every error silently and doing nothing. This masks critical bugs, keyboard interrupts, and memory errors! Instead, follow three principles: catch only the specific exceptions you anticipate, preserve error contexts using the raise keyword, and prefer context managers with the with statement for automatic resource cleanup.",
+        "estimated_duration": 24.0,
+        "visual_spec": {
+          "visual_type": "comparison_matrix",
+          "title": "Production Best Practices vs Antipatterns",
+          "subtitle": "Writing Robust, Maintainable Error Handling",
+          "parameters": {
+            "col1": "The Silent Killer (Antipattern): 'except: pass'. Masks typos, breaks debugging, swallows KeyboardInterrupt.",
+            "col2": "Specific & Informative: 'except (KeyError, ValueError) as err:'. Explicitly handle expected failures with logging.",
+            "col3": "Pythonic Resource Cleanup: Use 'with open(...) as f:' context managers instead of manual try/finally close."
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Antipattern"
+            },
+            {
+              "step": 2,
+              "highlight": "Specific Exception"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_7dd0eb53_s4.mp3",
+        "actual_duration": 29.83,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 4.27,
+            "text": "Let us conclude with the golden rules of production error handling."
+          },
+          {
+            "start": 4.22,
+            "end": 11.52,
+            "text": "The cardinal sin of Python programming is the bare except pass: catching every error silently and doing nothing."
+          },
+          {
+            "start": 11.53,
+            "end": 16.71,
+            "text": "This masks critical bugs, keyboard interrupts, and memory errors!"
+          },
+          {
+            "start": 16.71,
+            "end": 29.83,
+            "text": "Instead, follow three principles: catch only the specific exceptions you anticipate, preserve error contexts using the raise keyword, and prefer context managers with the with statement for automatic resource cleanup."
+          }
+        ]
+      }
+    ],
+    "video_url": "/media/videos/lecture_7dd0eb53.mp4",
+    "subtitles_vtt_url": "/media/subtitles/lec_7dd0eb53.vtt",
+    "materials": {
+      "summary": "Exception handling in Python provides a structured mechanism for detecting and recovering from runtime errors without crashing the program. Through try, except, else, and finally blocks, call stack unwinding, and object-oriented exception hierarchies, Python programs maintain reliability, data integrity, and clean resource management.",
+      "notes_markdown": "# Python Exception Handling: Complete Engineering Guide\n\n## 1. Syntax vs. Exception\n- **SyntaxError**: Detected during parsing before execution begins (e.g. `if x = 5:`).\n- **Exception**: Occurs during runtime when syntactically valid code encounters an impossible state (e.g. dividing by zero, file not found, network timeout).\n\n## 2. The Four Keyword Blocks\n```python\ntry:\n    # Code that may raise an exception\n    value = database.fetch(user_id)\nexcept UserNotFoundError as e:\n    # Code executed if specific exception occurs\n    logger.warning(f\"User {user_id} not found: {e}\")\n    value = default_user()\nelse:\n    # Executed ONLY if try block completed with NO exceptions\n    logger.info(\"Data fetched successfully\")\nfinally:\n    # ALWAYS executed regardless of success, exception, or early return\n    database.close_connection()\n```\n\n## 3. The Exception Class Hierarchy\n```\nBaseException\n ├── SystemExit\n ├── KeyboardInterrupt\n └── Exception\n      ├── ArithmeticError\n      │    └── ZeroDivisionError\n      ├── LookupError\n      │    ├── IndexError\n      │    └── KeyError\n      ├── ValueError\n      └── TypeError\n```\n\n## 4. Defining Custom Exceptions\n```python\nclass InsufficientFundsError(Exception):\n    def __init__(self, balance: float, amount: float):\n        self.balance = balance\n        self.amount = amount\n        super().__init__(f\"Cannot withdraw ${amount}; balance is only ${balance}\")\n\n# Usage:\ndef withdraw(balance, amount):\n    if amount > balance:\n        raise InsufficientFundsError(balance, amount)\n    return balance - amount\n```\n",
+      "key_concepts": [
+        {
+          "concept": "Stack Unwinding",
+          "definition": "The process by which the Python runtime terminates active function call frames in reverse order until a matching except block is located.",
+          "importance": "Allows high-level functions to handle errors originating in deep helper functions."
+        },
+        {
+          "concept": "Bare Except Antipattern",
+          "definition": "Writing `except:` without an exception type, which catches `BaseException` including `KeyboardInterrupt` and `SystemExit`.",
+          "importance": "Dangerous bug masking practice; always catch `Exception` or specific subtypes."
+        },
+        {
+          "concept": "Context Manager (`with` statement)",
+          "definition": "A language construct implementing `__enter__` and `__exit__` methods that guarantees cleanup even when exceptions occur.",
+          "importance": "Pythonic alternative to verbose try/finally blocks."
+        }
+      ],
+      "formulas_or_code": [
+        {
+          "title": "Re-raising Exceptions",
+          "type": "code",
+          "content": "try:\n    perform_action()\nexcept Exception as err:\n    log_error(err)\n    raise  # Re-raises current exception preserving original traceback",
+          "explanation": "Preserves original stack trace when logging and propagating."
+        },
+        {
+          "title": "Custom Exception Class",
+          "type": "code",
+          "content": "class CustomError(Exception):\n    pass",
+          "explanation": "Standard idiomatic way to create domain-specific application exceptions."
+        }
+      ],
+      "practice_questions": [
+        {
+          "question": "In a `try-except-else-finally` block, if the `try` block executes `return 10`, does the `finally` block still execute?",
+          "hint": "Consider the guaranteed nature of the `finally` keyword.",
+          "solution": "Yes! The `finally` block is guaranteed to run before the function returns to the caller, even when early return statements are executed inside the `try` or `except` blocks."
+        }
+      ],
+      "quiz": [
+        {
+          "id": 1,
+          "question": "When does the `else` block execute in a Python try/except construct?",
+          "options": [
+            "Whenever an exception is caught",
+            "Only when the try block completes with zero exceptions",
+            "Always right before the finally block",
+            "Only when a syntax error occurs"
+          ],
+          "correct_index": 1,
+          "explanation": "The else block executes strictly if no exception was raised in the try block."
+        },
+        {
+          "id": 2,
+          "question": "Why is writing `except Exception:` considered better than writing a bare `except:`?",
+          "options": [
+            "It runs 10x faster",
+            "It prevents accidentally catching SystemExit and KeyboardInterrupt (Ctrl+C)",
+            "It automatically writes to log files",
+            "It is required by the Python compiler"
+          ],
+          "correct_index": 1,
+          "explanation": "A bare except catches BaseException, which intercepts critical system signals like KeyboardInterrupt and SystemExit, preventing the user from stopping the program."
+        }
+      ],
+      "flashcards": [
+        {
+          "id": 1,
+          "front": "What is the difference between IndexError and KeyError?",
+          "back": "IndexError occurs when accessing a sequence with an out-of-range integer index; KeyError occurs when looking up a non-existent key in a dictionary.",
+          "category": "Built-in Exceptions"
+        },
+        {
+          "id": 2,
+          "front": "What does the 'finally' block guarantee?",
+          "back": "It guarantees execution under all circumstances, even after errors, caught exceptions, or early return statements.",
+          "category": "Control Flow"
+        }
+      ]
+    }
+  },
+  "94737686": {
+    "id": "94737686",
+    "topic": "India",
+    "title": "India: The Epic Journey of a Continuous Civilization",
+    "domain": "history",
+    "subdomain": "Civilizations, Culture & Geopolitics",
+    "knowledge_level": "intermediate",
+    "teaching_style": "epochs_timeline",
+    "duration_target": "standard",
+    "voice_name": "en-US-ChristopherNeural",
+    "created_at": "2026-09-24 23:22",
+    "total_duration": 177.12,
+    "scenes": [
+      {
+        "scene_id": "lec_94737686_s0",
+        "index": 0,
+        "chapter_title": "1. The Sacred Cradle: Antiquity & Spiritual Roots",
+        "pedagogical_phase": "hook",
+        "narration_text": "India is not merely a nation; it is one of humanity's oldest continuous living civilizations, spanning over five thousand years. Along the fertile banks of the Indus and the sacred Saraswati rivers, advanced planned cities like Harappa and Mohenjo-daro thrived with sophisticated metallurgy and civic drainage. From these ancient soils arose profound spiritual traditions: Sanatana Dharma, the poetic philosophy of the Vedas, the introspective depth of the Upanishads, and the timeless moral paths of Buddhism and Jainism. Here, truth was recognized as one, expressed in myriad forms.",
+        "estimated_duration": 26.0,
+        "visual_spec": {
+          "visual_type": "hierarchy_pyramid",
+          "title": "Ancient Spiritual & Philosophical Foundations",
+          "subtitle": "The Intellectual & Metaphysical Heritage of Ancient India",
+          "parameters": {
+            "pyramid_title": "Vedic & Philosophical Heritage",
+            "tiers": [
+              {
+                "tier": "Moksha & Self-Realization (The Upanishads)",
+                "note": "Ultimate liberation through spiritual realization (Aham Brahmasmi)"
+              },
+              {
+                "tier": "Dharma & Ethical Living (The Epics & Gita)",
+                "note": "Righteous duty, moral action without attachment to fruits (Nishkama Karma)"
+              },
+              {
+                "tier": "Spiritual Diversity: Buddhism, Jainism, Darshanas",
+                "note": "Ahimsa (non-violence), Yoga, Vedanta, Nyaya, and Samkhya systems"
+              },
+              {
+                "tier": "Indus Valley Civilization (~3300 - 1300 BCE)",
+                "note": "Urban grid cities, standardized weights, maritime commerce, bronze mastery"
+              }
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Indus Valley Foundation"
+            },
+            {
+              "step": 2,
+              "highlight": "Vedic & Philosophical Heritage"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_94737686_s0.mp3",
+        "actual_duration": 37.73,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 8.75,
+            "text": "India is not merely a nation; it is one of humanity's oldest continuous living civilizations, spanning over five thousand years."
+          },
+          {
+            "start": 8.7,
+            "end": 19.42,
+            "text": "Along the fertile banks of the Indus and the sacred Saraswati rivers, advanced planned cities like Harappa and Mohenjo-daro thrived with sophisticated metallurgy and civic drainage."
+          },
+          {
+            "start": 19.43,
+            "end": 32.67,
+            "text": "From these ancient soils arose profound spiritual traditions: Sanatana Dharma, the poetic philosophy of the Vedas, the introspective depth of the Upanishads, and the timeless moral paths of Buddhism and Jainism."
+          },
+          {
+            "start": 32.67,
+            "end": 37.73,
+            "text": "Here, truth was recognized as one, expressed in myriad forms."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_94737686_s1",
+        "index": 1,
+        "chapter_title": "2. Epochs of Enlightenment: Maurya, Gupta & Cultural Synthesis",
+        "pedagogical_phase": "foundation",
+        "narration_text": "Across centuries, great dynasties united the subcontinent in scholarship and architectural grandeur. Emperor Ashoka of the Maurya Empire renounced war after Kalinga, carving edicts of peace, religious tolerance, and animal welfare upon stone pillars across Asia. Under the Gupta Golden Age, Indian mathematicians invented the decimal system and the concept of zero, while astronomers like Aryabhata calculated the solar year. Universities like Nalanda welcomed thousands of scholars from China to Greece, making India the intellectual beacon of the ancient world.",
+        "estimated_duration": 27.0,
+        "visual_spec": {
+          "visual_type": "timeline_journey",
+          "title": "The Golden Epochs of Classical India",
+          "subtitle": "From Ancient Empires to Global Intellectual Influence",
+          "parameters": {
+            "milestones": [
+              {
+                "year": "321 - 185 BCE",
+                "title": "Mauryan Empire & Ashoka",
+                "desc": "Pan-Indian unification; Ashokan Edicts spread Buddhist ethics of Ahimsa",
+                "impact": "Universal moral governance"
+              },
+              {
+                "year": "320 - 550 CE",
+                "title": "Gupta Empire (Golden Age)",
+                "desc": "Aryabhata invents zero & decimal place-value; Kalidasa's classical Sanskrit poetry",
+                "impact": "Foundations of modern mathematics"
+              },
+              {
+                "year": "427 - 1197 CE",
+                "title": "Nalanda University",
+                "desc": "World's premier residential university with 10,000 students and massive library",
+                "impact": "Global hub of Buddhist & secular study"
+              },
+              {
+                "year": "9th - 13th Cent",
+                "title": "Chola Maritime Empire",
+                "desc": "Magnificent Brihadeeswarar bronze & stone temples; naval trade to Southeast Asia",
+                "impact": "Cultural diaspora across Indochina"
+              }
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Mauryan Empire"
+            },
+            {
+              "step": 2,
+              "highlight": "Gupta Golden Age"
+            },
+            {
+              "step": 3,
+              "highlight": "Nalanda & Cholas"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_94737686_s1.mp3",
+        "actual_duration": 35.64,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 6.65,
+            "text": "Across centuries, great dynasties united the subcontinent in scholarship and architectural grandeur."
+          },
+          {
+            "start": 6.6,
+            "end": 17.38,
+            "text": "Emperor Ashoka of the Maurya Empire renounced war after Kalinga, carving edicts of peace, religious tolerance, and animal welfare upon stone pillars across Asia."
+          },
+          {
+            "start": 17.38,
+            "end": 27.27,
+            "text": "Under the Gupta Golden Age, Indian mathematicians invented the decimal system and the concept of zero, while astronomers like Aryabhata calculated the solar year."
+          },
+          {
+            "start": 27.27,
+            "end": 35.64,
+            "text": "Universities like Nalanda welcomed thousands of scholars from China to Greece, making India the intellectual beacon of the ancient world."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_94737686_s2",
+        "index": 2,
+        "chapter_title": "3. The Crucible of Freedom: Colonial Struggle to 1947",
+        "pedagogical_phase": "visual_demonstration",
+        "narration_text": "By the eighteenth century, European colonial expansion culminated in the British East India Company and the British Raj, which systematically exploited India's textiles and wealth. But the spirit of India rose in resistance. From the brave rebellion of 1857 to the revolutionary bravery of Bhagat Singh, Netaji Subhas Chandra Bose's Indian National Army, and Mahatma Gandhi's mass non-violent Satyagraha, millions mobilized. On the midnight of August 15, 1947, as Jawaharlal Nehru declared, India awoke to life and freedom.",
+        "estimated_duration": 26.0,
+        "visual_spec": {
+          "visual_type": "cause_and_effect",
+          "title": "The Freedom Movement & The Dawn of Independence",
+          "subtitle": "How Colonial Resistance Forged a Sovereign Republic",
+          "parameters": {
+            "root_catalyst": "British Colonial Exploitation & The Revolt of 1857",
+            "intermediate_effects": [
+              "Birth of Indian National Congress (1885) and Swadeshi economic boycott",
+              "Mahatma Gandhi's Non-Violent Satyagraha, Salt March & Quit India Movement",
+              "Netaji Subhas Chandra Bose & The Indian National Army challenge British military power"
+            ],
+            "ultimate_consequence": "Midnight of August 15, 1947: Sovereign Independence; Constitution ratified in 1950"
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Revolt of 1857"
+            },
+            {
+              "step": 2,
+              "highlight": "Satyagraha & INA"
+            },
+            {
+              "step": 3,
+              "highlight": "Independence 1947"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_94737686_s2.mp3",
+        "actual_duration": 35.71,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 10.9,
+            "text": "By the eighteenth century, European colonial expansion culminated in the British East India Company and the British Raj, which systematically exploited India's textiles and wealth."
+          },
+          {
+            "start": 10.85,
+            "end": 14.19,
+            "text": "But the spirit of India rose in resistance."
+          },
+          {
+            "start": 14.19,
+            "end": 27.5,
+            "text": "From the brave rebellion of 1857 to the revolutionary bravery of Bhagat Singh, Netaji Subhas Chandra Bose's Indian National Army, and Mahatma Gandhi's mass non-violent Satyagraha, millions mobilized."
+          },
+          {
+            "start": 27.5,
+            "end": 35.71,
+            "text": "On the midnight of August 15, 1947, as Jawaharlal Nehru declared, India awoke to life and freedom."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_94737686_s3",
+        "index": 3,
+        "chapter_title": "4. Unity in Diversity: The Constitutional Tapestry",
+        "pedagogical_phase": "edge_cases",
+        "narration_text": "What makes modern India truly miraculous is its constitutional achievement. Architected by Dr. B. R. Ambedkar, the Indian Constitution established the world's largest sovereign democracy. Within one single nation live twenty-eight states, twenty-two officially recognized languages, and every major world religion—Hinduism, Islam, Christianity, Sikhism, Buddhism, and Jainism. Despite immense complexity, India thrives not by enforcing conformity, but by celebrating Unity in Diversity as its sacred national creed.",
+        "estimated_duration": 25.0,
+        "visual_spec": {
+          "visual_type": "comparison_matrix",
+          "title": "The Pluralistic Mosaic of the Republic",
+          "subtitle": "Democracy, Linguistic Richness & Spiritual Coexistence",
+          "parameters": {
+            "col1": "World's Largest Democracy: 1.4 billion people, 900+ million voters, peaceful constitutional transitions of power",
+            "col2": "Linguistic & Cultural Tapestry: 22 Eighth Schedule languages, classical literatures (Tamil, Sanskrit, Kannada, Telugu)",
+            "col3": "Spiritual Synthesis: Birthplace of Hinduism, Buddhism, Jainism, Sikhism; thriving home of Islam, Christianity, Zoroastrianism"
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Democracy"
+            },
+            {
+              "step": 2,
+              "highlight": "Linguistic Tapestry"
+            },
+            {
+              "step": 3,
+              "highlight": "Spiritual Synthesis"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_94737686_s3.mp3",
+        "actual_duration": 35.14,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 5.04,
+            "text": "What makes modern India truly miraculous is its constitutional achievement."
+          },
+          {
+            "start": 4.99,
+            "end": 12.59,
+            "text": "Architected by Dr. B. R. Ambedkar, the Indian Constitution established the world's largest sovereign democracy."
+          },
+          {
+            "start": 12.59,
+            "end": 26.02,
+            "text": "Within one single nation live twenty-eight states, twenty-two officially recognized languages, and every major world religion—Hinduism, Islam, Christianity, Sikhism, Buddhism, and Jainism."
+          },
+          {
+            "start": 26.02,
+            "end": 35.14,
+            "text": "Despite immense complexity, India thrives not by enforcing conformity, but by celebrating Unity in Diversity as its sacred national creed."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_94737686_s4",
+        "index": 4,
+        "chapter_title": "5. Modern India: Space, Digital Revolution & Global Horizon",
+        "pedagogical_phase": "summary",
+        "narration_text": "Today, India stands as a vibrant global powerhouse where ancient heritage meets twenty-first-century innovation. With ISRO's Chandrayaan landing on the lunar South Pole, a revolutionary digital public infrastructure powering billions of instant UPI transactions, and a young demographic driving global technology and entrepreneurship, India continues its civilizational mission. Guided by the timeless motto 'Vasudhaiva Kutumbakam'—the world is one family—India shines as a beacon of democracy, culture, and progress.",
+        "estimated_duration": 25.0,
+        "visual_spec": {
+          "visual_type": "spectrum_meter",
+          "title": "The Civilizational Synthesis of Modern India",
+          "subtitle": "Ancient Timeless Wisdom Harmonizing with Cutting-Edge Innovation",
+          "parameters": {
+            "left_label": "Timeless Spiritual Wisdom: Yoga, Ayurveda, Vedanta, Ahimsa",
+            "right_label": "High-Tech Frontier: ISRO Space Exploration, Digital Public Infrastructure, AI Leadership",
+            "center_balance": "Vasudhaiva Kutumbakam: 'The World is One Family' Guided by Democratic Values",
+            "markers": [
+              "Vedic Heritage",
+              "World's Largest Democracy",
+              "Global Innovation Leader"
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Spiritual Heritage"
+            },
+            {
+              "step": 2,
+              "highlight": "High-Tech Frontier"
+            },
+            {
+              "step": 3,
+              "highlight": "Vasudhaiva Kutumbakam"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_94737686_s4.mp3",
+        "actual_duration": 32.9,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 7.25,
+            "text": "Today, India stands as a vibrant global powerhouse where ancient heritage meets twenty-first-century innovation."
+          },
+          {
+            "start": 7.2,
+            "end": 23.1,
+            "text": "With ISRO's Chandrayaan landing on the lunar South Pole, a revolutionary digital public infrastructure powering billions of instant UPI transactions, and a young demographic driving global technology and entrepreneurship, India continues its civilizational mission."
+          },
+          {
+            "start": 23.1,
+            "end": 32.9,
+            "text": "Guided by the timeless motto 'Vasudhaiva Kutumbakam'—the world is one family—India shines as a beacon of democracy, culture, and progress."
+          }
+        ]
+      }
+    ],
+    "video_url": "/media/videos/lecture_94737686.mp4",
+    "subtitles_vtt_url": "/media/subtitles/lec_94737686.vtt",
+    "materials": {
+      "summary": "India (Bharat) is one of the world's oldest and most profound continuous civilizations. Spanning the ancient Indus Valley, the philosophical depths of the Vedas and Upanishads, golden classical empires, a heroic non-violent freedom struggle, and the world's largest constitutional democracy, India harmoniously bridges ancient spiritual wisdom with modern technological leadership in space, digital infrastructure, and global affairs.",
+      "notes_markdown": "# India: Comprehensive Civilizational & National Study Notes\n\n## 1. Antiquity & The Vedic Heritage\n- **Indus Valley Civilization (~3300 - 1300 BCE)**: Advanced planned urban centers at Harappa, Mohenjo-daro, and Dholavira with standardized brick architecture, water management, and extensive international trade.\n- **The Vedic Tradition & Philosophy**: The composition of the Rigveda, Samaveda, Yajurveda, and Atharvaveda, progressing to the **Upanishads**, which explored the fundamental nature of reality (*Brahman*) and the self (*Atman*).\n- **Core Spiritual Concepts**:\n  - *Dharma*: Cosmic order, moral duty, and ethical action.\n  - *Karma*: The law of cause and effect governing actions.\n  - *Ahimsa*: Non-violence and reverence for all living beings, championed by Mahavira and Gautama Buddha.\n\n## 2. Classical Golden Empires\n1. **The Maurya Empire (321 - 185 BCE)**: Unified under Chandragupta Maurya and Chanakya (author of the *Arthashastra*). Emperor Ashoka embraced Buddhism after the Kalinga war, carving edicts of tolerance and ethics across Asia.\n2. **The Gupta Golden Age (320 - 550 CE)**: Remarkable mathematical breakthroughs including the formalization of zero as a number, decimal place-value, and trigonometry by mathematicians like **Aryabhata** and **Varahamihira**.\n3. **Nalanda University**: Premier residential center of global learning hosting scholars from across the Silk Road.\n4. **Southern Dynasties (Cholas, Pandyas, Pallavas)**: Renowned for exquisite Dravidian temple architecture, bronze sculpture, and trans-oceanic trade networks.\n\n## 3. The Freedom Struggle & Independence\n- **Colonial Era**: British East India Company hegemony followed by direct British Crown rule (British Raj) after the historic **Revolt of 1857**.\n- **The National Movement**:\n  - *Mahatma Gandhi*: Championed mass non-violent resistance (*Satyagraha*), leading the Non-Cooperation Movement, Salt March (1930), and Quit India Movement (1942).\n  - *Netaji Subhas Chandra Bose*: Established the Indian National Army (Azad Hind Fauj) to militarily challenge British rule.\n  - *Revolutionary Heroes*: Bhagat Singh, Chandrashekhar Azad, Rani Lakshmibai.\n- **Midnight of August 15, 1947**: India attained sovereign independence, celebrated in Jawaharlal Nehru's historic 'Tryst with Destiny' address.\n\n## 4. The Republic of India\n- **The Constitution (Adopted Nov 26, 1949; in effect Jan 26, 1950)**: Drafted under the chairmanship of **Dr. B. R. Ambedkar**, creating a Sovereign, Socialist, Secular, Democratic Republic.\n- **Unity in Diversity**: 28 States, 8 Union Territories, 22 Eighth Schedule languages, and a multi-religious secular constitutional fabric.\n- **Modern Milestones**:\n  - **Space Leadership (ISRO)**: Successful Chandrayaan-3 lunar south-pole landing and Aditya-L1 solar mission.\n  - **Digital Public Infrastructure (India Stack)**: Unified Payments Interface (UPI) facilitating billions of real-time transactions monthly.\n",
+      "key_concepts": [
+        {
+          "concept": "Unity in Diversity",
+          "definition": "The philosophical and constitutional principle that diverse ethnic, linguistic, and religious communities coexist in harmonious shared citizenship.",
+          "importance": "Foundational bedrock of the Indian Republic."
+        },
+        {
+          "concept": "Ahimsa",
+          "definition": "The ancient ethical doctrine of non-violence in thought, word, and deed, central to Hinduism, Buddhism, and Jainism.",
+          "importance": "Inspired Mahatma Gandhi's freedom movement and modern global civil rights struggles."
+        },
+        {
+          "concept": "Vasudhaiva Kutumbakam",
+          "definition": "A Sanskrit phrase from the Maha Upanishad meaning 'The World is One Family'.",
+          "importance": "Guides India's cultural diplomacy and global humanitarian outlook."
+        }
+      ],
+      "formulas_or_code": [
+        {
+          "title": "The National Motto",
+          "type": "quote",
+          "content": "Satyameva Jayate (Truth Alone Triumphs)",
+          "explanation": "From the Mundaka Upanishad, inscribed at the base of the Lion Capital of Ashoka."
+        },
+        {
+          "title": "Universal Ethical Invariant",
+          "type": "principle",
+          "content": "Vasudhaiva Kutumbakam (The World is One Family)",
+          "explanation": "Core philosophical orientation recognizing the common bond of all humanity."
+        }
+      ],
+      "practice_questions": [
+        {
+          "question": "How did Emperor Ashoka's governance after the Kalinga war represent a paradigm shift in political philosophy?",
+          "hint": "Think about the transition from conquest by arms to conquest by righteousness.",
+          "solution": "Ashoka renounced military conquest (Digvijaya) and adopted conquest by moral righteousness (Dharmavijaya), inscribing edicts mandating medical care for humans and animals, environmental conservation, and mutual religious respect across his vast empire."
+        }
+      ],
+      "quiz": [
+        {
+          "id": 1,
+          "question": "Who served as the principal architect and Chairman of the Drafting Committee of the Indian Constitution?",
+          "options": [
+            "Mahatma Gandhi",
+            "Dr. B. R. Ambedkar",
+            "Jawaharlal Nehru",
+            "Sardar Vallabhbhai Patel"
+          ],
+          "correct_index": 1,
+          "explanation": "Dr. Bhimrao Ramji Ambedkar chaired the Drafting Committee that framed the Constitution of India."
+        },
+        {
+          "id": 2,
+          "question": "What groundbreaking mathematical contribution flourished during the Gupta Golden Age of India?",
+          "options": [
+            "The invention of the abacus",
+            "The formalization of zero and decimal place-value system",
+            "Calculus limits",
+            "Binary electronics"
+          ],
+          "correct_index": 1,
+          "explanation": "Indian mathematicians like Aryabhata developed the decimal system and the operational concept of zero, which revolutionized global mathematics."
+        }
+      ],
+      "flashcards": [
+        {
+          "id": 1,
+          "front": "What does the national motto 'Satyameva Jayate' mean and where does it originate?",
+          "back": "It means 'Truth Alone Triumphs' and originates from the ancient Mundaka Upanishad.",
+          "category": "National Symbols"
+        },
+        {
+          "id": 2,
+          "front": "When did the Constitution of India come into full effect?",
+          "back": "January 26, 1950, celebrated nationwide as Republic Day.",
+          "category": "Constitution"
+        }
+      ]
+    }
+  },
+  "c71f4203": {
+    "id": "c71f4203",
+    "topic": "India",
+    "title": "India: The Epic Journey of a Continuous Civilization",
+    "domain": "history",
+    "subdomain": "Civilizations, Culture & Geopolitics",
+    "knowledge_level": "intermediate",
+    "teaching_style": "epochs_timeline",
+    "duration_target": "standard",
+    "voice_name": "en-US-ChristopherNeural",
+    "created_at": "2026-09-24 23:25",
+    "total_duration": 177.12,
+    "scenes": [
+      {
+        "scene_id": "lec_c71f4203_s0",
+        "index": 0,
+        "chapter_title": "1. The Sacred Cradle: Antiquity & Spiritual Roots",
+        "pedagogical_phase": "hook",
+        "narration_text": "India is not merely a nation; it is one of humanity's oldest continuous living civilizations, spanning over five thousand years. Along the fertile banks of the Indus and the sacred Saraswati rivers, advanced planned cities like Harappa and Mohenjo-daro thrived with sophisticated metallurgy and civic drainage. From these ancient soils arose profound spiritual traditions: Sanatana Dharma, the poetic philosophy of the Vedas, the introspective depth of the Upanishads, and the timeless moral paths of Buddhism and Jainism. Here, truth was recognized as one, expressed in myriad forms.",
+        "estimated_duration": 26.0,
+        "visual_spec": {
+          "visual_type": "hierarchy_pyramid",
+          "title": "Ancient Spiritual & Philosophical Foundations",
+          "subtitle": "The Intellectual & Metaphysical Heritage of Ancient India",
+          "parameters": {
+            "pyramid_title": "Vedic & Philosophical Heritage",
+            "tiers": [
+              {
+                "tier": "Moksha & Self-Realization (The Upanishads)",
+                "note": "Ultimate liberation through spiritual realization (Aham Brahmasmi)"
+              },
+              {
+                "tier": "Dharma & Ethical Living (The Epics & Gita)",
+                "note": "Righteous duty, moral action without attachment to fruits (Nishkama Karma)"
+              },
+              {
+                "tier": "Spiritual Diversity: Buddhism, Jainism, Darshanas",
+                "note": "Ahimsa (non-violence), Yoga, Vedanta, Nyaya, and Samkhya systems"
+              },
+              {
+                "tier": "Indus Valley Civilization (~3300 - 1300 BCE)",
+                "note": "Urban grid cities, standardized weights, maritime commerce, bronze mastery"
+              }
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Indus Valley Foundation"
+            },
+            {
+              "step": 2,
+              "highlight": "Vedic & Philosophical Heritage"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_c71f4203_s0.mp3",
+        "actual_duration": 37.73,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 8.75,
+            "text": "India is not merely a nation; it is one of humanity's oldest continuous living civilizations, spanning over five thousand years."
+          },
+          {
+            "start": 8.7,
+            "end": 19.42,
+            "text": "Along the fertile banks of the Indus and the sacred Saraswati rivers, advanced planned cities like Harappa and Mohenjo-daro thrived with sophisticated metallurgy and civic drainage."
+          },
+          {
+            "start": 19.43,
+            "end": 32.67,
+            "text": "From these ancient soils arose profound spiritual traditions: Sanatana Dharma, the poetic philosophy of the Vedas, the introspective depth of the Upanishads, and the timeless moral paths of Buddhism and Jainism."
+          },
+          {
+            "start": 32.67,
+            "end": 37.73,
+            "text": "Here, truth was recognized as one, expressed in myriad forms."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_c71f4203_s1",
+        "index": 1,
+        "chapter_title": "2. Epochs of Enlightenment: Maurya, Gupta & Cultural Synthesis",
+        "pedagogical_phase": "foundation",
+        "narration_text": "Across centuries, great dynasties united the subcontinent in scholarship and architectural grandeur. Emperor Ashoka of the Maurya Empire renounced war after Kalinga, carving edicts of peace, religious tolerance, and animal welfare upon stone pillars across Asia. Under the Gupta Golden Age, Indian mathematicians invented the decimal system and the concept of zero, while astronomers like Aryabhata calculated the solar year. Universities like Nalanda welcomed thousands of scholars from China to Greece, making India the intellectual beacon of the ancient world.",
+        "estimated_duration": 27.0,
+        "visual_spec": {
+          "visual_type": "timeline_journey",
+          "title": "The Golden Epochs of Classical India",
+          "subtitle": "From Ancient Empires to Global Intellectual Influence",
+          "parameters": {
+            "milestones": [
+              {
+                "year": "321 - 185 BCE",
+                "title": "Mauryan Empire & Ashoka",
+                "desc": "Pan-Indian unification; Ashokan Edicts spread Buddhist ethics of Ahimsa",
+                "impact": "Universal moral governance"
+              },
+              {
+                "year": "320 - 550 CE",
+                "title": "Gupta Empire (Golden Age)",
+                "desc": "Aryabhata invents zero & decimal place-value; Kalidasa's classical Sanskrit poetry",
+                "impact": "Foundations of modern mathematics"
+              },
+              {
+                "year": "427 - 1197 CE",
+                "title": "Nalanda University",
+                "desc": "World's premier residential university with 10,000 students and massive library",
+                "impact": "Global hub of Buddhist & secular study"
+              },
+              {
+                "year": "9th - 13th Cent",
+                "title": "Chola Maritime Empire",
+                "desc": "Magnificent Brihadeeswarar bronze & stone temples; naval trade to Southeast Asia",
+                "impact": "Cultural diaspora across Indochina"
+              }
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Mauryan Empire"
+            },
+            {
+              "step": 2,
+              "highlight": "Gupta Golden Age"
+            },
+            {
+              "step": 3,
+              "highlight": "Nalanda & Cholas"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_c71f4203_s1.mp3",
+        "actual_duration": 35.64,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 6.65,
+            "text": "Across centuries, great dynasties united the subcontinent in scholarship and architectural grandeur."
+          },
+          {
+            "start": 6.6,
+            "end": 17.38,
+            "text": "Emperor Ashoka of the Maurya Empire renounced war after Kalinga, carving edicts of peace, religious tolerance, and animal welfare upon stone pillars across Asia."
+          },
+          {
+            "start": 17.38,
+            "end": 27.27,
+            "text": "Under the Gupta Golden Age, Indian mathematicians invented the decimal system and the concept of zero, while astronomers like Aryabhata calculated the solar year."
+          },
+          {
+            "start": 27.27,
+            "end": 35.64,
+            "text": "Universities like Nalanda welcomed thousands of scholars from China to Greece, making India the intellectual beacon of the ancient world."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_c71f4203_s2",
+        "index": 2,
+        "chapter_title": "3. The Crucible of Freedom: Colonial Struggle to 1947",
+        "pedagogical_phase": "visual_demonstration",
+        "narration_text": "By the eighteenth century, European colonial expansion culminated in the British East India Company and the British Raj, which systematically exploited India's textiles and wealth. But the spirit of India rose in resistance. From the brave rebellion of 1857 to the revolutionary bravery of Bhagat Singh, Netaji Subhas Chandra Bose's Indian National Army, and Mahatma Gandhi's mass non-violent Satyagraha, millions mobilized. On the midnight of August 15, 1947, as Jawaharlal Nehru declared, India awoke to life and freedom.",
+        "estimated_duration": 26.0,
+        "visual_spec": {
+          "visual_type": "cause_and_effect",
+          "title": "The Freedom Movement & The Dawn of Independence",
+          "subtitle": "How Colonial Resistance Forged a Sovereign Republic",
+          "parameters": {
+            "root_catalyst": "British Colonial Exploitation & The Revolt of 1857",
+            "intermediate_effects": [
+              "Birth of Indian National Congress (1885) and Swadeshi economic boycott",
+              "Mahatma Gandhi's Non-Violent Satyagraha, Salt March & Quit India Movement",
+              "Netaji Subhas Chandra Bose & The Indian National Army challenge British military power"
+            ],
+            "ultimate_consequence": "Midnight of August 15, 1947: Sovereign Independence; Constitution ratified in 1950"
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Revolt of 1857"
+            },
+            {
+              "step": 2,
+              "highlight": "Satyagraha & INA"
+            },
+            {
+              "step": 3,
+              "highlight": "Independence 1947"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_c71f4203_s2.mp3",
+        "actual_duration": 35.71,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 10.9,
+            "text": "By the eighteenth century, European colonial expansion culminated in the British East India Company and the British Raj, which systematically exploited India's textiles and wealth."
+          },
+          {
+            "start": 10.85,
+            "end": 14.19,
+            "text": "But the spirit of India rose in resistance."
+          },
+          {
+            "start": 14.19,
+            "end": 27.5,
+            "text": "From the brave rebellion of 1857 to the revolutionary bravery of Bhagat Singh, Netaji Subhas Chandra Bose's Indian National Army, and Mahatma Gandhi's mass non-violent Satyagraha, millions mobilized."
+          },
+          {
+            "start": 27.5,
+            "end": 35.71,
+            "text": "On the midnight of August 15, 1947, as Jawaharlal Nehru declared, India awoke to life and freedom."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_c71f4203_s3",
+        "index": 3,
+        "chapter_title": "4. Unity in Diversity: The Constitutional Tapestry",
+        "pedagogical_phase": "edge_cases",
+        "narration_text": "What makes modern India truly miraculous is its constitutional achievement. Architected by Dr. B. R. Ambedkar, the Indian Constitution established the world's largest sovereign democracy. Within one single nation live twenty-eight states, twenty-two officially recognized languages, and every major world religion—Hinduism, Islam, Christianity, Sikhism, Buddhism, and Jainism. Despite immense complexity, India thrives not by enforcing conformity, but by celebrating Unity in Diversity as its sacred national creed.",
+        "estimated_duration": 25.0,
+        "visual_spec": {
+          "visual_type": "comparison_matrix",
+          "title": "The Pluralistic Mosaic of the Republic",
+          "subtitle": "Democracy, Linguistic Richness & Spiritual Coexistence",
+          "parameters": {
+            "col1": "World's Largest Democracy: 1.4 billion people, 900+ million voters, peaceful constitutional transitions of power",
+            "col2": "Linguistic & Cultural Tapestry: 22 Eighth Schedule languages, classical literatures (Tamil, Sanskrit, Kannada, Telugu)",
+            "col3": "Spiritual Synthesis: Birthplace of Hinduism, Buddhism, Jainism, Sikhism; thriving home of Islam, Christianity, Zoroastrianism"
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Democracy"
+            },
+            {
+              "step": 2,
+              "highlight": "Linguistic Tapestry"
+            },
+            {
+              "step": 3,
+              "highlight": "Spiritual Synthesis"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_c71f4203_s3.mp3",
+        "actual_duration": 35.14,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 5.04,
+            "text": "What makes modern India truly miraculous is its constitutional achievement."
+          },
+          {
+            "start": 4.99,
+            "end": 12.59,
+            "text": "Architected by Dr. B. R. Ambedkar, the Indian Constitution established the world's largest sovereign democracy."
+          },
+          {
+            "start": 12.59,
+            "end": 26.02,
+            "text": "Within one single nation live twenty-eight states, twenty-two officially recognized languages, and every major world religion—Hinduism, Islam, Christianity, Sikhism, Buddhism, and Jainism."
+          },
+          {
+            "start": 26.02,
+            "end": 35.14,
+            "text": "Despite immense complexity, India thrives not by enforcing conformity, but by celebrating Unity in Diversity as its sacred national creed."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_c71f4203_s4",
+        "index": 4,
+        "chapter_title": "5. Modern India: Space, Digital Revolution & Global Horizon",
+        "pedagogical_phase": "summary",
+        "narration_text": "Today, India stands as a vibrant global powerhouse where ancient heritage meets twenty-first-century innovation. With ISRO's Chandrayaan landing on the lunar South Pole, a revolutionary digital public infrastructure powering billions of instant UPI transactions, and a young demographic driving global technology and entrepreneurship, India continues its civilizational mission. Guided by the timeless motto 'Vasudhaiva Kutumbakam'—the world is one family—India shines as a beacon of democracy, culture, and progress.",
+        "estimated_duration": 25.0,
+        "visual_spec": {
+          "visual_type": "spectrum_meter",
+          "title": "The Civilizational Synthesis of Modern India",
+          "subtitle": "Ancient Timeless Wisdom Harmonizing with Cutting-Edge Innovation",
+          "parameters": {
+            "left_label": "Timeless Spiritual Wisdom: Yoga, Ayurveda, Vedanta, Ahimsa",
+            "right_label": "High-Tech Frontier: ISRO Space Exploration, Digital Public Infrastructure, AI Leadership",
+            "center_balance": "Vasudhaiva Kutumbakam: 'The World is One Family' Guided by Democratic Values",
+            "markers": [
+              "Vedic Heritage",
+              "World's Largest Democracy",
+              "Global Innovation Leader"
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Spiritual Heritage"
+            },
+            {
+              "step": 2,
+              "highlight": "High-Tech Frontier"
+            },
+            {
+              "step": 3,
+              "highlight": "Vasudhaiva Kutumbakam"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_c71f4203_s4.mp3",
+        "actual_duration": 32.9,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 7.25,
+            "text": "Today, India stands as a vibrant global powerhouse where ancient heritage meets twenty-first-century innovation."
+          },
+          {
+            "start": 7.2,
+            "end": 23.1,
+            "text": "With ISRO's Chandrayaan landing on the lunar South Pole, a revolutionary digital public infrastructure powering billions of instant UPI transactions, and a young demographic driving global technology and entrepreneurship, India continues its civilizational mission."
+          },
+          {
+            "start": 23.1,
+            "end": 32.9,
+            "text": "Guided by the timeless motto 'Vasudhaiva Kutumbakam'—the world is one family—India shines as a beacon of democracy, culture, and progress."
+          }
+        ]
+      }
+    ],
+    "video_url": "/media/videos/lecture_c71f4203.mp4",
+    "subtitles_vtt_url": "/media/subtitles/lec_c71f4203.vtt",
+    "materials": {
+      "summary": "India (Bharat) is one of the world's oldest and most profound continuous civilizations. Spanning the ancient Indus Valley, the philosophical depths of the Vedas and Upanishads, golden classical empires, a heroic non-violent freedom struggle, and the world's largest constitutional democracy, India harmoniously bridges ancient spiritual wisdom with modern technological leadership in space, digital infrastructure, and global affairs.",
+      "notes_markdown": "# India: Comprehensive Civilizational & National Study Notes\n\n## 1. Antiquity & The Vedic Heritage\n- **Indus Valley Civilization (~3300 - 1300 BCE)**: Advanced planned urban centers at Harappa, Mohenjo-daro, and Dholavira with standardized brick architecture, water management, and extensive international trade.\n- **The Vedic Tradition & Philosophy**: The composition of the Rigveda, Samaveda, Yajurveda, and Atharvaveda, progressing to the **Upanishads**, which explored the fundamental nature of reality (*Brahman*) and the self (*Atman*).\n- **Core Spiritual Concepts**:\n  - *Dharma*: Cosmic order, moral duty, and ethical action.\n  - *Karma*: The law of cause and effect governing actions.\n  - *Ahimsa*: Non-violence and reverence for all living beings, championed by Mahavira and Gautama Buddha.\n\n## 2. Classical Golden Empires\n1. **The Maurya Empire (321 - 185 BCE)**: Unified under Chandragupta Maurya and Chanakya (author of the *Arthashastra*). Emperor Ashoka embraced Buddhism after the Kalinga war, carving edicts of tolerance and ethics across Asia.\n2. **The Gupta Golden Age (320 - 550 CE)**: Remarkable mathematical breakthroughs including the formalization of zero as a number, decimal place-value, and trigonometry by mathematicians like **Aryabhata** and **Varahamihira**.\n3. **Nalanda University**: Premier residential center of global learning hosting scholars from across the Silk Road.\n4. **Southern Dynasties (Cholas, Pandyas, Pallavas)**: Renowned for exquisite Dravidian temple architecture, bronze sculpture, and trans-oceanic trade networks.\n\n## 3. The Freedom Struggle & Independence\n- **Colonial Era**: British East India Company hegemony followed by direct British Crown rule (British Raj) after the historic **Revolt of 1857**.\n- **The National Movement**:\n  - *Mahatma Gandhi*: Championed mass non-violent resistance (*Satyagraha*), leading the Non-Cooperation Movement, Salt March (1930), and Quit India Movement (1942).\n  - *Netaji Subhas Chandra Bose*: Established the Indian National Army (Azad Hind Fauj) to militarily challenge British rule.\n  - *Revolutionary Heroes*: Bhagat Singh, Chandrashekhar Azad, Rani Lakshmibai.\n- **Midnight of August 15, 1947**: India attained sovereign independence, celebrated in Jawaharlal Nehru's historic 'Tryst with Destiny' address.\n\n## 4. The Republic of India\n- **The Constitution (Adopted Nov 26, 1949; in effect Jan 26, 1950)**: Drafted under the chairmanship of **Dr. B. R. Ambedkar**, creating a Sovereign, Socialist, Secular, Democratic Republic.\n- **Unity in Diversity**: 28 States, 8 Union Territories, 22 Eighth Schedule languages, and a multi-religious secular constitutional fabric.\n- **Modern Milestones**:\n  - **Space Leadership (ISRO)**: Successful Chandrayaan-3 lunar south-pole landing and Aditya-L1 solar mission.\n  - **Digital Public Infrastructure (India Stack)**: Unified Payments Interface (UPI) facilitating billions of real-time transactions monthly.\n",
+      "key_concepts": [
+        {
+          "concept": "Unity in Diversity",
+          "definition": "The philosophical and constitutional principle that diverse ethnic, linguistic, and religious communities coexist in harmonious shared citizenship.",
+          "importance": "Foundational bedrock of the Indian Republic."
+        },
+        {
+          "concept": "Ahimsa",
+          "definition": "The ancient ethical doctrine of non-violence in thought, word, and deed, central to Hinduism, Buddhism, and Jainism.",
+          "importance": "Inspired Mahatma Gandhi's freedom movement and modern global civil rights struggles."
+        },
+        {
+          "concept": "Vasudhaiva Kutumbakam",
+          "definition": "A Sanskrit phrase from the Maha Upanishad meaning 'The World is One Family'.",
+          "importance": "Guides India's cultural diplomacy and global humanitarian outlook."
+        }
+      ],
+      "formulas_or_code": [
+        {
+          "title": "The National Motto",
+          "type": "quote",
+          "content": "Satyameva Jayate (Truth Alone Triumphs)",
+          "explanation": "From the Mundaka Upanishad, inscribed at the base of the Lion Capital of Ashoka."
+        },
+        {
+          "title": "Universal Ethical Invariant",
+          "type": "principle",
+          "content": "Vasudhaiva Kutumbakam (The World is One Family)",
+          "explanation": "Core philosophical orientation recognizing the common bond of all humanity."
+        }
+      ],
+      "practice_questions": [
+        {
+          "question": "How did Emperor Ashoka's governance after the Kalinga war represent a paradigm shift in political philosophy?",
+          "hint": "Think about the transition from conquest by arms to conquest by righteousness.",
+          "solution": "Ashoka renounced military conquest (Digvijaya) and adopted conquest by moral righteousness (Dharmavijaya), inscribing edicts mandating medical care for humans and animals, environmental conservation, and mutual religious respect across his vast empire."
+        }
+      ],
+      "quiz": [
+        {
+          "id": 1,
+          "question": "Who served as the principal architect and Chairman of the Drafting Committee of the Indian Constitution?",
+          "options": [
+            "Mahatma Gandhi",
+            "Dr. B. R. Ambedkar",
+            "Jawaharlal Nehru",
+            "Sardar Vallabhbhai Patel"
+          ],
+          "correct_index": 1,
+          "explanation": "Dr. Bhimrao Ramji Ambedkar chaired the Drafting Committee that framed the Constitution of India."
+        },
+        {
+          "id": 2,
+          "question": "What groundbreaking mathematical contribution flourished during the Gupta Golden Age of India?",
+          "options": [
+            "The invention of the abacus",
+            "The formalization of zero and decimal place-value system",
+            "Calculus limits",
+            "Binary electronics"
+          ],
+          "correct_index": 1,
+          "explanation": "Indian mathematicians like Aryabhata developed the decimal system and the operational concept of zero, which revolutionized global mathematics."
+        }
+      ],
+      "flashcards": [
+        {
+          "id": 1,
+          "front": "What does the national motto 'Satyameva Jayate' mean and where does it originate?",
+          "back": "It means 'Truth Alone Triumphs' and originates from the ancient Mundaka Upanishad.",
+          "category": "National Symbols"
+        },
+        {
+          "id": 2,
+          "front": "When did the Constitution of India come into full effect?",
+          "back": "January 26, 1950, celebrated nationwide as Republic Day.",
+          "category": "Constitution"
+        }
+      ]
+    }
+  },
+  "0e3bbe7d": {
+    "id": "0e3bbe7d",
+    "topic": "Exception in Python",
+    "title": "Exception Handling in Python: Writing Crash-Proof Code",
+    "domain": "computer_science",
+    "subdomain": "Software Engineering & Python Runtime",
+    "knowledge_level": "intermediate",
+    "teaching_style": "code_flow",
+    "duration_target": "standard",
+    "voice_name": "en-US-ChristopherNeural",
+    "created_at": "2026-09-24 23:29",
+    "total_duration": 158.45,
+    "scenes": [
+      {
+        "scene_id": "lec_0e3bbe7d_s0",
+        "index": 0,
+        "chapter_title": "1. The Production Crash: Syntax Errors vs. Runtime Exceptions",
+        "pedagogical_phase": "hook",
+        "narration_text": "Imagine writing a banking script or web server. If your code has a syntax error like a missing parenthesis, Python detects it before running a single line. But what happens when your code is syntactically flawless, yet a user inputs zero as a divisor, or a database connection suddenly drops? Without exception handling, Python panics, halts execution immediately, and crashes with an ugly traceback. Exception handling is the vital safety net that transforms fatal crashes into resilient, graceful recovery.",
+        "estimated_duration": 24.0,
+        "visual_spec": {
+          "visual_type": "concept_metaphor",
+          "title": "Syntax Error vs. Runtime Exception",
+          "subtitle": "Compile-Time Parsing vs. Runtime Unexpected Conditions",
+          "parameters": {
+            "left_title": "SyntaxError (Fatal Parser Halt)",
+            "left_items": [
+              "Missing colon, mismatched brackets, typos",
+              "Caught before code begins executing",
+              "Cannot be handled at runtime with try/except"
+            ],
+            "right_title": "Exceptions (Recoverable Runtime Events)",
+            "right_items": [
+              "ZeroDivisionError, KeyError, FileNotFoundError",
+              "Occurs while code is actively executing",
+              "Can be caught, recovered from, and cleanly resolved!"
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "SyntaxError parse failure"
+            },
+            {
+              "step": 2,
+              "highlight": "Runtime Exception handling"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_0e3bbe7d_s0.mp3",
+        "actual_duration": 34.03,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 3.73,
+            "text": "Imagine writing a banking script or web server."
+          },
+          {
+            "start": 3.67,
+            "end": 10.51,
+            "text": "If your code has a syntax error like a missing parenthesis, Python detects it before running a single line."
+          },
+          {
+            "start": 10.51,
+            "end": 19.15,
+            "text": "But what happens when your code is syntactically flawless, yet a user inputs zero as a divisor, or a database connection suddenly drops?"
+          },
+          {
+            "start": 19.15,
+            "end": 26.96,
+            "text": "Without exception handling, Python panics, halts execution immediately, and crashes with an ugly traceback."
+          },
+          {
+            "start": 26.96,
+            "end": 34.03,
+            "text": "Exception handling is the vital safety net that transforms fatal crashes into resilient, graceful recovery."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_0e3bbe7d_s1",
+        "index": 1,
+        "chapter_title": "2. The Four Pillars: try, except, else, and finally",
+        "pedagogical_phase": "foundation",
+        "narration_text": "Python's exception handling engine is built upon four keywords. Inside the try block, you place code that might fail. The except block catches specific error types and executes fallback logic. Many developers forget the else block: it executes strictly if no exception was raised in the try block! And finally is the unbreakable guarantee: it runs no matter what happens, whether an exception occurred, was caught, or even if the function returned early.",
+        "estimated_duration": 25.0,
+        "visual_spec": {
+          "visual_type": "code_visualizer",
+          "title": "The Full try-except-else-finally Suite",
+          "subtitle": "Complete Four-Keyword Error Handling Anatomy",
+          "parameters": {
+            "language": "python",
+            "code": "def process_account_file(filename):\n    file = None\n    try:\n        # 1. Dangerous operation: File I/O\n        file = open(filename, 'r')\n        data = file.read()\n    except FileNotFoundError as err:\n        # 2. Recovery logic for missing file\n        print(f'Warning: {filename} missing. Using defaults.')\n        return {}\n    else:\n        # 3. Runs ONLY if try succeeded with zero errors\n        print('File successfully read without exceptions!')\n        return parse_data(data)\n    finally:\n        # 4. ALWAYS runs: Crucial resource cleanup\n        if file:\n            file.close()\n            print('Cleanup: File closed safely.')",
+            "highlights": [
+              {
+                "line": 3,
+                "label": "try block: contains code that might fail"
+              },
+              {
+                "line": 7,
+                "label": "except block: catches specific error"
+              },
+              {
+                "line": 11,
+                "label": "else block: runs strictly on success"
+              },
+              {
+                "line": 15,
+                "label": "finally block: always guaranteed to run"
+              }
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "active_line": 3,
+              "scope": "Entering try block"
+            },
+            {
+              "step": 2,
+              "active_line": 7,
+              "scope": "Catching FileNotFoundError"
+            },
+            {
+              "step": 3,
+              "active_line": 15,
+              "scope": "Finally cleanup guaranteed"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_0e3bbe7d_s1.mp3",
+        "actual_duration": 30.53,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 4.7,
+            "text": "Python's exception handling engine is built upon four keywords."
+          },
+          {
+            "start": 4.65,
+            "end": 8.65,
+            "text": "Inside the try block, you place code that might fail."
+          },
+          {
+            "start": 8.65,
+            "end": 13.91,
+            "text": "The except block catches specific error types and executes fallback logic."
+          },
+          {
+            "start": 13.91,
+            "end": 20.81,
+            "text": "Many developers forget the else block: it executes strictly if no exception was raised in the try block!"
+          },
+          {
+            "start": 20.81,
+            "end": 30.53,
+            "text": "And finally is the unbreakable guarantee: it runs no matter what happens, whether an exception occurred, was caught, or even if the function returned early."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_0e3bbe7d_s2",
+        "index": 2,
+        "chapter_title": "3. Stack Unwinding: How Exceptions Travel Up the Call Stack",
+        "pedagogical_phase": "visual_demonstration",
+        "narration_text": "When an exception occurs deep inside a nested function, Python initiates Stack Unwinding. Let's watch: main calls calculate, which calls divide. When divide attempts ten divided by zero, a ZeroDivisionError object is instantiated. Divide has no try block, so Python terminates divide and pops it off the stack! It jumps up to calculate; no handler exists there either. Finally, it arrives back at main, finds a matching except block, and handles the error gracefully without crashing your server.",
+        "estimated_duration": 26.0,
+        "visual_spec": {
+          "visual_type": "code_visualizer",
+          "title": "Call Stack Unwinding in Action",
+          "subtitle": "How Exceptions Bubble Up Across Nested Functions",
+          "parameters": {
+            "language": "python",
+            "code": "def divide(a, b):\n    return a / b  # <-- ZeroDivisionError raised here!\n\ndef calculate(x, y):\n    return divide(x, y)  # Unwinds up call stack\n\ndef main():\n    try:\n        result = calculate(10, 0)\n    except ZeroDivisionError as e:\n        print(f'Caught at top level: {e}')\n        result = 0\n    return result",
+            "highlights": [
+              {
+                "line": 2,
+                "label": "Error occurs in deepest leaf function"
+              },
+              {
+                "line": 5,
+                "label": "Stack frame popped: bubbles up"
+              },
+              {
+                "line": 9,
+                "label": "Target except block catches and recovers!"
+              }
+            ],
+            "variables": {
+              "a": 10,
+              "b": 0,
+              "active_error": "ZeroDivisionError",
+              "stack_depth": "main -> calculate -> divide"
+            }
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "active_line": 2,
+              "scope": "divide(10, 0) raises error"
+            },
+            {
+              "step": 2,
+              "active_line": 5,
+              "scope": "calculate frame unwound"
+            },
+            {
+              "step": 3,
+              "active_line": 9,
+              "scope": "main catches ZeroDivisionError"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_0e3bbe7d_s2.mp3",
+        "actual_duration": 35.33,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 6.3,
+            "text": "When an exception occurs deep inside a nested function, Python initiates Stack Unwinding."
+          },
+          {
+            "start": 6.25,
+            "end": 10.85,
+            "text": "Let's watch: main calls calculate, which calls divide."
+          },
+          {
+            "start": 10.85,
+            "end": 16.98,
+            "text": "When divide attempts ten divided by zero, a ZeroDivisionError object is instantiated."
+          },
+          {
+            "start": 16.98,
+            "end": 22.76,
+            "text": "Divide has no try block, so Python terminates divide and pops it off the stack!"
+          },
+          {
+            "start": 22.76,
+            "end": 27.07,
+            "text": "It jumps up to calculate; no handler exists there either."
+          },
+          {
+            "start": 27.07,
+            "end": 35.33,
+            "text": "Finally, it arrives back at main, finds a matching except block, and handles the error gracefully without crashing your server."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_0e3bbe7d_s3",
+        "index": 3,
+        "chapter_title": "4. The Exception Class Hierarchy & Custom Exceptions",
+        "pedagogical_phase": "edge_cases",
+        "narration_text": "In Python, all exceptions are standard object-oriented classes organized in a strict inheritance tree. At the very root sits BaseException, followed by Exception. When you write except LookupError, Python will catch both IndexError and KeyError because they are child subclasses! To write professional code, you can define your own custom exceptions by inheriting from Exception, allowing your application to signal domain-specific business logic errors.",
+        "estimated_duration": 25.0,
+        "visual_spec": {
+          "visual_type": "hierarchy_pyramid",
+          "title": "The Python Built-In Exception Tree",
+          "subtitle": "BaseException -> Exception -> Specific Subclasses",
+          "parameters": {
+            "pyramid_title": "Python Exception Class Hierarchy",
+            "tiers": [
+              {
+                "tier": "BaseException (SystemExit, KeyboardInterrupt)",
+                "note": "Root class. Should almost NEVER be caught directly in application code!"
+              },
+              {
+                "tier": "Exception (Standard Application Errors)",
+                "note": "Root for all non-system-exiting errors; base class for user custom exceptions"
+              },
+              {
+                "tier": "ArithmeticError (ZeroDivisionError, OverflowError)",
+                "note": "Mathematical failures during runtime arithmetic"
+              },
+              {
+                "tier": "LookupError (KeyError, IndexError)",
+                "note": "Dictionary key missing or list index out of bounds"
+              }
+            ]
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "BaseException & SystemExit"
+            },
+            {
+              "step": 2,
+              "highlight": "Exception Subclasses"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_0e3bbe7d_s3.mp3",
+        "actual_duration": 28.73,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 6.97,
+            "text": "In Python, all exceptions are standard object-oriented classes organized in a strict inheritance tree."
+          },
+          {
+            "start": 6.92,
+            "end": 11.35,
+            "text": "At the very root sits BaseException, followed by Exception."
+          },
+          {
+            "start": 11.35,
+            "end": 18.45,
+            "text": "When you write except LookupError, Python will catch both IndexError and KeyError because they are child subclasses!"
+          },
+          {
+            "start": 18.45,
+            "end": 28.73,
+            "text": "To write professional code, you can define your own custom exceptions by inheriting from Exception, allowing your application to signal domain-specific business logic errors."
+          }
+        ]
+      },
+      {
+        "scene_id": "lec_0e3bbe7d_s4",
+        "index": 4,
+        "chapter_title": "5. Production Best Practices: Antipatterns vs. Clean Code",
+        "pedagogical_phase": "summary",
+        "narration_text": "Let us conclude with the golden rules of production error handling. The cardinal sin of Python programming is the bare except pass: catching every error silently and doing nothing. This masks critical bugs, keyboard interrupts, and memory errors! Instead, follow three principles: catch only the specific exceptions you anticipate, preserve error contexts using the raise keyword, and prefer context managers with the with statement for automatic resource cleanup.",
+        "estimated_duration": 24.0,
+        "visual_spec": {
+          "visual_type": "comparison_matrix",
+          "title": "Production Best Practices vs Antipatterns",
+          "subtitle": "Writing Robust, Maintainable Error Handling",
+          "parameters": {
+            "col1": "The Silent Killer (Antipattern): 'except: pass'. Masks typos, breaks debugging, swallows KeyboardInterrupt.",
+            "col2": "Specific & Informative: 'except (KeyError, ValueError) as err:'. Explicitly handle expected failures with logging.",
+            "col3": "Pythonic Resource Cleanup: Use 'with open(...) as f:' context managers instead of manual try/finally close."
+          },
+          "keyframe_steps": [
+            {
+              "step": 1,
+              "highlight": "Antipattern"
+            },
+            {
+              "step": 2,
+              "highlight": "Specific Exception"
+            }
+          ]
+        },
+        "audio_url": "/media/audio/lec_0e3bbe7d_s4.mp3",
+        "actual_duration": 29.83,
+        "subtitles": [
+          {
+            "start": 0.1,
+            "end": 4.27,
+            "text": "Let us conclude with the golden rules of production error handling."
+          },
+          {
+            "start": 4.22,
+            "end": 11.52,
+            "text": "The cardinal sin of Python programming is the bare except pass: catching every error silently and doing nothing."
+          },
+          {
+            "start": 11.53,
+            "end": 16.71,
+            "text": "This masks critical bugs, keyboard interrupts, and memory errors!"
+          },
+          {
+            "start": 16.71,
+            "end": 29.83,
+            "text": "Instead, follow three principles: catch only the specific exceptions you anticipate, preserve error contexts using the raise keyword, and prefer context managers with the with statement for automatic resource cleanup."
+          }
+        ]
+      }
+    ],
+    "video_url": "/media/videos/lecture_0e3bbe7d.mp4",
+    "subtitles_vtt_url": "/media/subtitles/lec_0e3bbe7d.vtt",
+    "materials": {
+      "summary": "Exception handling in Python provides a structured mechanism for detecting and recovering from runtime errors without crashing the program. Through try, except, else, and finally blocks, call stack unwinding, and object-oriented exception hierarchies, Python programs maintain reliability, data integrity, and clean resource management.",
+      "notes_markdown": "# Python Exception Handling: Complete Engineering Guide\n\n## 1. Syntax vs. Exception\n- **SyntaxError**: Detected during parsing before execution begins (e.g. `if x = 5:`).\n- **Exception**: Occurs during runtime when syntactically valid code encounters an impossible state (e.g. dividing by zero, file not found, network timeout).\n\n## 2. The Four Keyword Blocks\n```python\ntry:\n    # Code that may raise an exception\n    value = database.fetch(user_id)\nexcept UserNotFoundError as e:\n    # Code executed if specific exception occurs\n    logger.warning(f\"User {user_id} not found: {e}\")\n    value = default_user()\nelse:\n    # Executed ONLY if try block completed with NO exceptions\n    logger.info(\"Data fetched successfully\")\nfinally:\n    # ALWAYS executed regardless of success, exception, or early return\n    database.close_connection()\n```\n\n## 3. The Exception Class Hierarchy\n```\nBaseException\n ├── SystemExit\n ├── KeyboardInterrupt\n └── Exception\n      ├── ArithmeticError\n      │    └── ZeroDivisionError\n      ├── LookupError\n      │    ├── IndexError\n      │    └── KeyError\n      ├── ValueError\n      └── TypeError\n```\n\n## 4. Defining Custom Exceptions\n```python\nclass InsufficientFundsError(Exception):\n    def __init__(self, balance: float, amount: float):\n        self.balance = balance\n        self.amount = amount\n        super().__init__(f\"Cannot withdraw ${amount}; balance is only ${balance}\")\n\n# Usage:\ndef withdraw(balance, amount):\n    if amount > balance:\n        raise InsufficientFundsError(balance, amount)\n    return balance - amount\n```\n",
+      "key_concepts": [
+        {
+          "concept": "Stack Unwinding",
+          "definition": "The process by which the Python runtime terminates active function call frames in reverse order until a matching except block is located.",
+          "importance": "Allows high-level functions to handle errors originating in deep helper functions."
+        },
+        {
+          "concept": "Bare Except Antipattern",
+          "definition": "Writing `except:` without an exception type, which catches `BaseException` including `KeyboardInterrupt` and `SystemExit`.",
+          "importance": "Dangerous bug masking practice; always catch `Exception` or specific subtypes."
+        },
+        {
+          "concept": "Context Manager (`with` statement)",
+          "definition": "A language construct implementing `__enter__` and `__exit__` methods that guarantees cleanup even when exceptions occur.",
+          "importance": "Pythonic alternative to verbose try/finally blocks."
+        }
+      ],
+      "formulas_or_code": [
+        {
+          "title": "Re-raising Exceptions",
+          "type": "code",
+          "content": "try:\n    perform_action()\nexcept Exception as err:\n    log_error(err)\n    raise  # Re-raises current exception preserving original traceback",
+          "explanation": "Preserves original stack trace when logging and propagating."
+        },
+        {
+          "title": "Custom Exception Class",
+          "type": "code",
+          "content": "class CustomError(Exception):\n    pass",
+          "explanation": "Standard idiomatic way to create domain-specific application exceptions."
+        }
+      ],
+      "practice_questions": [
+        {
+          "question": "In a `try-except-else-finally` block, if the `try` block executes `return 10`, does the `finally` block still execute?",
+          "hint": "Consider the guaranteed nature of the `finally` keyword.",
+          "solution": "Yes! The `finally` block is guaranteed to run before the function returns to the caller, even when early return statements are executed inside the `try` or `except` blocks."
+        }
+      ],
+      "quiz": [
+        {
+          "id": 1,
+          "question": "When does the `else` block execute in a Python try/except construct?",
+          "options": [
+            "Whenever an exception is caught",
+            "Only when the try block completes with zero exceptions",
+            "Always right before the finally block",
+            "Only when a syntax error occurs"
+          ],
+          "correct_index": 1,
+          "explanation": "The else block executes strictly if no exception was raised in the try block."
+        },
+        {
+          "id": 2,
+          "question": "Why is writing `except Exception:` considered better than writing a bare `except:`?",
+          "options": [
+            "It runs 10x faster",
+            "It prevents accidentally catching SystemExit and KeyboardInterrupt (Ctrl+C)",
+            "It automatically writes to log files",
+            "It is required by the Python compiler"
+          ],
+          "correct_index": 1,
+          "explanation": "A bare except catches BaseException, which intercepts critical system signals like KeyboardInterrupt and SystemExit, preventing the user from stopping the program."
+        }
+      ],
+      "flashcards": [
+        {
+          "id": 1,
+          "front": "What is the difference between IndexError and KeyError?",
+          "back": "IndexError occurs when accessing a sequence with an out-of-range integer index; KeyError occurs when looking up a non-existent key in a dictionary.",
+          "category": "Built-in Exceptions"
+        },
+        {
+          "id": 2,
+          "front": "What does the 'finally' block guarantee?",
+          "back": "It guarantees execution under all circumstances, even after errors, caught exceptions, or early return statements.",
+          "category": "Control Flow"
+        }
+      ]
+    }
   }
 }
